@@ -408,5 +408,5 @@ eMBPoll( void )
             break;
         }
     }
-    return MB_ENOERR;
+    return eStatus;
 }
