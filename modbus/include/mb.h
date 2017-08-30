@@ -35,6 +35,7 @@
 #include "mbmode.h"
 #include "mbparity.h"
 #include "mbproto.h"
+#include "mbregistermode.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -75,23 +76,6 @@ extern "C" {
  * \brief Use the default Modbus TCP port (502)
  */
 #define MB_TCP_PORT_USE_DEFAULT 0
-
-/*! \ingroup modbus
- * \brief If register should be written or read.
- *
- * This value is passed to the callback functions which support either
- * reading or writing register values. Writing means that the application
- * registers should be updated and reading means that the modbus protocol
- * stack needs to know the current register values.
- *
- * \see eMBRegHoldingCB( ), eMBRegCoilsCB( ), eMBRegDiscreteCB( ) and
- *   eMBRegInputCB( ).
- */
-typedef enum
-{
-    MB_REG_READ,                /*!< Read register values and pass to protocol stack. */
-    MB_REG_WRITE                /*!< Update register values. */
-} eMBRegisterMode;
 
 /* ----------------------- Function prototypes ------------------------------*/
 /*! \ingroup modbus
