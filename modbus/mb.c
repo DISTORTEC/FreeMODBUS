@@ -33,6 +33,7 @@
 #include "port.h"
 
 #include "mbconfig.h"
+#include "mbeventtype.h"
 #include "mbframe.h"
 #include "mbfunc.h"
 #include "mbport.h"

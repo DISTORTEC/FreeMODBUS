@@ -31,6 +31,7 @@
 #ifndef _MB_PORT_H
 #define _MB_PORT_H
 
+#include "mbeventtype.h"
 #include "mbparity.h"
 
 #include <stdbool.h>
@@ -39,16 +40,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/* ----------------------- Type definitions ---------------------------------*/
-
-typedef enum
-{
-    EV_READY,                   /*!< Startup finished. */
-    EV_FRAME_RECEIVED,          /*!< Frame received. */
-    EV_EXECUTE,                 /*!< Execute function. */
-    EV_FRAME_SENT               /*!< Frame sent. */
-} eMBEventType;
 
 /* ----------------------- Supporting functions -----------------------------*/
 bool            xMBPortEventInit( void );
