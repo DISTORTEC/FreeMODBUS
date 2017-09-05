@@ -102,8 +102,8 @@ static const PROGMEM UCHAR aucCRCLo[] = {
     0x40
 };
 
-USHORT
-usMBCRC16( UCHAR * pucFrame, USHORT usLen )
+uint16_t
+usMBCRC16( UCHAR * pucFrame, uint16_t usLen )
 {
     UCHAR           ucCRCHi = 0xFF;
     UCHAR           ucCRCLo = 0xFF;

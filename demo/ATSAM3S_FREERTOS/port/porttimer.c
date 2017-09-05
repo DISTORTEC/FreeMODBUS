@@ -69,7 +69,7 @@ const static Pin xTimerDebugPins[] = { TIMER_PIN };
 
 /* ----------------------- Start implementation -----------------------------*/
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
 #if MB_TIMER_DEBUG == 1
     PIO_Configure( xTimerDebugPins, PIO_LISTSIZE( xTimerDebugPins ) );
@@ -115,7 +115,7 @@ vMBPortTimersDisable(  )
 }
 
 void
-vMBPortTimersDelay( USHORT usTimeOutMS )
+vMBPortTimersDelay( uint16_t usTimeOutMS )
 {
     vTaskDelay( usTimeOutMS / portTICK_RATE_MS );
 }

@@ -51,7 +51,7 @@ static struct tcp_pcb *pxPCBListen;
 static struct tcp_pcb *pxPCBClient;
 
 static UCHAR    aucTCPBuf[MB_TCP_BUF_SIZE];
-static USHORT   usTCPBufPos;
+static uint16_t   usTCPBufPos;
 
 /* ----------------------- Static functions ---------------------------------*/
 static err_t    prvxMBTCPPortAccept( void *pvArg, struct tcp_pcb *pxPCB, err_t xErr );
@@ -61,11 +61,11 @@ static void     prvvMBTCPPortError( void *pvArg, err_t xErr );
 
 /* ----------------------- Begin implementation -----------------------------*/
 bool
-xMBTCPPortInit( USHORT usTCPPort )
+xMBTCPPortInit( uint16_t usTCPPort )
 {
     struct tcp_pcb *pxPCBListenNew, *pxPCBListenOld;
     bool            bOkay = false;
-    USHORT          usPort;
+    uint16_t          usPort;
 
     if( usTCPPort == 0 )
     {
@@ -73,7 +73,7 @@ xMBTCPPortInit( USHORT usTCPPort )
     }
     else
     {
-        usPort = ( USHORT ) usTCPPort;
+        usPort = ( uint16_t ) usTCPPort;
     }
 
     if( ( pxPCBListenNew = pxPCBListenOld = tcp_new(  ) ) == NULL )
@@ -218,7 +218,7 @@ prvvMBTCPPortError( void *pvArg, err_t xErr )
 err_t
 prvxMBTCPPortReceive( void *pvArg, struct tcp_pcb *pxPCB, struct pbuf *p, err_t xErr )
 {
-    USHORT          usLength;
+    uint16_t          usLength;
 
     err_t           error;
 
@@ -289,7 +289,7 @@ prvxMBTCPPortReceive( void *pvArg, struct tcp_pcb *pxPCB, struct pbuf *p, err_t 
 }
 
 bool
-xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
+xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, uint16_t * usTCPLength )
 {
     *ppucMBTCPFrame = &aucTCPBuf[0];
     *usTCPLength = usTCPBufPos;
@@ -300,7 +300,7 @@ xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
 }
 
 bool
-xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
+xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, uint16_t usTCPLength )
 {
     bool            bFrameSent = false;
 

@@ -83,7 +83,7 @@ static UCHAR    prvucMBCHAR2BIN( UCHAR ucCharacter );
 
 static UCHAR    prvucMBBIN2CHAR( UCHAR ucByte );
 
-static UCHAR    prvucMBLRC( UCHAR * pucFrame, USHORT usLen );
+static UCHAR    prvucMBLRC( UCHAR * pucFrame, uint16_t usLen );
 
 /* ----------------------- Static variables ---------------------------------*/
 static volatile eMBSndState eSndState;
@@ -94,11 +94,11 @@ static volatile eMBRcvState eRcvState;
 extern volatile UCHAR ucRTUBuf[];
 static volatile UCHAR *ucASCIIBuf = ucRTUBuf;
 
-static volatile USHORT usRcvBufferPos;
+static volatile uint16_t usRcvBufferPos;
 static volatile eMBBytePos eBytePos;
 
 static volatile UCHAR *pucSndBufferCur;
-static volatile USHORT usSndBufferCount;
+static volatile uint16_t usSndBufferCount;
 
 static volatile UCHAR ucLRC;
 static volatile UCHAR ucMBLFCharacter;
@@ -149,7 +149,7 @@ eMBASCIIStop( void )
 }
 
 eMBErrorCode
-eMBASCIIReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
+eMBASCIIReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, uint16_t * pusLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -168,7 +168,7 @@ eMBASCIIReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
         /* Total length of Modbus-PDU is Modbus-Serial-Line-PDU minus
          * size of address field and CRC checksum.
          */
-        *pusLength = ( USHORT )( usRcvBufferPos - MB_SER_PDU_PDU_OFF - MB_SER_PDU_SIZE_LRC );
+        *pusLength = ( uint16_t )( usRcvBufferPos - MB_SER_PDU_PDU_OFF - MB_SER_PDU_SIZE_LRC );
 
         /* Return the start of the Modbus PDU to the caller. */
         *pucFrame = ( UCHAR * ) & ucASCIIBuf[MB_SER_PDU_PDU_OFF];
@@ -182,7 +182,7 @@ eMBASCIIReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
 }
 
 eMBErrorCode
-eMBASCIISend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
+eMBASCIISend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, uint16_t usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     UCHAR           usLRC;
@@ -469,7 +469,7 @@ prvucMBBIN2CHAR( UCHAR ucByte )
 
 
 static          UCHAR
-prvucMBLRC( UCHAR * pucFrame, USHORT usLen )
+prvucMBLRC( UCHAR * pucFrame, uint16_t usLen )
 {
     UCHAR           ucLRC = 0;  /* LRC char initialized */
 

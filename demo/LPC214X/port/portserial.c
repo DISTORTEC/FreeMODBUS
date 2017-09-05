@@ -64,7 +64,7 @@ bool
 xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     bool            bInitialized = true;
-    USHORT          cfg = 0;
+    uint16_t          cfg = 0;
     uint32_t           reload = ( ( PCLK / ulBaudRate ) / 16UL );
     volatile char   dummy;
 

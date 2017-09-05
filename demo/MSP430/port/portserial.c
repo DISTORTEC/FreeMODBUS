@@ -85,8 +85,8 @@ bool
 xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     bool            bInitialized = true;
-    USHORT          UxCTL = 0;
-    USHORT          UxBR = ( USHORT ) ( SMCLK / ulBaudRate );
+    uint16_t          UxCTL = 0;
+    uint16_t          UxBR = ( uint16_t ) ( SMCLK / ulBaudRate );
 
     switch ( eParity )
     {
@@ -178,7 +178,7 @@ prvvMBSerialTXIRQHandler( void ) __interrupt[USART0TX_VECTOR]
 void
 EnterCriticalSection( void )
 {
-    USHORT usOldSR;
+    uint16_t usOldSR;
     if( ucCriticalNesting == 0 )
     {
 #if defined (__GNUC__)

@@ -45,13 +45,13 @@
 
 /* ----------------------- Static variables ---------------------------------*/
 static UCHAR    ucMBSlaveID[MB_FUNC_OTHER_REP_SLAVEID_BUF];
-static USHORT   usMBSlaveIDLen;
+static uint16_t   usMBSlaveIDLen;
 
 /* ----------------------- Start implementation -----------------------------*/
 
 eMBErrorCode
 eMBSetSlaveID( UCHAR ucSlaveID, bool xIsRunning,
-               UCHAR const *pucAdditional, USHORT usAdditionalLen )
+               UCHAR const *pucAdditional, uint16_t usAdditionalLen )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -78,10 +78,10 @@ eMBSetSlaveID( UCHAR ucSlaveID, bool xIsRunning,
 }
 
 eMBException
-eMBFuncReportSlaveID( UCHAR * pucFrame, USHORT * usLen )
+eMBFuncReportSlaveID( UCHAR * pucFrame, uint16_t * usLen )
 {
     memcpy( &pucFrame[MB_PDU_DATA_OFF], &ucMBSlaveID[0], ( size_t )usMBSlaveIDLen );
-    *usLen = ( USHORT )( MB_PDU_DATA_OFF + usMBSlaveIDLen );
+    *usLen = ( uint16_t )( MB_PDU_DATA_OFF + usMBSlaveIDLen );
     return MB_EX_NONE;
 }
 

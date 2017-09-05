@@ -44,9 +44,9 @@ void            eMBASCIIStart( void );
 void            eMBASCIIStop( void );
 
 eMBErrorCode    eMBASCIIReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame,
-                                 USHORT * pusLength );
+                                 uint16_t * pusLength );
 eMBErrorCode    eMBASCIISend( UCHAR slaveAddress, const UCHAR * pucFrame,
-                              USHORT usLength );
+                              uint16_t usLength );
 bool            xMBASCIIReceiveFSM( void );
 bool            xMBASCIITransmitFSM( void );
 bool            xMBASCIITimerT1SExpired( void );

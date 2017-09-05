@@ -26,8 +26,8 @@
 /* ----------------------- Type definitions ---------------------------------*/
 typedef struct
 {
-    volatile USHORT usNTimeOutMS;
-    volatile USHORT usNTimeLeft;
+    volatile uint16_t usNTimeOutMS;
+    volatile uint16_t usNTimeLeft;
 } xTimerInternalHandle;
 
 /* ----------------------- Static variables ---------------------------------*/
@@ -39,9 +39,9 @@ STATIC bool     bIsInitalized = false;
 /* ----------------------- Start implementation -----------------------------*/
 
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
-    USHORT          usTimeoutMS;
+    uint16_t          usTimeoutMS;
 
     ENTER_CRITICAL_SECTION(  );
     usTimeoutMS = ( usTim1Timerout50us + 10 ) / 20;

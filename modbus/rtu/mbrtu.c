@@ -72,9 +72,9 @@ static volatile eMBRcvState eRcvState;
 volatile UCHAR  ucRTUBuf[MB_SER_PDU_SIZE_MAX];
 
 static volatile UCHAR *pucSndBufferCur;
-static volatile USHORT usSndBufferCount;
+static volatile uint16_t usSndBufferCount;
 
-static volatile USHORT usRcvBufferPos;
+static volatile uint16_t usRcvBufferPos;
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
@@ -112,7 +112,7 @@ eMBRTUInit( UCHAR ucSlaveAddress, UCHAR ucPort, uint32_t ulBaudRate, eMBParity e
              */
             usTimerT35_50us = ( 7UL * 220000UL ) / ( 2UL * ulBaudRate );
         }
-        if( xMBPortTimersInit( ( USHORT ) usTimerT35_50us ) != true )
+        if( xMBPortTimersInit( ( uint16_t ) usTimerT35_50us ) != true )
         {
             eStatus = MB_EPORTERR;
         }
@@ -148,7 +148,7 @@ eMBRTUStop( void )
 }
 
 eMBErrorCode
-eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
+eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, uint16_t * pusLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -167,7 +167,7 @@ eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
         /* Total length of Modbus-PDU is Modbus-Serial-Line-PDU minus
          * size of address field and CRC checksum.
          */
-        *pusLength = ( USHORT )( usRcvBufferPos - MB_SER_PDU_PDU_OFF - MB_SER_PDU_SIZE_CRC );
+        *pusLength = ( uint16_t )( usRcvBufferPos - MB_SER_PDU_PDU_OFF - MB_SER_PDU_SIZE_CRC );
 
         /* Return the start of the Modbus PDU to the caller. */
         *pucFrame = ( UCHAR * ) & ucRTUBuf[MB_SER_PDU_PDU_OFF];
@@ -182,10 +182,10 @@ eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength )
 }
 
 eMBErrorCode
-eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
+eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, uint16_t usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
-    USHORT          usCRC16;
+    uint16_t          usCRC16;
 
     ENTER_CRITICAL_SECTION(  );
 

@@ -39,7 +39,7 @@ static struct timeval xTimeLast;
 
 /* ----------------------- Start implementation -----------------------------*/
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     ulTimeOut = usTim1Timerout50us / 20U;
     if( ulTimeOut == 0 )

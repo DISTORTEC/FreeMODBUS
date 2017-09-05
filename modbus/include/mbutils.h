@@ -75,7 +75,7 @@ extern "C" {
  * xMBUtilSetBits( ucBits, 8, 8, 0x5A);
  * \endcode
  */
-void            xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset,
+void            xMBUtilSetBits( UCHAR * ucByteBuf, uint16_t usBitOffset,
                                 UCHAR ucNBits, UCHAR ucValues );
 
 /*! \brief Function to read bits in a byte buffer.
@@ -97,7 +97,7 @@ void            xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset,
  * ucResult = xMBUtilGetBits( ucBits, 3, 8 );
  * \endcode
  */
-UCHAR           xMBUtilGetBits( UCHAR * ucByteBuf, USHORT usBitOffset,
+UCHAR           xMBUtilGetBits( UCHAR * ucByteBuf, uint16_t usBitOffset,
                                 UCHAR ucNBits );
 
 /*! @} */

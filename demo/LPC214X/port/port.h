@@ -40,6 +40,4 @@ void            ExitCriticalSection( void );
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 
-typedef uint16_t USHORT;
-
 #endif

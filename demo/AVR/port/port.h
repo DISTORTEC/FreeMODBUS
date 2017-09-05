@@ -44,8 +44,6 @@
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 
-typedef unsigned short USHORT;
-
 /* ----------------------- AVR platform specifics ---------------------------*/
 
 #if defined (__AVR_ATmega168__)

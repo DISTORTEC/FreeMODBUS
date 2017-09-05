@@ -85,7 +85,7 @@ bool            xMBPortSerialGetByte( CHAR * pucByte );
 bool            xMBPortSerialPutByte( CHAR ucByte );
 
 /* ----------------------- Timers functions ---------------------------------*/
-bool            xMBPortTimersInit( USHORT usTimeOut50us );
+bool            xMBPortTimersInit( uint16_t usTimeOut50us );
 
 void            xMBPortTimersClose( void );
 
@@ -93,7 +93,7 @@ void            vMBPortTimersEnable( void );
 
 void            vMBPortTimersDisable( void );
 
-void            vMBPortTimersDelay( USHORT usTimeOutMS );
+void            vMBPortTimersDelay( uint16_t usTimeOutMS );
 
 /* ----------------------- Callback for the protocol stack ------------------*/
 
@@ -116,15 +116,15 @@ extern          bool( *pxMBFrameCBTransmitterEmpty ) ( void );
 extern          bool( *pxMBPortCBTimerExpired ) ( void );
 
 /* ----------------------- TCP port functions -------------------------------*/
-bool            xMBTCPPortInit( USHORT usTCPPort );
+bool            xMBTCPPortInit( uint16_t usTCPPort );
 
 void            vMBTCPPortClose( void );
 
 void            vMBTCPPortDisable( void );
 
-bool            xMBTCPPortGetRequest( UCHAR **ppucMBTCPFrame, USHORT * usTCPLength );
+bool            xMBTCPPortGetRequest( UCHAR **ppucMBTCPFrame, uint16_t * usTCPLength );
 
-bool            xMBTCPPortSendResponse( const UCHAR *pucMBTCPFrame, USHORT usTCPLength );
+bool            xMBTCPPortSendResponse( const UCHAR *pucMBTCPFrame, uint16_t usTCPLength );
 
 #ifdef __cplusplus
 }

@@ -76,7 +76,7 @@ vModbusTask( void *pvParameters )
 }
 
 eMBErrorCode
-eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
+eMBRegCoilsCB( UCHAR * pucRegBuffer, uint16_t usAddress, uint16_t usNCoils,
                eMBRegisterMode eMode )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
@@ -127,20 +127,20 @@ eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
 
 
 eMBErrorCode
-eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
+eMBRegInputCB( UCHAR * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs )
 {
     return MB_ENOREG;
 }
 
 eMBErrorCode
-eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
+eMBRegHoldingCB( UCHAR * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs,
                  eMBRegisterMode eMode )
 {
     return MB_ENOREG;
 }
 
 eMBErrorCode
-eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
+eMBRegDiscreteCB( UCHAR * pucRegBuffer, uint16_t usAddress, uint16_t usNDiscrete )
 {
     return MB_ENOREG;
 }

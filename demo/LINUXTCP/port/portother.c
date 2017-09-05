@@ -38,13 +38,13 @@
 
 
 bool
-prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, USHORT usBufSize )
+prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, uint16_t usBufSize )
 {
     return true;
 }
 
 CHAR           *
-prvMBTCPPortFrameToString( UCHAR * pucFrame, USHORT usFrameLen )
+prvMBTCPPortFrameToString( UCHAR * pucFrame, uint16_t usFrameLen )
 {
     return NULL;
 }

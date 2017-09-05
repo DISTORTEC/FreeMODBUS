@@ -31,7 +31,7 @@ static void interrupt prvvTIMERExpiredISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     /* Configure Timer 0 (One Shot, Prescale = 1, Disabled)
      *

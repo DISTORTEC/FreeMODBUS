@@ -28,12 +28,12 @@
 #include "mbport.h"
 
 /* ----------------------- Persistent variable ------------------------------*/
-static USHORT   usDelta;
+static uint16_t   usDelta;
 
 /* ----------------------- Start implementation -----------------------------*/
 
-USHORT
-usMBMulDiv( USHORT a, USHORT b, USHORT c )
+uint16_t
+usMBMulDiv( uint16_t a, uint16_t b, uint16_t c )
 {
     uint32_t           x;
 
@@ -41,14 +41,14 @@ usMBMulDiv( USHORT a, USHORT b, USHORT c )
     x *= b;
     x /= c;
 
-    return ( USHORT ) x;
+    return ( uint16_t ) x;
 }
 
 
 /* Initialize Timer 1 as free running, and Channel 0 as output compare (with no pin)
  */
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     /* We assume 4194304 Hz bus clock and let the timer run at 1/128 of this frequency, ie. 32768 Hz */
     ( void )assert( BM_BUS_CLOCK == 4194304 );

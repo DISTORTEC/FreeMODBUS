@@ -37,12 +37,12 @@
 #define MB_50US_TICKS           ( 20000UL )
 
 /* ----------------------- Static variables ---------------------------------*/
-static USHORT   usTimerOCRADelta;
-static USHORT   usTimerOCRBDelta;
+static uint16_t   usTimerOCRADelta;
+static uint16_t   usTimerOCRBDelta;
 
 /* ----------------------- Start implementation -----------------------------*/
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     /* Calculate overflow counter an OCR values for Timer1. */
     usTimerOCRADelta =

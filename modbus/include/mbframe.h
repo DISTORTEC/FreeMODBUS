@@ -73,11 +73,11 @@ typedef void    ( *pvMBFrameStop ) ( void );
 
 typedef eMBErrorCode( *peMBFrameReceive ) ( UCHAR * pucRcvAddress,
                                             UCHAR ** pucFrame,
-                                            USHORT * pusLength );
+                                            uint16_t * pusLength );
 
 typedef eMBErrorCode( *peMBFrameSend ) ( UCHAR slaveAddress,
                                          const UCHAR * pucFrame,
-                                         USHORT usLength );
+                                         uint16_t usLength );
 
 typedef void( *pvMBFrameClose ) ( void );
 

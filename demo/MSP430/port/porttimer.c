@@ -33,12 +33,12 @@
 #define MB_TIMER_TICKS          ( 20000L )
 
 /* ----------------------- Static variables ---------------------------------*/
-static USHORT   usTimerOCRADelta;
-static USHORT   usTimerOCRBDelta;
+static uint16_t   usTimerOCRADelta;
+static uint16_t   usTimerOCRBDelta;
 
 /* ----------------------- Start implementation -----------------------------*/
 bool
-xMBPortTimersInit( USHORT usTim1Timeout50us )
+xMBPortTimersInit( uint16_t usTim1Timeout50us )
 {
     bool            bInitialized = false;
     uint32_t           ulReloadValue = ( ACLK * ( uint32_t )usTim1Timeout50us ) / MB_TIMER_TICKS;
@@ -56,7 +56,7 @@ xMBPortTimersInit( USHORT usTim1Timeout50us )
     {
         /* Timer A clock source is ACLK, Start disabled. */
         TACTL = TASSEL0;
-        TACCR0 = ( USHORT ) ulReloadValue;
+        TACCR0 = ( uint16_t ) ulReloadValue;
         /* Enable Timer A caputer compare interrupt. */
         TACCTL0 = CCIE;
 

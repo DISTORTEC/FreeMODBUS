@@ -53,7 +53,7 @@ bool
 xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     /* Compute baud rate generator divider */
-    SCI1BD = ( USHORT ) ( ( ( BM_BUS_CLOCK + 16 / 2 ) / 16 + ulBaudRate / 2 ) / ulBaudRate );
+    SCI1BD = ( uint16_t ) ( ( ( BM_BUS_CLOCK + 16 / 2 ) / 16 + ulBaudRate / 2 ) / ulBaudRate );
 
     /* Configure the serial port */
 //      SCI1C1 = 0x00;          // LOOPS=0,SCISWAI=0,RSRC=0,M=0,ILT=0,PE=0,PT=0

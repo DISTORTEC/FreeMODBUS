@@ -36,7 +36,7 @@ extern HANDLE   g_hSerial;
 
 /* ----------------------- Start implementation -----------------------------*/
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     dwTimeOut = usTim1Timerout50us / 20U;
     if( dwTimeOut == 0 )

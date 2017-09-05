@@ -38,8 +38,6 @@ extern "C" {
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 
-typedef unsigned short USHORT;
-
 #ifdef MB_TCP_DEBUG
 typedef enum
 {

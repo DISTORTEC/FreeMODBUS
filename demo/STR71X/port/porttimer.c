@@ -51,14 +51,14 @@
 #define MB_TIMER_TICKS          ( 20000UL )
 
 /* ----------------------- Static variables ---------------------------------*/
-static USHORT   usTimerDeltaOCRA;
+static uint16_t   usTimerDeltaOCRA;
 
 /* ----------------------- Static functions ---------------------------------*/
 void            prvvMBTimerIRQHandler( void ) __attribute__ ( ( naked ) );
 
 /* ----------------------- Start implementation -----------------------------*/
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     /* Calculate output compare value for timer1. */
     usTimerDeltaOCRA =

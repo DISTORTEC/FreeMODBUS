@@ -46,7 +46,6 @@ extern "C" {
 
 typedef unsigned char UCHAR;
 typedef char    CHAR;
-typedef unsigned short USHORT;
 
 /* ----------------------- Function prototypes ------------------------------*/
 

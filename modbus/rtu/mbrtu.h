@@ -41,8 +41,8 @@ extern "C" {
                              eMBParity eParity );
 void            eMBRTUStart( void );
 void            eMBRTUStop( void );
-eMBErrorCode    eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength );
-eMBErrorCode    eMBRTUSend( UCHAR slaveAddress, const UCHAR * pucFrame, USHORT usLength );
+eMBErrorCode    eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, uint16_t * pusLength );
+eMBErrorCode    eMBRTUSend( UCHAR slaveAddress, const UCHAR * pucFrame, uint16_t usLength );
 bool            xMBRTUReceiveFSM( void );
 bool            xMBRTUTransmitFSM( void );
 bool            xMBRTUTimerT15Expired( void );

@@ -78,7 +78,7 @@
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBTCPDoInit( USHORT ucTCPPort )
+eMBTCPDoInit( uint16_t ucTCPPort )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -102,12 +102,12 @@ eMBTCPStop( void )
 }
 
 eMBErrorCode
-eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, USHORT * pusLength )
+eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, uint16_t * pusLength )
 {
     eMBErrorCode    eStatus = MB_EIO;
     UCHAR          *pucMBTCPFrame;
-    USHORT          usLength;
-    USHORT          usPID;
+    uint16_t          usLength;
+    uint16_t          usPID;
 
     if( xMBTCPPortGetRequest( &pucMBTCPFrame, &usLength ) != false )
     {
@@ -134,11 +134,11 @@ eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, USHORT * pusLength )
 }
 
 eMBErrorCode
-eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame, USHORT usLength )
+eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame, uint16_t usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     UCHAR          *pucMBTCPFrame = ( UCHAR * ) pucFrame - MB_TCP_FUNC;
-    USHORT          usTCPLength = usLength + MB_TCP_FUNC;
+    uint16_t          usTCPLength = usLength + MB_TCP_FUNC;
 
     /* The MBAP header is already initialized because the caller calls this
      * function with the buffer returned by the previous call. Therefore we

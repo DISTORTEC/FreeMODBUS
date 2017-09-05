@@ -36,12 +36,12 @@
 	( (t50us * PIT_TIMER_TICKS )/20000UL - 1UL)
 
 /* ----------------------- Static variables -------------------------------- */
-USHORT          usTimerModulus;
+uint16_t          usTimerModulus;
 
 /* ----------------------- Start implementation ---------------------------- */
 
 bool
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     usTimerModulus = PIT_MODULUS_REGISTER( usTim1Timerout50us );
     /* Configure prescaler */

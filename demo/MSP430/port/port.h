@@ -46,8 +46,6 @@ typedef unsigned char UCHAR;
 
 typedef char    CHAR;
 
-typedef unsigned short USHORT;
-
 void            EnterCriticalSection( void );
 void            ExitCriticalSection( void );
 

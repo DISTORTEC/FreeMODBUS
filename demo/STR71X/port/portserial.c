@@ -179,7 +179,7 @@ prvvMBSerialIRQHandler( void )
 
     static bool     xTaskWokenReceive = false;
     static bool     xTaskWokenTransmit = false;
-    static USHORT   usStatus;
+    static uint16_t   usStatus;
 
     usStatus = UART_FlagStatus( MB_UART_DEV );
 

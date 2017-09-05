@@ -37,6 +37,4 @@
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 
-typedef unsigned int USHORT;
-
 #endif

@@ -78,15 +78,15 @@ SOCKET          xClientSocket = INVALID_SOCKET;
 static fd_set   allset;
 
 static UCHAR    aucTCPBuf[MB_TCP_BUF_SIZE];
-static USHORT   usTCPBufPos;
-static USHORT   usTCPFrameBytesLeft;
+static uint16_t   usTCPBufPos;
+static uint16_t   usTCPFrameBytesLeft;
 
 /* ----------------------- External functions -------------------------------*/
 CHAR           *WsaError2String( int dwError );
 
 /* ----------------------- Static functions ---------------------------------*/
-bool            prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, USHORT usBufSize );
-CHAR           *prvMBTCPPortFrameToString( UCHAR * pucFrame, USHORT usFrameLen );
+bool            prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, uint16_t usBufSize );
+CHAR           *prvMBTCPPortFrameToString( UCHAR * pucFrame, uint16_t usFrameLen );
 static bool     prvbMBPortAcceptClient( void );
 static void     prvvMBPortReleaseClient( void );
 
@@ -94,9 +94,9 @@ static void     prvvMBPortReleaseClient( void );
 /* ----------------------- Begin implementation -----------------------------*/
 
 bool
-xMBTCPPortInit( USHORT usTCPPort )
+xMBTCPPortInit( uint16_t usTCPPort )
 {
-    USHORT          usPort;
+    uint16_t          usPort;
     struct sockaddr_in serveraddr;
 
     if( usTCPPort == 0 )
@@ -105,7 +105,7 @@ xMBTCPPortInit( USHORT usTCPPort )
     }
     else
     {
-        usPort = ( USHORT ) usTCPPort;
+        usPort = ( uint16_t ) usTCPPort;
     }
     memset( &serveraddr, 0, sizeof( serveraddr ) );
     serveraddr.sin_family = AF_INET;
@@ -186,7 +186,7 @@ xMBPortTCPPool( void )
     tval.tv_sec = 0;
     tval.tv_usec = 5000;
     int             ret;
-    USHORT          usLength;
+    uint16_t          usLength;
 
     if( xClientSocket == INVALID_SOCKET )
     {
@@ -278,7 +278,7 @@ xMBPortTCPPool( void )
  */
 
 bool
-xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
+xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, uint16_t * usTCPLength )
 {
     *ppucMBTCPFrame = &aucTCPBuf[0];
     *usTCPLength = usTCPBufPos;
@@ -290,7 +290,7 @@ xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
 }
 
 bool
-xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
+xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, uint16_t usTCPLength )
 {
     bool            bFrameSent = false;
     bool            bAbort = false;

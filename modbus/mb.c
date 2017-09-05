@@ -194,7 +194,7 @@ eMBInit( eMBMode eMode, UCHAR ucSlaveAddress, UCHAR ucPort, uint32_t ulBaudRate,
 
 #if MB_TCP_ENABLED > 0
 eMBErrorCode
-eMBTCPInit( USHORT ucTCPPort )
+eMBTCPInit( uint16_t ucTCPPort )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -334,7 +334,7 @@ eMBPoll( void )
     static UCHAR   *ucMBFrame;
     static UCHAR    ucRcvAddress;
     static UCHAR    ucFunctionCode;
-    static USHORT   usLength;
+    static uint16_t   usLength;
     static eMBException eException;
 
     int             i;

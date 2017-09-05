@@ -32,7 +32,7 @@
 
 
 bool
-prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, USHORT usBufSize )
+prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, uint16_t usBufSize )
 {
     bool            bOkay;
     SOCKADDR_IN     xClientAddr;
@@ -57,7 +57,7 @@ prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, USHORT usBufSize )
 }
 
 LPTSTR
-prvMBTCPPortFrameToString( UCHAR * pucFrame, USHORT usFrameLen )
+prvMBTCPPortFrameToString( UCHAR * pucFrame, uint16_t usFrameLen )
 {
     LPTSTR          szBuf;
     int             i;

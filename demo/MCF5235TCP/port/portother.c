@@ -36,7 +36,7 @@
 
 #ifdef MB_TCP_DEBUG
 void
-prvvMBTCPLogFrame( UCHAR * pucMsg, UCHAR * pucFrame, USHORT usFrameLen )
+prvvMBTCPLogFrame( UCHAR * pucMsg, UCHAR * pucFrame, uint16_t usFrameLen )
 {
     int             i;
     int             res;

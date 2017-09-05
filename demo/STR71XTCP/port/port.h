@@ -44,8 +44,6 @@ extern "C" {
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 
-typedef unsigned short USHORT;
-
 #ifdef MB_TCP_DEBUG
 typedef enum
 {
@@ -60,7 +58,7 @@ typedef enum
 #ifdef MB_TCP_DEBUG
 void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
                             const CHAR * szFmt, ... );
-void            prvvMBTCPLogFrame( UCHAR * pucMsg, UCHAR * pucFrame, USHORT usFrameLen );
+void            prvvMBTCPLogFrame( UCHAR * pucMsg, UCHAR * pucFrame, uint16_t usFrameLen );
 #endif
 
 #ifdef __cplusplus
