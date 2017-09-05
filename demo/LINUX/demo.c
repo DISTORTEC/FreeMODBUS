@@ -97,7 +97,7 @@ vSigShutdown( int xSigNr )
 }
 
 int
-main( int argc, char *argv[] )
+main( void )
 {
     int             iExitCode;
     int8_t            cCh;
@@ -220,6 +220,7 @@ bCreatePollingThread( void )
 void           *
 pvPollingThread( void *pvParameter )
 {
+    (void)pvParameter;
     vSetPollingThreadState( RUNNING );
 
     if( eMBEnable(  ) == MB_ENOERR )
@@ -332,11 +333,18 @@ eMBRegHoldingCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs, e
 eMBErrorCode
 eMBRegCoilsCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNCoils, eMBRegisterMode eMode )
 {
+    (void)pucRegBuffer;
+    (void)usAddress;
+    (void)usNCoils;
+    (void)eMode;
     return MB_ENOREG;
 }
 
 eMBErrorCode
 eMBRegDiscreteCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNDiscrete )
 {
+    (void)pucRegBuffer;
+    (void)usAddress;
+    (void)usNDiscrete;
     return MB_ENOREG;
 }
