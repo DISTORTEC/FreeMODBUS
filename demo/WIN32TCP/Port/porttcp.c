@@ -200,8 +200,8 @@ vMBTCPPortDisable( void )
  *   for new events.
  * \internal
  *
- * This function checks if new clients want to connect or if already connected 
- * clients are sending requests. If a new client is connected and there are 
+ * This function checks if new clients want to connect or if already connected
+ * clients are sending requests. If a new client is connected and there are
  * still client slots left (The current implementation supports only one)
  * then the connection is accepted and an event object for the new client
  * socket is activated (See prvbMBPortAcceptClient() ).
@@ -211,7 +211,7 @@ vMBTCPPortDisable( void )
  * and if a complete frame has been received the Modbus Stack is notified.
  *
  * \return FALSE in case of an internal I/O error. For example if the internal
- *   event objects are in an invalid state. Note that this does not include any 
+ *   event objects are in an invalid state. Note that this does not include any
  *   client errors. In all other cases returns TRUE.
  */
 BOOL
@@ -253,7 +253,7 @@ xMBPortTCPPool( void )
             }
 
             /* Get additional event information from the socket. In addition the event
-             * object is reseted. 
+             * object is reseted.
              */
             iRes = WSAEnumNetworkEvents( xListenSocket, xEvents[iEventNr], &xNetworkEvents );
             if( iRes == SOCKET_ERROR )
@@ -268,7 +268,7 @@ xMBPortTCPPool( void )
             }
         }
 
-        /* An already connected client has new data or the connection has 
+        /* An already connected client has new data or the connection has
          * been closed. */
         else if( iEventNr == EV_CLIENT )
         {
@@ -324,11 +324,11 @@ xMBPortTCPPool( void )
  * \ingroup port_win32tcp
  * \brief Receives parts of a Modbus TCP frame and if complete notifies
  *    the protocol stack.
- * \internal 
+ * \internal
  *
  * This function reads a complete Modbus TCP frame from the protocol stack.
  * It starts by reading the header with an initial request size for
- * usTCPFrameBytesLeft = MB_TCP_FUNC. If the header is complete the 
+ * usTCPFrameBytesLeft = MB_TCP_FUNC. If the header is complete the
  * number of bytes left can be calculated from it (See Length in MBAP header).
  * Further read calls are issued until the frame is complete.
  *
@@ -516,7 +516,7 @@ prvvMBPortReleaseClient(  )
                     WsaError2String( WSAGetLastError(  ) ) );
     }
 
-    /* Read any unread data from the socket. Note that this is not the strictly 
+    /* Read any unread data from the socket. Note that this is not the strictly
      * correct way to do it because our sockets are non blocking and therefore
      * some bytes could remain.
      */

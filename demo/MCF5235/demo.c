@@ -46,7 +46,7 @@ main( int argc, char *argv[], char *envp[] )
     //vMBPortSerialEnable (TRUE , FALSE);
     //xMBPortTimersInit( 200 );
     //vMBPortTimersEnable();
-    // 
+    //
     const UCHAR     ucSlaveID[] = { 0xAA, 0xBB, 0xCC };
     eMBErrorCode    eStatus;
 

@@ -55,18 +55,18 @@ xMBPortEventGet( eMBEventType * eEvent )
         xEventHappened = TRUE;
     }
     else
-    {        
+    {
         /* Poll the serial device. The serial device timeouts if no
          * characters have been received within for t3.5 during an
          * active transmission or if nothing happens within a specified
          * amount of time. Both timeouts are configured from the timer
          * init functions.
          */
-        ( void )xMBPortSerialPoll(  );  
+        ( void )xMBPortSerialPoll(  );
 
         /* Check if any of the timers have expired. */
         vMBPortTimerPoll(  );
-     
+
     }
     return xEventHappened;
 }

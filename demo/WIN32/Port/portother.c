@@ -63,7 +63,7 @@ vMBPortLog( eMBPortLogLevel eLevel, const TCHAR * szModule, const TCHAR * szFmt,
     static const LPTSTR arszLevel2Str[] =
         { _T( "DEBUG" ), _T( "INFO" ), _T( "WARN" ), _T( "ERROR" ) };
 
-    i = _sntprintf_s( szBuf, _countof(szBuf) , _TRUNCATE, _T( "%s: %s: " ), 
+    i = _sntprintf_s( szBuf, _countof(szBuf) , _TRUNCATE, _T( "%s: %s: " ),
                      arszLevel2Str[eLevel], szModule );
 
     if( i != 0 )
@@ -84,5 +84,5 @@ vMBPortLog( eMBPortLogLevel eLevel, const TCHAR * szModule, const TCHAR * szFmt,
             _fputts( szBuf, stderr );
         }
     }
-    
+
 }

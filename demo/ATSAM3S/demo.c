@@ -2,7 +2,7 @@
  * FreeModbus Libary: Atmel AT91SAM3S Demo Application
  * Copyright (C) 2010 Christian Walter <cwalter@embedded-solutions.at>
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,7 +13,7 @@
  *   documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * IF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -57,7 +57,7 @@ int
 main( void )
 {
     _SetupHardware(  );
-    
+
     const UCHAR     ucSlaveID[] = { 0xAA, 0xBB, 0xCC };
     eMBErrorCode    eStatus;
 
@@ -68,7 +68,7 @@ main( void )
             /* Can not initialize. Add error handling code here. */
         }
         else
-        {      
+        {
             if( MB_ENOERR != ( eStatus = eMBSetSlaveID( 0x34, TRUE, ucSlaveID, 3 ) ) )
             {
                 /* Can not set slave id. Check arguments */
@@ -78,33 +78,33 @@ main( void )
                 /* Enable failed. */
             }
             else
-            {      
+            {
                 usRegHoldingBuf[0] = 1;
                 do
                 {
                     ( void )eMBPoll(  );
-            
+
                     /* Here we simply count the number of poll cycles. */
                     usRegInputBuf[0]++;
                 }
                 while( usRegHoldingBuf[0] );
                 ( void )eMBDisable(  );
-                ( void )eMBClose(  );                
+                ( void )eMBClose(  );
             }
         }
-    }    
+    }
     return 1;
 }
 
 void _SetupHardware( void )
 {
     WDT_Disable(  );
-    
+
     uint32_t i = 0;
     for( i = 0; i < 35; i++ )
     {
         NVIC_SetPriority( (IRQn_Type)i, 0xF << 4 ) ;
-    }    
+    }
 }
 
 eMBErrorCode

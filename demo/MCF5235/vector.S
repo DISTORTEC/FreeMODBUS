@@ -308,7 +308,7 @@ TrapDefault:
 IRQUart0:
   lea.l   (-16, %sp), %sp
   movem.l %d0-%d1/%a0-a1, (%sp)
-  jsr     prvvMBPortSerialISR; 
+  jsr     prvvMBPortSerialISR;
   movem.l (%sp),%d0-%d1/%a0-%a1
   lea.l   (16, %sp), %sp
   rte
@@ -316,7 +316,7 @@ IRQUart0:
 IRQPIT0:
   lea.l   (-16, %sp), %sp
   movem.l %d0-%d1/%a0-a1, (%sp)
-  jsr     prvvMBPortTimerISR; 
+  jsr     prvvMBPortTimerISR;
   movem.l (%sp),%d0-%d1/%a0-%a1
   lea.l   (16, %sp), %sp
   rte

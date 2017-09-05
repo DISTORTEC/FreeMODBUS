@@ -79,7 +79,7 @@ vInitTask( void *pvParameters )
     for( ;; )
     {
         /* Call the main polling loop of the Modbus protocol stack. Internally
-         * the polling loop waits for a new event by calling the port 
+         * the polling loop waits for a new event by calling the port
          * dependent function xMBPortEventGet(  ). In the FreeRTOS port the
          * event layer is built with queues.
          */

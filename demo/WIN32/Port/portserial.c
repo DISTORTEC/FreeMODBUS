@@ -160,7 +160,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits,
         else if( !SetCommState( g_hSerial, &dcb ) )
         {
             vMBPortLog( MB_LOG_ERROR, _T( "SER-INIT" ),
-                        _T( "Can't set settings for serial device %s: %s" ), 
+                        _T( "Can't set settings for serial device %s: %s" ),
                         szDevice, Error2String( GetLastError( ) ) );
             bStatus = FALSE;
         }
@@ -187,7 +187,7 @@ xMBPortSerialSetTimeout( DWORD dwTimeoutMs )
     BOOL            bStatus;
     COMMTIMEOUTS    cto;
 
-    /* usTimeOut is the inter character timeout used to detect the end 
+    /* usTimeOut is the inter character timeout used to detect the end
      * of frame. The total timeout is set to 50ms to make sure we
      * can exit the blocking read. */
     cto.ReadIntervalTimeout = dwTimeoutMs;

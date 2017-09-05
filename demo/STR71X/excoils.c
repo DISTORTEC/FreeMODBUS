@@ -108,7 +108,7 @@ eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
             case MB_REG_WRITE:
                 while( iNCoils > 0 )
                 {
-                    xMBUtilSetBits( ucRegCoilsBuf, usBitOffset, 
+                    xMBUtilSetBits( ucRegCoilsBuf, usBitOffset,
                                     ( unsigned char )( iNCoils > 8 ? 8 : iNCoils ),
                                     *pucRegBuffer++ );
                     iNCoils -= 8;

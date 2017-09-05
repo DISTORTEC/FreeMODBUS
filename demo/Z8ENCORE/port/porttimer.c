@@ -33,11 +33,11 @@ static void interrupt prvvTIMERExpiredISR( void );
 BOOL
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
-    /* Configure Timer 0 (One Shot, Prescale = 1, Disabled) 
+    /* Configure Timer 0 (One Shot, Prescale = 1, Disabled)
      *
      * Timer Control #00000000b
      *                 || ||_|_______ One Shot
-     * Disabled = 0  __||_|_____________/1 Prescale                                 
+     * Disabled = 0  __||_|_____________/1 Prescale
      * */
     T0CTL1 = 0x00;
 
@@ -77,7 +77,7 @@ vMBPortTimersDisable(  )
     T0CTL1 &= ~0x80;
 }
 
-/* 
+/*
  * Create an ISR which is called whenever the timer has expired. This function
  * must then call pxMBPortCBTimerExpired( ) to notify the protocol stack that
  * the timer has expired.

@@ -21,13 +21,12 @@
 
  /**********************************************************
  *	Linux TCP support.
- *	Based on Walter's project. 
+ *	Based on Walter's project.
  *	Modified by Steven Guo <gotop167@163.com>
  ***********************************************************/
 
 #ifndef _PORT_H
 #define _PORT_H
-
 
 #include <assert.h>
 

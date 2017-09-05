@@ -27,7 +27,7 @@
 
 /* work aroung a problem when inline is also defined in 71x_conf.h */
 #ifdef INLINE
-#undef INLINE  
+#undef INLINE
 #endif
 
 #define INLINE                      inline

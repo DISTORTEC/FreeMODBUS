@@ -58,7 +58,7 @@ typedef enum
 
 /* ----------------------- Function prototypes ------------------------------*/
 
-void            vMBPortLog( eMBPortLogLevel eLevel, const TCHAR * szModule, 
+void            vMBPortLog( eMBPortLogLevel eLevel, const TCHAR * szModule,
                             const TCHAR * szFmt, ... );
 void            vMBPortTimerPoll(  );
 BOOL            xMBPortSerialPoll(  );

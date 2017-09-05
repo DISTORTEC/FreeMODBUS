@@ -24,5 +24,5 @@ $MYDIR/indent.exe \
     --no-tabs \
     --line-length120 \
     $@
-   
+
 unix2dos $@

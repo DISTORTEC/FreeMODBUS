@@ -2,7 +2,7 @@
  * FreeModbus Libary: Atmel AT91SAM3S Demo Application
  * Copyright (C) 2010 Christian Walter <cwalter@embedded-solutions.at>
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,7 +13,7 @@
  *   documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * IF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -169,9 +169,9 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         if( TRUE == bStatus )
         {
             ucUsedPort = ucPORT;
-            
+
             NVIC_DisableIRQ( xUSARTHWMappings[ucUsedPort].xUSARTIrq );
-    
+
             PIO_Configure( xUSARTHWMappings[ucUsedPort].xUSARTPins, xUSARTHWMappings[ucUsedPort].xUSARTPinsCnt );
             if( NULL != xUSARTHWMappings[ucUsedPort].USARTNotREPin )
             {
@@ -186,7 +186,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
 
             NVIC_ClearPendingIRQ(  xUSARTHWMappings[ucUsedPort].xUSARTIrq );
             NVIC_SetPriority(  xUSARTHWMappings[ucUsedPort].xUSARTIrq, 0xF << 4 );
-            NVIC_EnableIRQ(  xUSARTHWMappings[ucUsedPort].xUSARTIrq );                                   
+            NVIC_EnableIRQ(  xUSARTHWMappings[ucUsedPort].xUSARTIrq );
         }
     }
 
@@ -209,7 +209,7 @@ vMBPortSerialClose( void )
             PIO_Clear( xUSARTHWMappings[ucUsedPort].USARTNotREPin );
         }
         ucUsedPort = USART_INVALID_PORT;
-    }            
+    }
 }
 
 BOOL
