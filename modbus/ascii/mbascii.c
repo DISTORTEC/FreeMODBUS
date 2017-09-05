@@ -28,23 +28,15 @@
  * File: $Id: mbascii.c,v 1.17 2010/06/06 13:47:07 wolti Exp $
  */
 
-/* ----------------------- System includes ----------------------------------*/
-#include "stdlib.h"
-#include "string.h"
+#include "mbascii.h"
 
-/* ----------------------- Platform includes --------------------------------*/
 #include "port.h"
 
-/* ----------------------- Modbus includes ----------------------------------*/
-#include "mb.h"
-#include "mbconfig.h"
-#include "mbascii.h"
-#include "mbframe.h"
-
-#include "mbcrc.h"
 #include "mbport.h"
 
 #include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 #if MB_ASCII_ENABLED > 0
 
