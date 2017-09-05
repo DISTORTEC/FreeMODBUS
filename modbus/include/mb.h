@@ -31,13 +31,12 @@
 #ifndef _MB_H
 #define _MB_H
 
-#include "port.h"
-
 #include "mberrorcode.h"
-#include "mbport.h"
+#include "mbparity.h"
 #include "mbproto.h"
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

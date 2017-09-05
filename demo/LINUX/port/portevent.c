@@ -19,6 +19,8 @@
  * File: $Id: portevent.c,v 1.1 2006/08/01 20:58:49 wolti Exp $
  */
 
+#include "port.h"
+
 /* ----------------------- Modbus includes ----------------------------------*/
 #include "mb.h"
 #include "mbport.h"
