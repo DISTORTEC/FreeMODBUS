@@ -33,6 +33,7 @@
 
 #include "port.h"
 
+#include "mberrorcode.h"
 #include "mbport.h"
 #include "mbproto.h"
 
@@ -107,22 +108,6 @@ typedef enum
     MB_REG_READ,                /*!< Read register values and pass to protocol stack. */
     MB_REG_WRITE                /*!< Update register values. */
 } eMBRegisterMode;
-
-/*! \ingroup modbus
- * \brief Errorcodes used by all function in the protocol stack.
- */
-typedef enum
-{
-    MB_ENOERR,                  /*!< no error. */
-    MB_ENOREG,                  /*!< illegal register address. */
-    MB_EINVAL,                  /*!< illegal argument. */
-    MB_EPORTERR,                /*!< porting layer error. */
-    MB_ENORES,                  /*!< insufficient resources. */
-    MB_EIO,                     /*!< I/O error. */
-    MB_EILLSTATE,               /*!< protocol stack in illegal state. */
-    MB_ETIMEDOUT                /*!< timeout error occurred. */
-} eMBErrorCode;
-
 
 /* ----------------------- Function prototypes ------------------------------*/
 /*! \ingroup modbus
