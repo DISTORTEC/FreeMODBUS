@@ -31,9 +31,14 @@
 #ifndef _MB_FRAME_H
 #define _MB_FRAME_H
 
+#include "mberrorcode.h"
+
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 /*!
  * Constants which defines the format of a modbus frame. The example is
