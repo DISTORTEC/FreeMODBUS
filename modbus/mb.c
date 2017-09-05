@@ -28,21 +28,15 @@
  * File: $Id: mb.c,v 1.28 2010/06/06 13:54:40 wolti Exp $
  */
 
-/* ----------------------- System includes ----------------------------------*/
-#include "stdlib.h"
-#include "string.h"
+#include "mb.h"
 
-/* ----------------------- Platform includes --------------------------------*/
 #include "port.h"
 
-/* ----------------------- Modbus includes ----------------------------------*/
-#include "mb.h"
 #include "mbconfig.h"
 #include "mbframe.h"
-#include "mbproto.h"
 #include "mbfunc.h"
-
 #include "mbport.h"
+
 #if MB_RTU_ENABLED == 1
 #include "mbrtu.h"
 #endif
@@ -52,6 +46,10 @@
 #if MB_TCP_ENABLED == 1
 #include "mbtcp.h"
 #endif
+
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 
 #ifndef MB_PORT_HAS_CLOSE
 #define MB_PORT_HAS_CLOSE 0
