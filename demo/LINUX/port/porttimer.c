@@ -32,7 +32,7 @@
 /* ----------------------- Defines ------------------------------------------*/
 
 /* ----------------------- Static variables ---------------------------------*/
-ULONG           ulTimeOut;
+uint32_t           ulTimeOut;
 bool            bTimeoutEnable;
 
 static struct timeval xTimeLast;
@@ -57,7 +57,7 @@ xMBPortTimersClose(  )
 void
 vMBPortTimerPoll(  )
 {
-    ULONG           ulDeltaMS;
+    uint32_t           ulDeltaMS;
     struct timeval  xTimeCur;
 
     /* Timers are called from the serial layer because we have no high

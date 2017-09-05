@@ -56,7 +56,6 @@ typedef char    CHAR;
 typedef unsigned short USHORT;
 typedef short   SHORT;
 
-typedef unsigned long ULONG;
 typedef long    LONG;
 
 #define MB_PORT_HAS_CLOSE	                    1

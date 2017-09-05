@@ -37,7 +37,7 @@
 #include <intrinsics.h>
 
 /* ----------------------- Variables ----------------------------------------*/
-static ULONG    ulNesting;
+static uint32_t    ulNesting;
 static __istate_t xOldState;
 
 /* ----------------------- Start implementation -----------------------------*/

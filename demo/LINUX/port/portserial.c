@@ -50,7 +50,7 @@ static int      iSerialFd = -1;
 static bool     bRxEnabled;
 static bool     bTxEnabled;
 
-static ULONG    ulTimeoutMs;
+static uint32_t    ulTimeoutMs;
 static UCHAR    ucBuffer[BUF_SIZE];
 static int      uiRxBufferPos;
 static int      uiTxBufferPos;
@@ -90,7 +90,7 @@ vMBPortSerialEnable( bool bEnableRx, bool bEnableTx )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     CHAR            szDevice[16];
     bool            bStatus = true;
@@ -188,7 +188,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
 }
 
 bool
-xMBPortSerialSetTimeout( ULONG ulNewTimeoutMs )
+xMBPortSerialSetTimeout( uint32_t ulNewTimeoutMs )
 {
     if( ulNewTimeoutMs > 0 )
     {

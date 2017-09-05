@@ -37,7 +37,7 @@
 extern "C" {
 #endif
 
-    eMBErrorCode eMBRTUInit( UCHAR slaveAddress, UCHAR ucPort, ULONG ulBaudRate,
+    eMBErrorCode eMBRTUInit( UCHAR slaveAddress, UCHAR ucPort, uint32_t ulBaudRate,
                              eMBParity eParity );
 void            eMBRTUStart( void );
 void            eMBRTUStop( void );

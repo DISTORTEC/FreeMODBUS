@@ -131,7 +131,7 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     bool            bStatus = false;
     uint32_t        uiMode = US_MR_USART_MODE_NORMAL;

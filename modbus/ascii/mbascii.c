@@ -105,7 +105,7 @@ static volatile UCHAR ucMBLFCharacter;
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBASCIIInit( UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity )
+eMBASCIIInit( UCHAR ucSlaveAddress, UCHAR ucPort, uint32_t ulBaudRate, eMBParity eParity )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     ( void )ucSlaveAddress;

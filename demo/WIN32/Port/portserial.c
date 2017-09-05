@@ -76,7 +76,7 @@ vMBPortSerialEnable( bool bEnableRx, bool bEnableTx )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits,
+xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits,
                    eMBParity eParity )
 {
     TCHAR           szDevice[8];

@@ -24,6 +24,7 @@
 
 #include <assert.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #define INLINE
 
@@ -48,7 +49,6 @@ typedef char    CHAR;
 typedef unsigned short USHORT;
 typedef short   SHORT;
 
-typedef unsigned long ULONG;
 typedef long    LONG;
 
 /* ----------------------- Function prototypes ------------------------------*/
@@ -59,7 +59,7 @@ void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
                             const CHAR * szFmt, ... );
 void            vMBPortTimerPoll(  );
 bool            xMBPortSerialPoll(  );
-bool            xMBPortSerialSetTimeout( ULONG dwTimeoutMs );
+bool            xMBPortSerialSetTimeout( uint32_t dwTimeoutMs );
 
 #ifdef __cplusplus
 }

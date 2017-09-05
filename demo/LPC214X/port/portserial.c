@@ -61,11 +61,11 @@ vMBPortClose( void )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     bool            bInitialized = true;
     USHORT          cfg = 0;
-    ULONG           reload = ( ( PCLK / ulBaudRate ) / 16UL );
+    uint32_t           reload = ( ( PCLK / ulBaudRate ) / 16UL );
     volatile char   dummy;
 
     ( void )ucPORT;

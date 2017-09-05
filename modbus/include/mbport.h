@@ -32,6 +32,7 @@
 #define _MB_PORT_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -70,7 +71,7 @@ bool            xMBPortEventGet(  /*@out@ */ eMBEventType * eEvent );
 
 /* ----------------------- Serial port functions ----------------------------*/
 
-bool            xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate,
+bool            xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate,
                                    UCHAR ucDataBits, eMBParity eParity );
 
 void            vMBPortClose( void );

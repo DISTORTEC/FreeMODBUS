@@ -35,7 +35,7 @@ static USHORT   usDelta;
 USHORT
 usMBMulDiv( USHORT a, USHORT b, USHORT c )
 {
-    ULONG           x;
+    uint32_t           x;
 
     x = a;
     x *= b;

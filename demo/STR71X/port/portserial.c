@@ -59,7 +59,7 @@ static inline bool prvMBPortRXIsEnabled(  );
 /* ----------------------- Start implementation -----------------------------*/
 
 bool
-xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     bool            xResult = true;
     UARTParity_TypeDef eUARTParity;

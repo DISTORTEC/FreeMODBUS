@@ -78,10 +78,10 @@ static volatile USHORT usRcvBufferPos;
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBRTUInit( UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity )
+eMBRTUInit( UCHAR ucSlaveAddress, UCHAR ucPort, uint32_t ulBaudRate, eMBParity eParity )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
-    ULONG           usTimerT35_50us;
+    uint32_t           usTimerT35_50us;
 
     ( void )ucSlaveAddress;
     ENTER_CRITICAL_SECTION(  );

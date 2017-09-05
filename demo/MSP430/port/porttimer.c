@@ -41,7 +41,7 @@ bool
 xMBPortTimersInit( USHORT usTim1Timeout50us )
 {
     bool            bInitialized = false;
-    ULONG           ulReloadValue = ( ACLK * ( ULONG )usTim1Timeout50us ) / MB_TIMER_TICKS;
+    uint32_t           ulReloadValue = ( ACLK * ( uint32_t )usTim1Timeout50us ) / MB_TIMER_TICKS;
 
     if( ulReloadValue <= 1 )
     {
