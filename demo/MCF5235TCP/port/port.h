@@ -41,8 +41,6 @@ typedef char    CHAR;
 typedef unsigned short USHORT;
 typedef short   SHORT;
 
-typedef long    LONG;
-
 #ifdef MB_TCP_DEBUG
 typedef enum
 {

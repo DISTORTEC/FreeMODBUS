@@ -49,8 +49,6 @@ typedef char    CHAR;
 typedef unsigned short USHORT;
 typedef short   SHORT;
 
-typedef long    LONG;
-
 /* ----------------------- Function prototypes ------------------------------*/
 
 void            vMBPortEnterCritical( void );

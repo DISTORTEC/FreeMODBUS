@@ -51,7 +51,6 @@ typedef char    CHAR;
 typedef unsigned short USHORT;
 typedef short   SHORT;
 
-typedef long    LONG;
 typedef enum
 {
     MB_LOG_DEBUG,

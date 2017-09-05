@@ -41,8 +41,6 @@ typedef char    CHAR;
 typedef unsigned short USHORT;
 typedef short   SHORT;
 
-typedef long    LONG;
-
 /* ----------------------- Defines ----------------------------------------- */
 void            prvvPortEnterCritical(  );
 void            prvvPortExitCritical(  );

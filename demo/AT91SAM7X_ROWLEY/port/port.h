@@ -54,8 +54,6 @@ extern          "C"
     typedef unsigned short USHORT;
     typedef short   SHORT;
 
-    typedef long    LONG;
-
 /* ----------------------- Function prototypes ------------------------------*/
     bool            bMBPIsWithinException( void );
     void            vMBPInit( void );

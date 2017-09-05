@@ -38,6 +38,4 @@ typedef char CHAR;
 typedef uint16_t USHORT;
 typedef int16_t SHORT;
 
-typedef int32_t LONG;
-
 #endif
