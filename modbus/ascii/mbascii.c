@@ -100,7 +100,6 @@ static volatile eMBBytePos eBytePos;
 static volatile uint8_t *pucSndBufferCur;
 static volatile uint16_t usSndBufferCount;
 
-static volatile uint8_t ucLRC;
 static volatile uint8_t ucMBLFCharacter;
 
 /* ----------------------- Start implementation -----------------------------*/
