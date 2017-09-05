@@ -28,17 +28,13 @@
  * File: $Id: mbutils.c,v 1.6 2007/02/18 23:49:07 wolti Exp $
  */
 
-/* ----------------------- System includes ----------------------------------*/
-#include "assert.h"
-#include "stdlib.h"
-#include "string.h"
+ #include "mbfunc.h"
 
-/* ----------------------- Platform includes --------------------------------*/
-#include "port.h"
+ #include "mb.h"
+ #include "mbframe.h"
 
-/* ----------------------- Modbus includes ----------------------------------*/
-#include "mb.h"
-#include "mbproto.h"
+ #include <assert.h>
+ #include <stddef.h>
 
 /* ----------------------- Defines ------------------------------------------*/
 #define BITS_UCHAR      8U
