@@ -49,7 +49,6 @@ typedef unsigned char UCHAR;
 typedef unsigned char BYTE;
 typedef char    CHAR;
 typedef unsigned short USHORT;
-typedef short   SHORT;
 
 typedef enum
 {

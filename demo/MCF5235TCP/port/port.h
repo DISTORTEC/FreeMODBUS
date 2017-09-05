@@ -39,7 +39,6 @@ typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 typedef unsigned short USHORT;
-typedef short   SHORT;
 
 #ifdef MB_TCP_DEBUG
 typedef enum

@@ -54,7 +54,6 @@ typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 typedef unsigned short USHORT;
-typedef short   SHORT;
 
 #define MB_PORT_HAS_CLOSE	                    1
 #define MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS    2

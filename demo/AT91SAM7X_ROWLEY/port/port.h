@@ -52,7 +52,6 @@ extern          "C"
     typedef char    CHAR;
 
     typedef unsigned short USHORT;
-    typedef short   SHORT;
 
 /* ----------------------- Function prototypes ------------------------------*/
     bool            bMBPIsWithinException( void );

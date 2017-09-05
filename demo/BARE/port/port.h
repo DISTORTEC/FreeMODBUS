@@ -36,6 +36,5 @@ typedef unsigned char UCHAR;
 typedef char CHAR;
 
 typedef uint16_t USHORT;
-typedef int16_t SHORT;
 
 #endif

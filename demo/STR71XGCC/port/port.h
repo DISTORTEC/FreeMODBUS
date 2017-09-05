@@ -41,6 +41,5 @@ typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 typedef unsigned short USHORT;
-typedef short   SHORT;
 
 #endif
