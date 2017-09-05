@@ -141,7 +141,7 @@ static u_int	 lcp_echo_interval = LCP_ECHOINTERVAL; /* Interval between LCP echo
 static u_int	 lcp_echo_fails = LCP_MAXECHOFAILS; /* Tolerance to unanswered echo-requests */
 static u32_t lcp_echos_pending = 0;	/* Number of outstanding echo msgs */
 static u32_t lcp_echo_number   = 0;	/* ID number of next echo frame */
-static u32_t lcp_echo_timer_running = 0;  /* TRUE if a timer is running */
+static u32_t lcp_echo_timer_running = 0;  /* true if a timer is running */
 
 static u_char nak_buffer[PPP_MRU];	/* where we construct a nak packet */
 

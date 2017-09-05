@@ -25,34 +25,34 @@
 
 /* ----------------------- Variables ----------------------------------------*/
 static eMBEventType eQueuedEvent;
-static BOOL     xEventInQueue;
+static bool     xEventInQueue;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortEventInit( void )
 {
-    xEventInQueue = FALSE;
-    return TRUE;
+    xEventInQueue = false;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventPost( eMBEventType eEvent )
 {
-    xEventInQueue = TRUE;
+    xEventInQueue = true;
     eQueuedEvent = eEvent;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventGet( eMBEventType * eEvent )
 {
-    BOOL            xEventHappened = FALSE;
+    bool            xEventHappened = false;
 
     if( xEventInQueue )
     {
         *eEvent = eQueuedEvent;
-        xEventInQueue = FALSE;
-        xEventHappened = TRUE;
+        xEventInQueue = false;
+        xEventHappened = true;
     }
     else
     {

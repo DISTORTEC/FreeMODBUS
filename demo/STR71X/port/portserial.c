@@ -52,16 +52,16 @@
 /* ----------------------- Static functions ---------------------------------*/
 void            prvvMBSerialIRQHandler( void ) __attribute__ ( ( naked ) );
 
-static inline BOOL prvMBPortTXIsEnabled(  );
+static inline bool prvMBPortTXIsEnabled(  );
 
-static inline BOOL prvMBPortRXIsEnabled(  );
+static inline bool prvMBPortRXIsEnabled(  );
 
 /* ----------------------- Start implementation -----------------------------*/
 
-BOOL
+bool
 xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
-    BOOL            xResult = TRUE;
+    bool            xResult = true;
     UARTParity_TypeDef eUARTParity;
     UARTMode_TypeDef eUARTMode;
 
@@ -86,7 +86,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
             if( eParity == MB_PAR_NONE )
             {
                 /* not supported by our hardware. */
-                xResult = FALSE;
+                xResult = false;
             }
             else
             {
@@ -104,10 +104,10 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
             }
             break;
         default:
-            xResult = FALSE;
+            xResult = false;
     }
 
-    if( xResult != FALSE )
+    if( xResult != false )
     {
         /* Setup the UART port pins. */
         GPIO_Config( MB_UART_TX_PORT, 1 << MB_UART_TX_PIN, GPIO_AF_PP );
@@ -122,7 +122,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         UART_Config( MB_UART_DEV, ulBaudRate, eUARTParity, UART_1_StopBits,
                      eUARTMode );
         UART_RxConfig( UART0, ENABLE );
-        vMBPortSerialEnable( FALSE, FALSE );
+        vMBPortSerialEnable( false, false );
 
         /* Configure the IEC for the UART interrupts. */
         EIC_IRQChannelPriorityConfig( MB_UART_IRQ_CH, MB_IRQ_PRIORITY );
@@ -132,7 +132,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
 }
 
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     if( xRxEnable )
         UART_ItConfig( MB_UART_DEV, UART_RxBufFull, ENABLE );
@@ -145,27 +145,27 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
         UART_ItConfig( MB_UART_DEV, UART_TxHalfEmpty, DISABLE );
 }
 
-BOOL
+bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
     MB_UART_DEV->TxBUFR = ucByte;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialGetByte( CHAR * pucByte )
 {
     *pucByte = MB_UART_DEV->RxBUFR;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 prvMBPortTXIsEnabled(  )
 {
     return ( MB_UART_DEV->IER & UART_TxHalfEmpty ) == UART_TxHalfEmpty;
 }
 
-BOOL
+bool
 prvMBPortRXIsEnabled(  )
 {
     return ( MB_UART_DEV->IER & UART_RxBufFull ) == UART_RxBufFull;
@@ -177,8 +177,8 @@ prvvMBSerialIRQHandler( void )
 {
     portENTER_SWITCHING_ISR(  );
 
-    static BOOL     xTaskWokenReceive = FALSE;
-    static BOOL     xTaskWokenTransmit = FALSE;
+    static bool     xTaskWokenReceive = false;
+    static bool     xTaskWokenTransmit = false;
     static USHORT   usStatus;
 
     usStatus = UART_FlagStatus( MB_UART_DEV );

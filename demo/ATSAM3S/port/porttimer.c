@@ -70,7 +70,7 @@ const static Pin xTimerDebugPins[] = { TIMER_PIN };
 #endif
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
 #if MB_TIMER_DEBUG == 1
@@ -87,7 +87,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     NVIC_SetPriority( TCXIRQ, 0xF << 4 );
     NVIC_EnableIRQ( TCXIRQ );
 
-    return TRUE;
+    return true;
 }
 
 void

@@ -24,6 +24,7 @@
 
 #include <stdint.h>
 #include <assert.h>
+#include <stdbool.h>
 
 #include "FreeRTOS.h"
 
@@ -42,16 +43,7 @@ extern          "C"
 #define ENTER_CRITICAL_SECTION( )      vMBPPortEnterCritical( )
 #define EXIT_CRITICAL_SECTION( )       vMBPPortExitCritical( )
 
-#ifndef TRUE
-#define TRUE                           ( BOOL )1
-#endif
-
-#ifndef FALSE
-#define FALSE                          ( BOOL )0
-#endif
-
 /* ----------------------- Type definitions ---------------------------------*/
-    typedef char    BOOL;
 
     typedef signed char BYTE;
     typedef unsigned char UBYTE;
@@ -66,7 +58,7 @@ extern          "C"
     typedef long    LONG;
 
 /* ----------------------- Function prototypes ------------------------------*/
-    BOOL            bMBPIsWithinException( void );
+    bool            bMBPIsWithinException( void );
     void            vMBPInit( void );
     void            vMBPPortEnterCritical( void );
     void            vMBPPortExitCritical( void );

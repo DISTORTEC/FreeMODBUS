@@ -23,6 +23,8 @@
 #ifndef _PORT_H
 #define _PORT_H
 
+#include <stdbool.h>
+
 /* ----------------------- Platform includes --------------------------------*/
 #include "71x_type.h"
 #include "lwip/opt.h"
@@ -34,22 +36,11 @@
 
 #define assert( x )             LWIP_ASSERT( #x, x );
 
-/*
-#ifndef TRUE
-#define TRUE                    1
-#endif
-
-#ifndef FALSE
-#define FALSE                   0
-#endif*/
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 #define MB_TCP_DEBUG            1       /* Debug output in TCP module. */
 /* ----------------------- Type definitions ---------------------------------*/
-typedef char    BOOL;
-
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 

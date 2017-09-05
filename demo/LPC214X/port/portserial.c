@@ -34,7 +34,7 @@ sio_irq( void )
      static void     prvvUARTRxISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
-     void            vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+     void            vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     if( xRxEnable )
     {
@@ -60,10 +60,10 @@ vMBPortClose( void )
 {
 }
 
-BOOL
+bool
 xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
-    BOOL            bInitialized = TRUE;
+    bool            bInitialized = true;
     USHORT          cfg = 0;
     ULONG           reload = ( ( PCLK / ulBaudRate ) / 16UL );
     volatile char   dummy;
@@ -90,7 +90,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         break;
 
     default:
-        bInitialized = FALSE;
+        bInitialized = false;
     }
 
     switch ( eParity )
@@ -128,7 +128,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     return bInitialized;
 }
 
-BOOL
+bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
     U1THR = ucByte;
@@ -138,10 +138,10 @@ xMBPortSerialPutByte( CHAR ucByte )
     {
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialGetByte( CHAR * pucByte )
 {
     while( !( U1LSR & 0x01 ) )
@@ -151,7 +151,7 @@ xMBPortSerialGetByte( CHAR * pucByte )
     /* Receive Byte */
     *pucByte = U1RBR;
 
-    return TRUE;
+    return true;
 }
 
 

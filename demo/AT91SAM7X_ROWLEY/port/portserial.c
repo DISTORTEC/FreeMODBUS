@@ -60,8 +60,8 @@
     ( x )->pxCOM = NULL; \
     ( x )->uiAT91C_ID_USX = 0; \
     ( x )->pvIRQHandlerFN = NULL; \
-    ( x )->bIsRxEnabled = FALSE; \
-    ( x )->bIsTxEnabled = FALSE; \
+    ( x )->bIsRxEnabled = false; \
+    ( x )->bIsTxEnabled = false; \
 } while( 0 );
 
 /* ----------------------- Type definitions ---------------------------------*/
@@ -70,14 +70,14 @@ typedef struct
 {
     AT91PS_USART    pxCOM;
     unsigned int    uiAT91C_ID_USX;
-    volatile BOOL   bIsRxEnabled;
-    volatile BOOL   bIsTxEnabled;
+    volatile bool   bIsRxEnabled;
+    volatile bool   bIsTxEnabled;
     void            ( *pvIRQHandlerFN ) ( void );
 } xMBPSerialIntHandle;
 
 /* ----------------------- Static variables ---------------------------------*/
 STATIC xMBPSerialIntHandle xSerialHdls[1];
-STATIC BOOL     bIsInitalized = FALSE;
+STATIC bool     bIsInitalized = false;
 
 /* ----------------------- Static functions ---------------------------------*/
 STATIC void     vUSART0ISR( void ) __attribute__ ( ( interrupt( "IRQ" ) ) );
@@ -85,17 +85,17 @@ STATIC void     vUSART1ISR( void ) __attribute__ ( ( interrupt( "IRQ" ) ) );
 
 /* ----------------------- Start implementation -----------------------------*/
 
-BOOL
+bool
 xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
-    BOOL            bOkay = TRUE;
+    bool            bOkay = true;
     unsigned int    uiUARTMode = 0;
 
     ENTER_CRITICAL_SECTION(  );
     if( !bIsInitalized )
     {
         HDL_RESET( &xSerialHdls[0] );
-        bIsInitalized = TRUE;
+        bIsInitalized = true;
     }
 
     uiUARTMode = AT91C_US_USMODE_RS485 | AT91C_US_CLKS_CLOCK;
@@ -143,7 +143,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         }
         else
         {
-            bOkay = FALSE;
+            bOkay = false;
         }
 
         if( bOkay )
@@ -161,7 +161,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     }
     else
     {
-        bOkay = FALSE;
+        bOkay = false;
     }
 
     EXIT_CRITICAL_SECTION(  );
@@ -183,30 +183,30 @@ vMBPortSerialClose( void )
 }
 
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     ENTER_CRITICAL_SECTION(  );
     assert( NULL != xSerialHdls[0].pxCOM );
     if( xRxEnable )
     {
         AT91F_US_EnableIt( xSerialHdls[0].pxCOM, AT91C_US_RXRDY );
-        xSerialHdls[0].bIsRxEnabled = TRUE;
+        xSerialHdls[0].bIsRxEnabled = true;
     }
     else
     {
         AT91F_US_DisableIt( xSerialHdls[0].pxCOM, AT91C_US_RXRDY );
-        xSerialHdls[0].bIsRxEnabled = FALSE;
+        xSerialHdls[0].bIsRxEnabled = false;
     }
 
     if( xTxEnable )
     {
         AT91F_US_EnableIt( xSerialHdls[0].pxCOM, AT91C_US_TXRDY );
-        xSerialHdls[0].bIsTxEnabled = TRUE;
+        xSerialHdls[0].bIsTxEnabled = true;
     }
     else
     {
         AT91F_US_DisableIt( xSerialHdls[0].pxCOM, AT91C_US_TXRDY );
-        xSerialHdls[0].bIsTxEnabled = FALSE;
+        xSerialHdls[0].bIsTxEnabled = false;
     }
     EXIT_CRITICAL_SECTION(  );
 }
@@ -226,20 +226,20 @@ vUSARTIRQHandler( void )
     }
 }
 
-BOOL
+bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
     assert( NULL != xSerialHdls[0].pxCOM );
     AT91F_US_PutChar( xSerialHdls[0].pxCOM, ucByte );
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialGetByte( CHAR * pucByte )
 {
     assert( NULL != xSerialHdls[0].pxCOM );
     *pucByte = ( CHAR ) AT91F_US_GetChar( xSerialHdls[0].pxCOM );
-    return TRUE;
+    return true;
 }
 
 void

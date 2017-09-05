@@ -36,12 +36,12 @@ static sys_mbox_t xMailBox = SYS_MBOX_NULL;
 static eMBEventType eMailBoxEvent;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortEventInit( void )
 {
     eMailBoxEvent = EV_READY;
     xMailBox = sys_mbox_new(  );
-    return xMailBox != SYS_MBOX_NULL ? TRUE : FALSE;
+    return xMailBox != SYS_MBOX_NULL ? true : false;
 }
 
 void
@@ -53,19 +53,19 @@ vMBPortEventClose( void )
     }
 }
 
-BOOL
+bool
 xMBPortEventPost( eMBEventType eEvent )
 {
     eMailBoxEvent = eEvent;
     sys_mbox_post( xMailBox, &eMailBoxEvent );
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventGet( eMBEventType * eEvent )
 {
     void           *peMailBoxEvent;
-    BOOL            xEventHappend = FALSE;
+    bool            xEventHappend = false;
     u32_t           uiTimeSpent;
 
     uiTimeSpent = sys_arch_mbox_fetch( xMailBox, &peMailBoxEvent, MB_POLL_CYCLETIME );
@@ -73,7 +73,7 @@ xMBPortEventGet( eMBEventType * eEvent )
     {
         *eEvent = *( eMBEventType * ) peMailBoxEvent;
         eMailBoxEvent = EV_READY;
-        xEventHappend = TRUE;
+        xEventHappend = true;
     }
     return xEventHappend;
 }

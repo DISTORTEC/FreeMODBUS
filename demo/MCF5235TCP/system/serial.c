@@ -109,7 +109,7 @@ xSerialPortInitMinimal( unsigned portLONG ulWantedBaud, unsigned portBASE_TYPE u
         /* Enable the UART. */
         MCF_UART_UCR0 = MCF_UART_UCR_RXC( 0x1 ) | MCF_UART_UCR_TXC( 0x1 );
 
-        xComPortIF[0].xInitialized = TRUE;
+        xComPortIF[0].xInitialized = true;
         xReturn = ( xComPortHandle ) & xComPortIF[0];
 
         ( void )portSET_IPL( xOldIPL );

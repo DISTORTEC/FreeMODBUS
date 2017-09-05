@@ -60,11 +60,11 @@ static err_t    prvxMBTCPPortReceive( void *pvArg, struct tcp_pcb *pxPCB, struct
 static void     prvvMBTCPPortError( void *pvArg, err_t xErr );
 
 /* ----------------------- Begin implementation -----------------------------*/
-BOOL
+bool
 xMBTCPPortInit( USHORT usTCPPort )
 {
     struct tcp_pcb *pxPCBListenNew, *pxPCBListenOld;
-    BOOL            bOkay = FALSE;
+    bool            bOkay = false;
     USHORT          usPort;
 
     if( usTCPPort == 0 )
@@ -79,18 +79,18 @@ xMBTCPPortInit( USHORT usTCPPort )
     if( ( pxPCBListenNew = pxPCBListenOld = tcp_new(  ) ) == NULL )
     {
         /* Can't create TCP socket. */
-        bOkay = FALSE;
+        bOkay = false;
     }
     else if( tcp_bind( pxPCBListenNew, IP_ADDR_ANY, ( u16_t ) usPort ) != ERR_OK )
     {
         /* Bind failed - Maybe illegal port value or in use. */
         ( void )tcp_close( pxPCBListenOld );
-        bOkay = FALSE;
+        bOkay = false;
     }
     else if( ( pxPCBListenNew = tcp_listen( pxPCBListenNew ) ) == NULL )
     {
         ( void )tcp_close( pxPCBListenOld );
-        bOkay = FALSE;
+        bOkay = false;
     }
     else
     {
@@ -104,7 +104,7 @@ xMBTCPPortInit( USHORT usTCPPort )
         vMBPortLog( MB_LOG_DEBUG, "MBTCP-ACCEPT", "Protocol stack ready.\r\n" );
 #endif
     }
-    bOkay = TRUE;
+    bOkay = true;
     return bOkay;
 }
 
@@ -288,7 +288,7 @@ prvxMBTCPPortReceive( void *pvArg, struct tcp_pcb *pxPCB, struct pbuf *p, err_t 
     return error;
 }
 
-BOOL
+bool
 xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
 {
     *ppucMBTCPFrame = &aucTCPBuf[0];
@@ -296,13 +296,13 @@ xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
 
     /* Reset the buffer. */
     usTCPBufPos = 0;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
 {
-    BOOL            bFrameSent = FALSE;
+    bool            bFrameSent = false;
 
     if( pxPCBClient )
     {
@@ -316,7 +316,7 @@ xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
 #endif
             /* Make sure data gets sent immediately. */
             ( void )tcp_output( pxPCBClient );
-            bFrameSent = TRUE;
+            bFrameSent = true;
         }
         else
         {

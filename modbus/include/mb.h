@@ -36,6 +36,8 @@
 #include "mbport.h"
 #include "mbproto.h"
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -228,7 +230,7 @@ eMBErrorCode    eMBPoll( void );
  *
  * \param ucSlaveID Values is returned in the <em>Slave ID</em> byte of the
  *   <em>Report Slave ID</em> response.
- * \param xIsRunning If TRUE the <em>Run Indicator Status</em> byte is set to 0xFF.
+ * \param xIsRunning If true the <em>Run Indicator Status</em> byte is set to 0xFF.
  *   otherwise the <em>Run Indicator Status</em> is 0x00.
  * \param pucAdditional Values which should be returned in the <em>Additional</em>
  *   bytes of the <em> Report Slave ID</em> response.
@@ -238,7 +240,7 @@ eMBErrorCode    eMBPoll( void );
  *   mbconfig.h is to small it returns eMBErrorCode::MB_ENORES. Otherwise
  *   it returns eMBErrorCode::MB_ENOERR.
  */
-eMBErrorCode    eMBSetSlaveID( UCHAR ucSlaveID, BOOL xIsRunning,
+eMBErrorCode    eMBSetSlaveID( UCHAR ucSlaveID, bool xIsRunning,
                                UCHAR const *pucAdditional,
                                USHORT usAdditionalLen );
 

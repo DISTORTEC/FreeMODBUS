@@ -68,7 +68,7 @@ const static Pin xTimerDebugPins[] = { TIMER_PIN };
 #endif
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
 #if MB_TIMER_DEBUG == 1
@@ -85,7 +85,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     NVIC_SetPriority( TCXIRQ, 0xF << 4 );
     NVIC_EnableIRQ( TCXIRQ );
 
-    return TRUE;
+    return true;
 }
 
 void
@@ -126,9 +126,9 @@ TCX_IRQHANDLER( void )
     uint32_t        xTCX_IMRX = TCX->TC_CHANNEL[TCCHANNEL].TC_IMR;
     uint32_t        xTCX_SRX = TCX->TC_CHANNEL[TCCHANNEL].TC_SR;
     uint32_t        uiSRMasked = xTCX_SRX & xTCX_IMRX;
-    BOOL            bTaskWoken = FALSE;
+    bool            bTaskWoken = false;
 
-    vMBPortSetWithinException( TRUE );
+    vMBPortSetWithinException( true );
 
     if( ( uiSRMasked & TC_SRX_CPAS ) > 0 )
     {
@@ -137,7 +137,7 @@ TCX_IRQHANDLER( void )
 #endif
         ( void )pxMBPortCBTimerExpired(  );
     }
-    vMBPortSetWithinException( FALSE );
+    vMBPortSetWithinException( false );
 
     portEND_SWITCHING_ISR( bTaskWoken ? pdTRUE : pdFALSE );
 }

@@ -22,6 +22,8 @@
 #ifndef _PORT_H
 #define _PORT_H
 
+#include <stdbool.h>
+
 /* ----------------------- Platform includes --------------------------------*/
 
 #include <msp430x16x.h>
@@ -40,8 +42,6 @@
 #define SMCLK                       ( 4000000UL )
 #define ACLK                        ( 32768UL )
 
-typedef char    BOOL;
-
 typedef unsigned char UCHAR;
 
 typedef char    CHAR;
@@ -51,14 +51,6 @@ typedef short   SHORT;
 
 typedef unsigned long ULONG;
 typedef long    LONG;
-
-#ifndef TRUE
-#define TRUE            1
-#endif
-
-#ifndef FALSE
-#define FALSE           0
-#endif
 
 void            EnterCriticalSection( void );
 void            ExitCriticalSection( void );

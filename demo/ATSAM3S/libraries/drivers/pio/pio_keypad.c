@@ -51,7 +51,7 @@ void PIO_KeyPadConfig(AT91S_PIO *pPIO, KeyPadConfig *config)
     pPIO->PIO_KER = config->enable;
 
     //if enable, set keypad matrix and debouncing
-    if(config->enable == TRUE) {
+    if(config->enable == true) {
         //set key matrix
         pPIO->PIO_KRCR = (config->row | config->col<<8) ;
 
@@ -72,7 +72,7 @@ void PIO_GetKeyStatus(AT91S_PIO *pPIO, KeyEvent *event)
     int i,j;
 
     //get key press event
-    event->kdEvent.press = (pPIO->KSR&0x1)?TRUE:FALSE;
+    event->kdEvent.press = (pPIO->KSR&0x1)?true:false;
     event->kdEvent.keyPressNum = (pPIO->KSR>>8)&0x3;
     j=event->kdEvent.keyPressNum+1;
     for(i=0; i<j; i++) {
@@ -81,7 +81,7 @@ void PIO_GetKeyStatus(AT91S_PIO *pPIO, KeyEvent *event)
     }
 
     //get key release event
-    event->kuEvent.release = ((pPIO->KSR>>1) & 0x1)?TRUE:FALSE;
+    event->kuEvent.release = ((pPIO->KSR>>1) & 0x1)?true:false;
     event->kuEvent.keyRelNum = (pPIO->KSR>>16)&0x3;
     j=event->kdEvent.keyPressNum+1;
     for(i=0;i<j;i++) {

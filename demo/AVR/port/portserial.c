@@ -40,7 +40,7 @@
 //#define UART_UCSRB  UCSR0B
 
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
 #ifdef RTS_ENABLE
     UCSRB |= _BV( TXEN ) | _BV(TXCIE);
@@ -70,7 +70,7 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     }
 }
 
-BOOL
+bool
 xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     UCHAR ucUCSRC = 0;
@@ -116,26 +116,26 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     UCSRC |= ucUCSRC;
 #endif
 
-    vMBPortSerialEnable( FALSE, FALSE );
+    vMBPortSerialEnable( false, false );
 
 #ifdef RTS_ENABLE
     RTS_INIT;
 #endif
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
     UDR = ucByte;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialGetByte( CHAR * pucByte )
 {
     *pucByte = UDR;
-    return TRUE;
+    return true;
 }
 
 SIGNAL( SIG_USART_DATA )

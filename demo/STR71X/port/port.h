@@ -25,6 +25,8 @@
 #include "assert.h"
 #include "FreeRTOS.h"
 
+#include <stdbool.h>
+
 /* work aroung a problem when inline is also defined in 71x_conf.h */
 #ifdef INLINE
 #undef INLINE
@@ -35,8 +37,6 @@
 #define ENTER_CRITICAL_SECTION( )   portENTER_CRITICAL( )
 #define EXIT_CRITICAL_SECTION( )    portEXIT_CRITICAL( )
 
-typedef char    BOOL;
-
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 
@@ -45,13 +45,5 @@ typedef short   SHORT;
 
 typedef unsigned long ULONG;
 typedef long    LONG;
-
-#ifndef TRUE
-#define TRUE            1
-#endif
-
-#ifndef FALSE
-#define FALSE           0
-#endif
 
 #endif

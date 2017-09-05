@@ -31,6 +31,8 @@
 #ifndef _MB_ASCII_H
 #define _MB_ASCII_H
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -45,9 +47,9 @@ eMBErrorCode    eMBASCIIReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame,
                                  USHORT * pusLength );
 eMBErrorCode    eMBASCIISend( UCHAR slaveAddress, const UCHAR * pucFrame,
                               USHORT usLength );
-BOOL            xMBASCIIReceiveFSM( void );
-BOOL            xMBASCIITransmitFSM( void );
-BOOL            xMBASCIITimerT1SExpired( void );
+bool            xMBASCIIReceiveFSM( void );
+bool            xMBASCIITransmitFSM( void );
+bool            xMBASCIITimerT1SExpired( void );
 #endif
 
 #ifdef __cplusplus

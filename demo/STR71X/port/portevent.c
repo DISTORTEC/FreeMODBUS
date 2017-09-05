@@ -35,30 +35,30 @@
 static xQueueHandle xMBPortQueueHdl;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortEventInit( void )
 {
     xMBPortQueueHdl = xQueueCreate( 1, sizeof( eMBEventType ) );
-    return xMBPortQueueHdl != NULL ? TRUE : FALSE;
+    return xMBPortQueueHdl != NULL ? true : false;
 }
 
-BOOL
+bool
 xMBPortEventPost( eMBEventType eEvent )
 {
     portBASE_TYPE   xEventSent = pdFALSE;
 
     xEventSent = xQueueSendFromISR( xMBPortQueueHdl, &eEvent, xEventSent );
-    return xEventSent == pdTRUE ? TRUE : FALSE;
+    return xEventSent == pdTRUE ? true : false;
 }
 
-BOOL
+bool
 xMBPortEventGet( eMBEventType * eEvent )
 {
-    BOOL            xEventHappened = FALSE;
+    bool            xEventHappened = false;
 
     if( xQueueReceive( xMBPortQueueHdl, eEvent, portMAX_DELAY ) == pdTRUE )
     {
-        xEventHappened = TRUE;
+        xEventHappened = true;
     }
     return xEventHappened;
 }

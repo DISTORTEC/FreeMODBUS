@@ -82,7 +82,7 @@ eMBTCPDoInit( USHORT ucTCPPort )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
-    if( xMBTCPPortInit( ucTCPPort ) == FALSE )
+    if( xMBTCPPortInit( ucTCPPort ) == false )
     {
         eStatus = MB_EPORTERR;
     }
@@ -109,7 +109,7 @@ eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, USHORT * pusLength )
     USHORT          usLength;
     USHORT          usPID;
 
-    if( xMBTCPPortGetRequest( &pucMBTCPFrame, &usLength ) != FALSE )
+    if( xMBTCPPortGetRequest( &pucMBTCPFrame, &usLength ) != false )
     {
         usPID = pucMBTCPFrame[MB_TCP_PID] << 8U;
         usPID |= pucMBTCPFrame[MB_TCP_PID + 1];
@@ -148,7 +148,7 @@ eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame, USHORT usLength )
      */
     pucMBTCPFrame[MB_TCP_LEN] = ( usLength + 1 ) >> 8U;
     pucMBTCPFrame[MB_TCP_LEN + 1] = ( usLength + 1 ) & 0xFF;
-    if( xMBTCPPortSendResponse( pucMBTCPFrame, usTCPLength ) == FALSE )
+    if( xMBTCPPortSendResponse( pucMBTCPFrame, usTCPLength ) == false )
     {
         eStatus = MB_EIO;
     }

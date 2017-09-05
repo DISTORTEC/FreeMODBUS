@@ -44,7 +44,7 @@ main( void )
 
     eStatus = eMBInit( MB_RTU, 0x0A, 0, 38400, MB_PAR_EVEN );
 
-    eStatus = eMBSetSlaveID( 0x34, TRUE, ucSlaveID, 3 );
+    eStatus = eMBSetSlaveID( 0x34, true, ucSlaveID, 3 );
     sei(  );
 
     /* Enable the Modbus Protocol Stack. */

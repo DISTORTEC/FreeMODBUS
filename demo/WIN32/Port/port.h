@@ -37,12 +37,6 @@ extern "C" {
 #define ENTER_CRITICAL_SECTION( )
 #define EXIT_CRITICAL_SECTION( )
 #define MB_PORT_HAS_CLOSE	1
-#ifndef TRUE
-#define TRUE            1
-#endif
-#ifndef FALSE
-#define FALSE           0
-#endif
 
 /* ----------------------- Type definitions ---------------------------------*/
 
@@ -59,8 +53,8 @@ typedef enum
 void            vMBPortLog( eMBPortLogLevel eLevel, const TCHAR * szModule,
                             const TCHAR * szFmt, ... );
 void            vMBPortTimerPoll(  );
-BOOL            xMBPortSerialPoll(  );
-BOOL            xMBPortSerialSetTimeout( DWORD dwTimeoutMs );
+bool            xMBPortSerialPoll(  );
+bool            xMBPortSerialSetTimeout( DWORD dwTimeoutMs );
 
 #ifdef __cplusplus
 }

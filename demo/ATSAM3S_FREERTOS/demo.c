@@ -106,7 +106,7 @@ vTaskMODBUS( void *pvArg )
         }
         else
         {
-            if( MB_ENOERR != ( eStatus = eMBSetSlaveID( 0x34, TRUE, ucSlaveID, 3 ) ) )
+            if( MB_ENOERR != ( eStatus = eMBSetSlaveID( 0x34, true, ucSlaveID, 3 ) ) )
             {
                 /* Can not set slave id. Check arguments */
             }

@@ -110,7 +110,7 @@ static err_t    sio_open_low_level( u8_t devnr, serdev_t * dev );
 static err_t    sio_close_low_level( u8_t devnr, serdev_t * dev );
 
 /* ----------------------- Static variables ---------------------------------*/
-static u8_t     initialized = FALSE;
+static u8_t     initialized = false;
 static volatile serdev_t devices[UART_DEVICES_MAX];
 
 /* ----------------------- Start implementation -----------------------------*/

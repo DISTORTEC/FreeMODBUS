@@ -22,6 +22,8 @@
 #ifndef _PORT_H
 #define _PORT_H
 
+#include <stdbool.h>
+
 #include <assert.h>
 #include <inttypes.h>
 
@@ -29,8 +31,6 @@
 
 #define ENTER_CRITICAL_SECTION( )
 #define EXIT_CRITICAL_SECTION( )
-
-typedef uint8_t BOOL;
 
 typedef unsigned char UCHAR;
 typedef char CHAR;
@@ -40,13 +40,5 @@ typedef int16_t SHORT;
 
 typedef uint32_t ULONG;
 typedef int32_t LONG;
-
-#ifndef TRUE
-#define TRUE            1
-#endif
-
-#ifndef FALSE
-#define FALSE           0
-#endif
 
 #endif

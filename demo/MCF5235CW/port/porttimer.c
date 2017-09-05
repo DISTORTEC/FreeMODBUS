@@ -41,7 +41,7 @@ USHORT          usTimerModulus;
 
 /* ----------------------- Start implementation ---------------------------- */
 
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
     usTimerModulus = ( USHORT ) PIT_MODULUS_REGISTER( usTim1Timerout50us );
@@ -52,7 +52,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     /* Unmask interrupt */
     MCF_INTC0_IMRH &= ~MCF_INTC0_IMRH_INT_MASK37;
 
-    return TRUE;
+    return true;
 }
 
 void
@@ -77,7 +77,7 @@ vMBPortTimersDisable(  )
 
 extern volatile void *pxCurrentTCB;
 
-static          BOOL
+static          bool
 prvvMBPortTimerISRImpl( void )
 {
     MCF_PIT_PCSR1 |= MCF_PIT_PCSR_PIF;

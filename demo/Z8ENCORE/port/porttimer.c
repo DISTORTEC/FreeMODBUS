@@ -30,7 +30,7 @@
 static void interrupt prvvTIMERExpiredISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
     /* Configure Timer 0 (One Shot, Prescale = 1, Disabled)
@@ -58,7 +58,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     /* Set Interrupt Vector */
     SET_VECTOR( TIMER0, prvvTIMERExpiredISR );
 
-    return TRUE;
+    return true;
 }
 
 

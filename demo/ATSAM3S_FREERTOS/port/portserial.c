@@ -98,7 +98,7 @@ const struct xUSARTHWMappings_t
 static UCHAR    ucUsedPort = USART_INVALID_PORT;
 
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
 
     if( xRxEnable )
@@ -133,14 +133,14 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     }
 }
 
-BOOL
+bool
 xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
-    BOOL            bStatus = FALSE;
+    bool            bStatus = false;
     uint32_t        uiMode = US_MR_USART_MODE_NORMAL;
     if( ( ucPORT <= USART_IDX_LAST ) )
     {
-        bStatus = TRUE;
+        bStatus = true;
         switch ( eParity )
         {
         case MB_PAR_NONE:
@@ -153,7 +153,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
             uiMode |= US_MR_PAR_EVEN | US_MR_NBSTOP_1_BIT;
             break;
         default:
-            bStatus = FALSE;
+            bStatus = false;
             break;
         }
 
@@ -166,10 +166,10 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
             uiMode |= US_MR_CHRL_7_BITS;
             break;
         default:
-            bStatus = FALSE;
+            bStatus = false;
         }
 
-        if( TRUE == bStatus )
+        if( true == bStatus )
         {
             ucUsedPort = ucPORT;
 
@@ -215,18 +215,18 @@ vMBPortSerialClose( void )
     }
 }
 
-BOOL
+bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
     USART1->US_THR = ucByte;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialGetByte( CHAR * pucByte )
 {
     *pucByte = USART1->US_RHR;
-    return TRUE;
+    return true;
 }
 
 void
@@ -234,9 +234,9 @@ vUSARTHandler( void )
 {
     uint32_t        uiCSR;
     uint32_t        uiIMR;
-    BOOL            bTaskWoken = FALSE;
+    bool            bTaskWoken = false;
 
-    vMBPortSetWithinException( TRUE );
+    vMBPortSetWithinException( true );
 
     uiCSR = xUSARTHWMappings[ucUsedPort].pUsart->US_CSR;
     uiIMR = xUSARTHWMappings[ucUsedPort].pUsart->US_IMR;
@@ -262,7 +262,7 @@ vUSARTHandler( void )
         }
         USART_DisableIt( xUSARTHWMappings[ucUsedPort].pUsart, US_IER_TXEMPTY );
     }
-    vMBPortSetWithinException( FALSE );
+    vMBPortSetWithinException( false );
 
     portEND_SWITCHING_ISR( bTaskWoken ? pdTRUE : pdFALSE );
 }

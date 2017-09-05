@@ -37,10 +37,10 @@ static USHORT   usTimerOCRADelta;
 static USHORT   usTimerOCRBDelta;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timeout50us )
 {
-    BOOL            bInitialized = FALSE;
+    bool            bInitialized = false;
     ULONG           ulReloadValue = ( ACLK * ( ULONG )usTim1Timeout50us ) / MB_TIMER_TICKS;
 
     if( ulReloadValue <= 1 )
@@ -60,7 +60,7 @@ xMBPortTimersInit( USHORT usTim1Timeout50us )
         /* Enable Timer A caputer compare interrupt. */
         TACCTL0 = CCIE;
 
-        bInitialized = TRUE;
+        bInitialized = true;
     }
     return bInitialized;
 }

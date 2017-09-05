@@ -85,7 +85,7 @@ main( void )
     {
         UCHAR           ucByte;
 
-        vMBPortSerialEnable( TRUE, FALSE );
+        vMBPortSerialEnable( true, false );
         _Wait;                  // wait for an interrupt
         assert( xMBPortSerialGetByte( &ucByte ) );
 
@@ -97,7 +97,7 @@ main( void )
          * Comment out call to pxMBFrameCBTransmitterEmpty() in prvvUARTTxReadyISR() when testing the transmitter
          */
 #if 0
-        vMBPortSerialEnable( FALSE, TRUE );
+        vMBPortSerialEnable( false, true );
         assert( xMBPortSerialPutByte( ucByte ) );
         _Wait;                  // wait for an interrupt
 

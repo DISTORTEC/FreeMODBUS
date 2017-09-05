@@ -60,7 +60,7 @@ static enum ThreadState
 } ePollThreadState;
 
 /* ----------------------- Static functions ---------------------------------*/
-static BOOL     bCreatePollingThread( void );
+static bool     bCreatePollingThread( void );
 static enum ThreadState eGetPollingThreadState( void );
 static void     eSetPollingThreadState( enum ThreadState eNewState );
 static void* pvPollingThread( void *pvParameter );
@@ -71,7 +71,7 @@ main( int argc, char *argv[] )
 {
     int             iExitCode;
     CHAR           cCh;
-    BOOL            bDoExit;
+    bool            bDoExit;
 
     if( eMBTCPInit( MB_TCP_PORT_USE_DEFAULT ) != MB_ENOERR )
     {
@@ -83,7 +83,7 @@ main( int argc, char *argv[] )
         eSetPollingThreadState( STOPPED );
         /* CLI interface. */
         printf(  "Type 'q' for quit or 'h' for help!\r\n"  );
-        bDoExit = FALSE;
+        bDoExit = false;
         do
         {
             printf(  "> "  );
@@ -91,13 +91,13 @@ main( int argc, char *argv[] )
             switch ( cCh )
             {
             case  'q' :
-                bDoExit = TRUE;
+                bDoExit = true;
                 break;
             case  'd' :
                 eSetPollingThreadState( SHUTDOWN );
                 break;
             case  'e' :
-                if( bCreatePollingThread(  ) != TRUE )
+                if( bCreatePollingThread(  ) != true )
                 {
                     printf(  "Can't start protocol stack! Already running?\r\n"  );
                 }
@@ -149,26 +149,26 @@ main( int argc, char *argv[] )
     return iExitCode;
 }
 
-BOOL
+bool
 bCreatePollingThread( void )
 {
-    BOOL            bResult;
+    bool            bResult;
 	pthread_t       xThread;
     if( eGetPollingThreadState(  ) == STOPPED )
     {
         if( pthread_create( &xThread, NULL, pvPollingThread, NULL ) != 0 )
         {
             /* Can't create the polling thread. */
-            bResult = FALSE;
+            bResult = false;
         }
         else
         {
-            bResult = TRUE;
+            bResult = true;
         }
     }
     else
     {
-        bResult = FALSE;
+        bResult = false;
     }
 
     return bResult;

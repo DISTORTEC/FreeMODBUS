@@ -82,12 +82,12 @@ static pvMBFrameClose pvMBFrameCloseCur;
  * an external event has happend which includes a timeout or the reception
  * or transmission of a character.
  */
-BOOL( *pxMBFrameCBByteReceived ) ( void );
-BOOL( *pxMBFrameCBTransmitterEmpty ) ( void );
-BOOL( *pxMBPortCBTimerExpired ) ( void );
+bool( *pxMBFrameCBByteReceived ) ( void );
+bool( *pxMBFrameCBTransmitterEmpty ) ( void );
+bool( *pxMBPortCBTimerExpired ) ( void );
 
-BOOL( *pxMBFrameCBReceiveFSMCur ) ( void );
-BOOL( *pxMBFrameCBTransmitFSMCur ) ( void );
+bool( *pxMBFrameCBReceiveFSMCur ) ( void );
+bool( *pxMBFrameCBTransmitFSMCur ) ( void );
 
 /* An array of Modbus functions handlers which associates Modbus function
  * codes with implementing functions.
@@ -349,7 +349,7 @@ eMBPoll( void )
 
     /* Check if there is a event available. If not return control to caller.
      * Otherwise we will handle the event. */
-    if( xMBPortEventGet( &eEvent ) == TRUE )
+    if( xMBPortEventGet( &eEvent ) == true )
     {
         switch ( eEvent )
         {

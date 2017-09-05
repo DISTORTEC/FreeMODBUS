@@ -29,6 +29,7 @@
 #define _PORT_H
 
 #include <assert.h>
+#include <stdbool.h>
 
 #define	INLINE
 
@@ -39,18 +40,11 @@ extern "C" {
 #define ENTER_CRITICAL_SECTION( )
 #define EXIT_CRITICAL_SECTION( )
 #define MB_PORT_HAS_CLOSE	1
-#ifndef TRUE
-#define TRUE            1
-#endif
-#ifndef FALSE
-#define FALSE           0
-#endif
 /* ----------------------- Type definitions ---------------------------------*/
 typedef int     SOCKET;
 
 #define SOCKET_ERROR (-1)
 #define INVALID_SOCKET (~0)
-typedef char    BOOL;
 typedef unsigned char UCHAR;
 typedef unsigned char BYTE;
 typedef char    CHAR;

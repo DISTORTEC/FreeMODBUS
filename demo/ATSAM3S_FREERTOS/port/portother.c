@@ -42,17 +42,17 @@
 #include <intrinsics.h>
 
 /* ----------------------- Variables ----------------------------------------*/
-static BOOL     bIsWithinException = FALSE;
+static bool     bIsWithinException = false;
 
 /* ----------------------- Start implementation -----------------------------*/
 
 void
-vMBPortSetWithinException( BOOL bInException )
+vMBPortSetWithinException( bool bInException )
 {
     bIsWithinException = bInException;
 }
 
-BOOL
+bool
 bMBPortIsWithinException( void )
 {
     return bIsWithinException;

@@ -54,19 +54,19 @@ static enum ThreadState
 } ePollThreadState;
 
 static pthread_mutex_t xLock = PTHREAD_MUTEX_INITIALIZER;
-static BOOL     bDoExit;
+static bool     bDoExit;
 
 /* ----------------------- Static functions ---------------------------------*/
-static BOOL     bCreatePollingThread( void );
+static bool     bCreatePollingThread( void );
 static enum ThreadState eGetPollingThreadState( void );
 static void     vSetPollingThreadState( enum ThreadState eNewState );
 static void    *pvPollingThread( void *pvParameter );
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 bSetSignal( int iSignalNr, void ( *pSigHandler ) ( int ) )
 {
-    BOOL            bResult;
+    bool            bResult;
     struct sigaction xNewSig, xOldSig;
 
     xNewSig.sa_handler = pSigHandler;
@@ -74,11 +74,11 @@ bSetSignal( int iSignalNr, void ( *pSigHandler ) ( int ) )
     xNewSig.sa_flags = 0;
     if( sigaction( iSignalNr, &xNewSig, &xOldSig ) != 0 )
     {
-        bResult = FALSE;
+        bResult = false;
     }
     else
     {
-        bResult = TRUE;
+        bResult = true;
     }
     return bResult;
 }
@@ -92,7 +92,7 @@ vSigShutdown( int xSigNr )
     case SIGINT:
     case SIGTERM:
         vSetPollingThreadState( SHUTDOWN );
-        bDoExit = TRUE;
+        bDoExit = true;
     }
 }
 
@@ -114,7 +114,7 @@ main( int argc, char *argv[] )
         fprintf( stderr, "%s: can't initialize modbus stack!\n", PROG );
         iExitCode = EXIT_FAILURE;
     }
-    else if( eMBSetSlaveID( 0x34, TRUE, ucSlaveID, 3 ) != MB_ENOERR )
+    else if( eMBSetSlaveID( 0x34, true, ucSlaveID, 3 ) != MB_ENOERR )
     {
         fprintf( stderr, "%s: can't set slave id!\n", PROG );
         iExitCode = EXIT_FAILURE;
@@ -125,7 +125,7 @@ main( int argc, char *argv[] )
 
         /* CLI interface. */
         printf( "Type 'q' for quit or 'h' for help!\n" );
-        bDoExit = FALSE;
+        bDoExit = false;
         do
         {
             printf( "> " );
@@ -134,13 +134,13 @@ main( int argc, char *argv[] )
             switch ( cCh )
             {
             case 'q':
-                bDoExit = TRUE;
+                bDoExit = true;
                 break;
             case 'd':
                 vSetPollingThreadState( SHUTDOWN );
                 break;
             case 'e':
-                if( bCreatePollingThread(  ) != TRUE )
+                if( bCreatePollingThread(  ) != true )
                 {
                     printf( "Can't start protocol stack! Already running?\n" );
                 }
@@ -192,26 +192,26 @@ main( int argc, char *argv[] )
     return iExitCode;
 }
 
-BOOL
+bool
 bCreatePollingThread( void )
 {
-    BOOL            bResult;
+    bool            bResult;
     pthread_t       xThread;
 
     if( eGetPollingThreadState(  ) == STOPPED )
     {
         if( pthread_create( &xThread, NULL, pvPollingThread, NULL ) != 0 )
         {
-            bResult = FALSE;
+            bResult = false;
         }
         else
         {
-            bResult = TRUE;
+            bResult = true;
         }
     }
     else
     {
-        bResult = FALSE;
+        bResult = false;
     }
 
     return bResult;

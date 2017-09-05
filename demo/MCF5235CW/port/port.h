@@ -23,6 +23,8 @@
 #ifndef _PORT_H
 #define _PORT_H
 
+#include <stdbool.h>
+
 /* ----------------------- Defines ----------------------------------------- */
 #define	INLINE
 
@@ -32,17 +34,7 @@
 #define ENTER_CRITICAL_SECTION( ) prvvPortEnterCritical()
 #define EXIT_CRITICAL_SECTION( )  prvvPortExitCritical()
 
-#ifndef TRUE
-#define TRUE            1
-#endif
-
-#ifndef FALSE
-#define FALSE           0
-#endif
-
 /* ----------------------- Type definitions -------------------------------- */
-typedef char    BOOL;
-
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 

@@ -42,17 +42,17 @@ typedef struct
 } xEventInternalHandle;
 
 /* ----------------------- Static variables ---------------------------------*/
-STATIC BOOL     bIsInitialized = FALSE;
+STATIC bool     bIsInitialized = false;
 STATIC xEventInternalHandle arxEventHdls[1];
 
 /* ----------------------- Static functions ---------------------------------*/
 
 /* ----------------------- Start implementation -----------------------------*/
 
-BOOL
+bool
 xMBPortEventInit( void )
 {
-    BOOL            bOkay = FALSE;
+    bool            bOkay = false;
     xQueueHandle    xQueueHdl;
 
     ENTER_CRITICAL_SECTION(  );
@@ -60,8 +60,8 @@ xMBPortEventInit( void )
     if( 0 != xQueueHdl )
     {
         arxEventHdls[0].xQueueHdl = xQueueHdl;
-        bIsInitialized = TRUE;
-        bOkay = TRUE;
+        bIsInitialized = true;
+        bOkay = true;
     }
     EXIT_CRITICAL_SECTION(  );
 
@@ -83,7 +83,7 @@ vMBPortEventClose(  )
     EXIT_CRITICAL_SECTION(  );
 }
 
-BOOL
+bool
 xMBPortEventPost( eMBEventType eEvent )
 {
     portBASE_TYPE   xEventSent = pdFALSE;
@@ -102,20 +102,20 @@ xMBPortEventPost( eMBEventType eEvent )
         }
     }
     EXIT_CRITICAL_SECTION(  );
-    return xEventSent == pdTRUE ? TRUE : FALSE;
+    return xEventSent == pdTRUE ? true : false;
 }
 
-BOOL
+bool
 xMBPortEventGet( eMBEventType * peEvent )
 {
-    BOOL            bEventInQueue = FALSE;
+    bool            bEventInQueue = false;
 
     ENTER_CRITICAL_SECTION(  );
     if( bIsInitialized )
     {
         if( pdTRUE == xQueueReceive( arxEventHdls[0].xQueueHdl, peEvent, portTICK_RATE_MS * 50 ) )
         {
-            bEventInQueue = TRUE;
+            bEventInQueue = true;
         }
     }
     EXIT_CRITICAL_SECTION(  );

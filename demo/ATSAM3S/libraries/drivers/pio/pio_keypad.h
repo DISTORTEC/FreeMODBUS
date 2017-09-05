@@ -36,6 +36,8 @@
 
 #include <board.h>
 
+#include <stdbool.h>
+
 //------------------------------------------------------------------------------
 //         Global Definitions
 //------------------------------------------------------------------------------
@@ -91,10 +93,6 @@
 //------------------------------------------------------------------------------
 //         Global Types
 //------------------------------------------------------------------------------
-typedef enum {
-	FALSE,
-	TRUE
-} bool;
 
 typedef struct _KeyPadConfig {
 	bool enable;//keypad controller enable or disable
@@ -150,4 +148,3 @@ void PIO_KeypadDisableIt(AT91S_PIO *pio, unsigned int mode);
 
 
 #endif //#ifndef PIO_KEYPAD_H
-

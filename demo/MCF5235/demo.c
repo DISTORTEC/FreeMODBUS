@@ -43,7 +43,7 @@ int
 main( int argc, char *argv[], char *envp[] )
 {
     //xMBPortSerialInit (9600UL, 8, MB_PAR_EVEN);
-    //vMBPortSerialEnable (TRUE , FALSE);
+    //vMBPortSerialEnable (true , false);
     //xMBPortTimersInit( 200 );
     //vMBPortTimersEnable();
     //
@@ -52,7 +52,7 @@ main( int argc, char *argv[], char *envp[] )
 
     eStatus = eMBInit( MB_RTU, 0x0A, 0, 38400, MB_PAR_EVEN );
 
-    eStatus = eMBSetSlaveID( 0x34, TRUE, ucSlaveID, 3 );
+    eStatus = eMBSetSlaveID( 0x34, true, ucSlaveID, 3 );
 
     /* Enable the Modbus Protocol Stack. */
     eStatus = eMBEnable(  );

@@ -23,6 +23,7 @@
 #define _PORT_H
 
 #include <assert.h>
+#include <stdbool.h>
 
 #include <eZ8.h>
 
@@ -33,8 +34,6 @@
 #define ENTER_CRITICAL_SECTION( )   DI()
 #define EXIT_CRITICAL_SECTION( )    EI()
 
-typedef unsigned char BOOL;
-
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 
@@ -43,13 +42,5 @@ typedef int     SHORT;
 
 typedef unsigned long ULONG;
 typedef long    LONG;
-
-#ifndef TRUE
-#define TRUE            1
-#endif
-
-#ifndef FALSE
-#define FALSE           0
-#endif
 
 #endif

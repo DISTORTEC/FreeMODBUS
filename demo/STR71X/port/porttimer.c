@@ -57,7 +57,7 @@ static USHORT   usTimerDeltaOCRA;
 void            prvvMBTimerIRQHandler( void ) __attribute__ ( ( naked ) );
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
     /* Calculate output compare value for timer1. */
@@ -77,7 +77,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     EIC_IRQChannelConfig( MB_TIMER_IRQ_CH, ENABLE );
     EIC_IRQChannelPriorityConfig( MB_TIMER_IRQ_CH, MB_IRQ_PRIORITY );
 
-    return TRUE;
+    return true;
 }
 
 void

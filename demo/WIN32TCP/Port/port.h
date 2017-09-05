@@ -37,12 +37,6 @@ extern "C" {
 #define ENTER_CRITICAL_SECTION( )
 #define EXIT_CRITICAL_SECTION( )
 #define MB_PORT_HAS_CLOSE	1
-#ifndef TRUE
-#define TRUE            1
-#endif
-#ifndef FALSE
-#define FALSE           0
-#endif
 
 /* ----------------------- Type definitions ---------------------------------*/
 

@@ -41,7 +41,7 @@ static USHORT   usTimerOCRADelta;
 static USHORT   usTimerOCRBDelta;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
     /* Calculate overflow counter an OCR values for Timer1. */
@@ -54,7 +54,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
 
     vMBPortTimersDisable(  );
 
-    return TRUE;
+    return true;
 }
 
 

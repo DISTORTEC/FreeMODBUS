@@ -20,6 +20,8 @@
 #ifndef _71x_type_H
 #define _71x_type_H
 
+#include <stdbool.h>
+
 typedef unsigned long   u32;
 typedef unsigned short  u16;
 typedef unsigned char   u8;
@@ -36,8 +38,6 @@ typedef volatile signed long   vs32;
 typedef volatile signed short  vs16;
 typedef volatile signed char   vs8;
 
-/*===================================================================*/
-typedef enum { FALSE = 0, TRUE  = !FALSE } bool;
 /*===================================================================*/
 typedef enum { RESET = 0, SET   = !RESET } FlagStatus;
 /*===================================================================*/

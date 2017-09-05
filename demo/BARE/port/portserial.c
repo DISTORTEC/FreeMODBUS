@@ -31,35 +31,35 @@ static void prvvUARTRxISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     /* If xRXEnable enable serial receive interrupts. If xTxENable enable
      * transmitter empty interrupts.
      */
 }
 
-BOOL
+bool
 xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
-    return FALSE;
+    return false;
 }
 
-BOOL
+bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
     /* Put a byte in the UARTs transmit buffer. This function is called
      * by the protocol stack if pxMBFrameCBTransmitterEmpty( ) has been
      * called. */
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialGetByte( CHAR * pucByte )
 {
     /* Return the byte in the UARTs receive buffer. This function is called
      * by the protocol stack after pxMBFrameCBByteReceived( ) has been called.
      */
-    return TRUE;
+    return true;
 }
 
 /* Create an interrupt handler for the transmit buffer empty interrupt

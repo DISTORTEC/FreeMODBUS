@@ -33,7 +33,7 @@ prvvTIMERExpiredISR( void )
     __irq;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
     // Timer0 Configuration
@@ -53,7 +53,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     VICVectCntl1 = 0x20 | 4;
     VICIntEnable = ( 1 << 4 );  // Enable Timer0 Interruption
 
-    return TRUE;
+    return true;
 }
 
 

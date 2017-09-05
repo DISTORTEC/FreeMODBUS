@@ -40,7 +40,7 @@ USHORT          usTimerModulus;
 
 /* ----------------------- Start implementation ---------------------------- */
 
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
     usTimerModulus = PIT_MODULUS_REGISTER( usTim1Timerout50us );
@@ -51,7 +51,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     /* Unmask interrupt */
     MCF_INTC0_IMRH &= ~MCF_INTC0_IMRH_INT_MASK36;
 
-    return TRUE;
+    return true;
 }
 
 inline void

@@ -37,10 +37,10 @@
 #include "mbconfig.h"
 
 
-BOOL
+bool
 prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, USHORT usBufSize )
 {
-    return TRUE;
+    return true;
 }
 
 CHAR           *

@@ -33,12 +33,12 @@
 
 /* ----------------------- Static variables ---------------------------------*/
 ULONG           ulTimeOut;
-BOOL            bTimeoutEnable;
+bool            bTimeoutEnable;
 
 static struct timeval xTimeLast;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
     ulTimeOut = usTim1Timerout50us / 20U;
@@ -74,7 +74,7 @@ vMBPortTimerPoll(  )
                 ( xTimeCur.tv_usec - xTimeLast.tv_usec ) * 1000L;
             if( ulDeltaMS > ulTimeOut )
             {
-                bTimeoutEnable = FALSE;
+                bTimeoutEnable = false;
                 ( void )pxMBPortCBTimerExpired(  );
             }
         }
@@ -87,11 +87,11 @@ vMBPortTimersEnable(  )
     int             res = gettimeofday( &xTimeLast, NULL );
 
     assert( res == 0 );
-    bTimeoutEnable = TRUE;
+    bTimeoutEnable = true;
 }
 
 void
 vMBPortTimersDisable(  )
 {
-    bTimeoutEnable = FALSE;
+    bTimeoutEnable = false;
 }

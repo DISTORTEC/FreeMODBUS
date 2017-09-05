@@ -51,7 +51,7 @@ static void interrupt prvvUARTRxISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     /* If xRXEnable enable serial receive interrupts. If xTxENable enable
      * transmitter empty interrupts.
@@ -76,14 +76,14 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     }
 }
 
-BOOL
+bool
 xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     UCHAR           cfg = 0;
 
     if( ucDataBits != 8 )
     {
-        return FALSE;
+        return false;
     }
 
     switch ( eParity )
@@ -100,7 +100,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         break;
 
     default:
-        return FALSE;
+        return false;
     }
 
     /* Baud Rate -> U0BR = (CLOCK/(16*BAUD) */
@@ -120,7 +120,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     /* Low Priority Rx/Tx Interrupts */
     IRQ0ENH &= ~UART0_TXD_INT_EN_H & ~UART0_RXD_INT_EN_H;
 
-    vMBPortSerialEnable( FALSE, FALSE );
+    vMBPortSerialEnable( false, false );
 
     /* Set Rx/Tx Interruption Vectors */
     SET_VECTOR( UART0_RX, prvvUARTRxISR );
@@ -129,10 +129,10 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     /* Enable Interrupts */
     EI(  );
 
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
     /* Put a byte in the UARTs transmit buffer. This function is called
@@ -144,10 +144,10 @@ xMBPortSerialPutByte( CHAR ucByte )
 
     U0D = ucByte;
 
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialGetByte( CHAR * pucByte )
 {
     /* Return the byte in the UARTs receive buffer. This function is called
@@ -159,7 +159,7 @@ xMBPortSerialGetByte( CHAR * pucByte )
 
     *pucByte = U0D;
 
-    return TRUE;
+    return true;
 }
 
 /*

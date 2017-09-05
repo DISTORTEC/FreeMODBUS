@@ -24,26 +24,17 @@
 #define _PORT_H
 
 #include <assert.h>
+#include <stdbool.h>
 
 /* ----------------------- Defines ------------------------------------------*/
 
 #define INLINE                  inline
-
-#ifndef TRUE
-#define TRUE                    1
-#endif
-
-#ifndef FALSE
-#define FALSE                   0
-#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 #define MB_TCP_DEBUG            1       /* Debug output in TCP module. */
 /* ----------------------- Type definitions ---------------------------------*/
-typedef char    BOOL;
-
 typedef unsigned char UCHAR;
 typedef char    CHAR;
 

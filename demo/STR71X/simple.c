@@ -70,7 +70,7 @@ vInitTask( void *pvParameters )
     assert( eStatus == MB_ENOERR );
 
     /* Configure the slave id of the device. */
-    eStatus = eMBSetSlaveID( 44, TRUE, ucSlaveIDAdditonal, 3 );
+    eStatus = eMBSetSlaveID( 44, true, ucSlaveIDAdditonal, 3 );
     assert( eStatus == MB_ENOERR );
 
     /* Enable the Modbus Protocol Stack. */

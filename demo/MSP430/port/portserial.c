@@ -53,12 +53,12 @@
 #endif
 
 /* ----------------------- Static variables ---------------------------------*/
-UCHAR           ucGIEWasEnabled = FALSE;
+UCHAR           ucGIEWasEnabled = false;
 UCHAR           ucCriticalNesting = 0x00;
 
 /* ----------------------- Start implementation -----------------------------*/
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     ENTER_CRITICAL_SECTION(  );
     if( xRxEnable )
@@ -81,10 +81,10 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     EXIT_CRITICAL_SECTION(  );
 }
 
-BOOL
+bool
 xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
-    BOOL            bInitialized = TRUE;
+    bool            bInitialized = true;
     USHORT          UxCTL = 0;
     USHORT          UxBR = ( USHORT ) ( SMCLK / ulBaudRate );
 
@@ -107,7 +107,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     case 7:
         break;
     default:
-        bInitialized = FALSE;
+        bInitialized = false;
     }
     if( bInitialized )
     {
@@ -139,18 +139,18 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     return bInitialized;
 }
 
-BOOL
+bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
     TXBUF0 = ucByte;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortSerialGetByte( CHAR * pucByte )
 {
     *pucByte = RXBUF0;
-    return TRUE;
+    return true;
 }
 
 #if defined (__GNUC__)
@@ -187,7 +187,7 @@ EnterCriticalSection( void )
 #else
         usOldSR = _DINT( );
 #endif
-        ucGIEWasEnabled = usOldSR & GIE ? TRUE : FALSE;
+        ucGIEWasEnabled = usOldSR & GIE ? true : false;
     }
     ucCriticalNesting++;
 }

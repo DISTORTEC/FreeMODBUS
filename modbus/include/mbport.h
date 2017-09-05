@@ -31,6 +31,8 @@
 #ifndef _MB_PORT_H
 #define _MB_PORT_H
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -60,29 +62,29 @@ typedef enum
 } eMBParity;
 
 /* ----------------------- Supporting functions -----------------------------*/
-BOOL            xMBPortEventInit( void );
+bool            xMBPortEventInit( void );
 
-BOOL            xMBPortEventPost( eMBEventType eEvent );
+bool            xMBPortEventPost( eMBEventType eEvent );
 
-BOOL            xMBPortEventGet(  /*@out@ */ eMBEventType * eEvent );
+bool            xMBPortEventGet(  /*@out@ */ eMBEventType * eEvent );
 
 /* ----------------------- Serial port functions ----------------------------*/
 
-BOOL            xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate,
+bool            xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate,
                                    UCHAR ucDataBits, eMBParity eParity );
 
 void            vMBPortClose( void );
 
 void            xMBPortSerialClose( void );
 
-void            vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable );
+void            vMBPortSerialEnable( bool xRxEnable, bool xTxEnable );
 
-BOOL            xMBPortSerialGetByte( CHAR * pucByte );
+bool            xMBPortSerialGetByte( CHAR * pucByte );
 
-BOOL            xMBPortSerialPutByte( CHAR ucByte );
+bool            xMBPortSerialPutByte( CHAR ucByte );
 
 /* ----------------------- Timers functions ---------------------------------*/
-BOOL            xMBPortTimersInit( USHORT usTimeOut50us );
+bool            xMBPortTimersInit( USHORT usTimeOut50us );
 
 void            xMBPortTimersClose( void );
 
@@ -102,26 +104,26 @@ void            vMBPortTimersDelay( USHORT usTimeOutMS );
  * ASCII transmission layers. In any case a call to xMBPortSerialGetByte()
  * must immediately return a new character.
  *
- * \return <code>TRUE</code> if a event was posted to the queue because
+ * \return <code>true</code> if a event was posted to the queue because
  *   a new byte was received. The port implementation should wake up the
  *   tasks which are currently blocked on the eventqueue.
  */
-extern          BOOL( *pxMBFrameCBByteReceived ) ( void );
+extern          bool( *pxMBFrameCBByteReceived ) ( void );
 
-extern          BOOL( *pxMBFrameCBTransmitterEmpty ) ( void );
+extern          bool( *pxMBFrameCBTransmitterEmpty ) ( void );
 
-extern          BOOL( *pxMBPortCBTimerExpired ) ( void );
+extern          bool( *pxMBPortCBTimerExpired ) ( void );
 
 /* ----------------------- TCP port functions -------------------------------*/
-BOOL            xMBTCPPortInit( USHORT usTCPPort );
+bool            xMBTCPPortInit( USHORT usTCPPort );
 
 void            vMBTCPPortClose( void );
 
 void            vMBTCPPortDisable( void );
 
-BOOL            xMBTCPPortGetRequest( UCHAR **ppucMBTCPFrame, USHORT * usTCPLength );
+bool            xMBTCPPortGetRequest( UCHAR **ppucMBTCPFrame, USHORT * usTCPLength );
 
-BOOL            xMBTCPPortSendResponse( const UCHAR *pucMBTCPFrame, USHORT usTCPLength );
+bool            xMBTCPPortSendResponse( const UCHAR *pucMBTCPFrame, USHORT usTCPLength );
 
 #ifdef __cplusplus
 }

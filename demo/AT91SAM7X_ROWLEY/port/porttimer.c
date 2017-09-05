@@ -32,13 +32,13 @@ typedef struct
 
 /* ----------------------- Static variables ---------------------------------*/
 STATIC xTimerInternalHandle arxTimerHdls[1];
-STATIC BOOL     bIsInitalized = FALSE;
+STATIC bool     bIsInitalized = false;
 
 /* ----------------------- Static functions ---------------------------------*/
 
 /* ----------------------- Start implementation -----------------------------*/
 
-BOOL
+bool
 xMBPortTimersInit( USHORT usTim1Timerout50us )
 {
     USHORT          usTimeoutMS;
@@ -51,10 +51,10 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     }
     arxTimerHdls[0].usNTimeOutMS = usTimeoutMS;
     arxTimerHdls[0].usNTimeLeft = TIMER_TIMEOUT_INVALID;
-    bIsInitalized = TRUE;
+    bIsInitalized = true;
     EXIT_CRITICAL_SECTION(  );
 
-    return TRUE;
+    return true;
 }
 
 void
@@ -64,7 +64,7 @@ vMBPortTimerClose( void )
     if( bIsInitalized )
     {
         arxTimerHdls[0].usNTimeLeft = TIMER_TIMEOUT_INVALID;
-        bIsInitalized = FALSE;
+        bIsInitalized = false;
     }
     EXIT_CRITICAL_SECTION(  );
 }
