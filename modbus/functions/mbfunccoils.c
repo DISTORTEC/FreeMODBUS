@@ -28,18 +28,10 @@
  * File: $Id: mbfunccoils.c,v 1.8 2007/02/18 23:47:16 wolti Exp $
  */
 
-/* ----------------------- System includes ----------------------------------*/
-#include "stdlib.h"
-#include "string.h"
+#include "mbfunc.h"
 
-/* ----------------------- Platform includes --------------------------------*/
-#include "port.h"
-
-/* ----------------------- Modbus includes ----------------------------------*/
 #include "mb.h"
 #include "mbframe.h"
-#include "mbproto.h"
-#include "mbconfig.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_PDU_FUNC_READ_ADDR_OFF           ( MB_PDU_DATA_OFF )
