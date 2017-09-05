@@ -28,8 +28,7 @@
  * File: $Id: mbcrc.c,v 1.7 2007/02/18 23:50:27 wolti Exp $
  */
 
-/* ----------------------- Platform includes --------------------------------*/
-#include "port.h"
+#include "mbcrc.h"
 
 static const uint8_t aucCRCHi[] = {
     0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 0x80, 0x41,
