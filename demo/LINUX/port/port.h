@@ -50,8 +50,8 @@ void            vMBPortEnterCritical( void );
 void            vMBPortExitCritical( void );
 void            vMBPortLog( eMBPortLogLevel eLevel, const char * szModule,
                             const char * szFmt, ... );
-void            vMBPortTimerPoll(  );
-bool            xMBPortSerialPoll(  );
+void            vMBPortTimerPoll( void );
+bool            xMBPortSerialPoll( void );
 bool            xMBPortSerialSetTimeout( uint32_t dwTimeoutMs );
 
 #ifdef __cplusplus
