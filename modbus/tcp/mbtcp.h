@@ -31,10 +31,17 @@
 #ifndef _MB_TCP_H
 #define _MB_TCP_H
 
+#include "mbconfig.h"
+#include "mberrorcode.h"
+#include "mbport.h"
+
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#if MB_TCP_ENABLED > 0
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_TCP_PSEUDO_ADDRESS   255
 
@@ -46,6 +53,8 @@ eMBErrorCode    eMBTCPReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame,
                                uint16_t * pusLength );
 eMBErrorCode    eMBTCPSend( uint8_t _unused, const uint8_t * pucFrame,
                             uint16_t usLength );
+
+#endif
 
 #ifdef __cplusplus
 }
