@@ -28,19 +28,9 @@
  * File: $Id: mbtcp.c,v 1.3 2006/12/07 22:10:34 wolti Exp $
  */
 
-/* ----------------------- System includes ----------------------------------*/
-#include "stdlib.h"
-#include "string.h"
-
-/* ----------------------- Platform includes --------------------------------*/
-#include "port.h"
-
-/* ----------------------- Modbus includes ----------------------------------*/
-#include "mb.h"
-#include "mbconfig.h"
 #include "mbtcp.h"
-#include "mbframe.h"
-#include "mbport.h"
+
+#include <stdbool.h>
 
 #if MB_TCP_ENABLED > 0
 
@@ -136,6 +126,8 @@ eMBTCPReceive( uint8_t * pucRcvAddress, uint8_t ** ppucFrame, uint16_t * pusLeng
 eMBErrorCode
 eMBTCPSend( uint8_t _unused, const uint8_t * pucFrame, uint16_t usLength )
 {
+    (void)_unused;
+
     eMBErrorCode    eStatus = MB_ENOERR;
     uint8_t          *pucMBTCPFrame = ( uint8_t * ) pucFrame - MB_TCP_FUNC;
     uint16_t          usTCPLength = usLength + MB_TCP_FUNC;
