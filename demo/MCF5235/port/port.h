@@ -35,7 +35,6 @@
 inline void     prvvPortEnterCritical(  );
 inline void     prvvPortExitCritical(  );
 
-typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 #endif

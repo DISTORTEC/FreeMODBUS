@@ -35,7 +35,6 @@ extern "C" {
 #endif
 #define MB_TCP_DEBUG            1       /* Debug output in TCP module. */
 /* ----------------------- Type definitions ---------------------------------*/
-typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 #ifdef MB_TCP_DEBUG

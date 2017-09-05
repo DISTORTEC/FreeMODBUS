@@ -44,7 +44,6 @@ extern "C" {
     MB_LOG_DEBUG = 3
 } eMBPortLogLevel;
 
-typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 /* ----------------------- Function prototypes ------------------------------*/

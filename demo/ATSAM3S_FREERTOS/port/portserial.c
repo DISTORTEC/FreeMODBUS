@@ -95,7 +95,7 @@ const struct xUSARTHWMappings_t
 #endif
 };
 
-static UCHAR    ucUsedPort = USART_INVALID_PORT;
+static uint8_t    ucUsedPort = USART_INVALID_PORT;
 
 void
 vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
@@ -134,7 +134,7 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     bool            bStatus = false;
     uint32_t        uiMode = US_MR_USART_MODE_NORMAL;

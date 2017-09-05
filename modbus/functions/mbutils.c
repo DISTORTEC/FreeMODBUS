@@ -44,8 +44,8 @@
 
 /* ----------------------- Start implementation -----------------------------*/
 void
-xMBUtilSetBits( UCHAR * ucByteBuf, uint16_t usBitOffset, UCHAR ucNBits,
-                UCHAR ucValue )
+xMBUtilSetBits( uint8_t * ucByteBuf, uint16_t usBitOffset, uint8_t ucNBits,
+                uint8_t ucValue )
 {
     uint16_t          usWordBuf;
     uint16_t          usMask;
@@ -54,7 +54,7 @@ xMBUtilSetBits( UCHAR * ucByteBuf, uint16_t usBitOffset, UCHAR ucNBits,
     uint16_t          usValue = ucValue;
 
     assert( ucNBits <= 8 );
-    assert( ( size_t )BITS_UCHAR == sizeof( UCHAR ) * 8 );
+    assert( ( size_t )BITS_UCHAR == sizeof( uint8_t ) * 8 );
 
     /* Calculate byte offset for first byte containing the bit values starting
      * at usBitOffset. */
@@ -78,12 +78,12 @@ xMBUtilSetBits( UCHAR * ucByteBuf, uint16_t usBitOffset, UCHAR ucNBits,
     usWordBuf = ( uint16_t )( ( usWordBuf & ( ~usMask ) ) | usValue );
 
     /* move bits back into storage */
-    ucByteBuf[usByteOffset] = ( UCHAR )( usWordBuf & 0xFF );
-    ucByteBuf[usByteOffset + 1] = ( UCHAR )( usWordBuf >> BITS_UCHAR );
+    ucByteBuf[usByteOffset] = ( uint8_t )( usWordBuf & 0xFF );
+    ucByteBuf[usByteOffset + 1] = ( uint8_t )( usWordBuf >> BITS_UCHAR );
 }
 
-UCHAR
-xMBUtilGetBits( UCHAR * ucByteBuf, uint16_t usBitOffset, UCHAR ucNBits )
+uint8_t
+xMBUtilGetBits( uint8_t * ucByteBuf, uint16_t usBitOffset, uint8_t ucNBits )
 {
     uint16_t          usWordBuf;
     uint16_t          usMask;
@@ -110,7 +110,7 @@ xMBUtilGetBits( UCHAR * ucByteBuf, uint16_t usBitOffset, UCHAR ucNBits )
     /* mask away bits above the requested bitfield. */
     usWordBuf &= usMask;
 
-    return ( UCHAR ) usWordBuf;
+    return ( uint8_t ) usWordBuf;
 }
 
 eMBException

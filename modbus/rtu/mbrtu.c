@@ -69,16 +69,16 @@ typedef enum
 static volatile eMBSndState eSndState;
 static volatile eMBRcvState eRcvState;
 
-volatile UCHAR  ucRTUBuf[MB_SER_PDU_SIZE_MAX];
+volatile uint8_t  ucRTUBuf[MB_SER_PDU_SIZE_MAX];
 
-static volatile UCHAR *pucSndBufferCur;
+static volatile uint8_t *pucSndBufferCur;
 static volatile uint16_t usSndBufferCount;
 
 static volatile uint16_t usRcvBufferPos;
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBRTUInit( UCHAR ucSlaveAddress, UCHAR ucPort, uint32_t ulBaudRate, eMBParity eParity )
+eMBRTUInit( uint8_t ucSlaveAddress, uint8_t ucPort, uint32_t ulBaudRate, eMBParity eParity )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     uint32_t           usTimerT35_50us;
@@ -148,7 +148,7 @@ eMBRTUStop( void )
 }
 
 eMBErrorCode
-eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, uint16_t * pusLength )
+eMBRTUReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame, uint16_t * pusLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -157,7 +157,7 @@ eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, uint16_t * pusLength )
 
     /* Length and CRC check */
     if( ( usRcvBufferPos >= MB_SER_PDU_SIZE_MIN )
-        && ( usMBCRC16( ( UCHAR * ) ucRTUBuf, usRcvBufferPos ) == 0 ) )
+        && ( usMBCRC16( ( uint8_t * ) ucRTUBuf, usRcvBufferPos ) == 0 ) )
     {
         /* Save the address field. All frames are passed to the upper layed
          * and the decision if a frame is used is done there.
@@ -170,7 +170,7 @@ eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, uint16_t * pusLength )
         *pusLength = ( uint16_t )( usRcvBufferPos - MB_SER_PDU_PDU_OFF - MB_SER_PDU_SIZE_CRC );
 
         /* Return the start of the Modbus PDU to the caller. */
-        *pucFrame = ( UCHAR * ) & ucRTUBuf[MB_SER_PDU_PDU_OFF];
+        *pucFrame = ( uint8_t * ) & ucRTUBuf[MB_SER_PDU_PDU_OFF];
     }
     else
     {
@@ -182,7 +182,7 @@ eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, uint16_t * pusLength )
 }
 
 eMBErrorCode
-eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, uint16_t usLength )
+eMBRTUSend( uint8_t ucSlaveAddress, const uint8_t * pucFrame, uint16_t usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     uint16_t          usCRC16;
@@ -196,7 +196,7 @@ eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, uint16_t usLength )
     if( eRcvState == STATE_RX_IDLE )
     {
         /* First byte before the Modbus-PDU is the slave address. */
-        pucSndBufferCur = ( UCHAR * ) pucFrame - 1;
+        pucSndBufferCur = ( uint8_t * ) pucFrame - 1;
         usSndBufferCount = 1;
 
         /* Now copy the Modbus-PDU into the Modbus-Serial-Line-PDU. */
@@ -204,9 +204,9 @@ eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, uint16_t usLength )
         usSndBufferCount += usLength;
 
         /* Calculate CRC16 checksum for Modbus-Serial-Line-PDU. */
-        usCRC16 = usMBCRC16( ( UCHAR * ) pucSndBufferCur, usSndBufferCount );
-        ucRTUBuf[usSndBufferCount++] = ( UCHAR )( usCRC16 & 0xFF );
-        ucRTUBuf[usSndBufferCount++] = ( UCHAR )( usCRC16 >> 8 );
+        usCRC16 = usMBCRC16( ( uint8_t * ) pucSndBufferCur, usSndBufferCount );
+        ucRTUBuf[usSndBufferCount++] = ( uint8_t )( usCRC16 & 0xFF );
+        ucRTUBuf[usSndBufferCount++] = ( uint8_t )( usCRC16 >> 8 );
 
         /* Activate the transmitter. */
         eSndState = STATE_TX_XMIT;
@@ -224,7 +224,7 @@ bool
 xMBRTUReceiveFSM( void )
 {
     bool            xTaskNeedSwitch = false;
-    UCHAR           ucByte;
+    uint8_t           ucByte;
 
     assert( eSndState == STATE_TX_IDLE );
 

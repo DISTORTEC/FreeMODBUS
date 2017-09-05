@@ -61,7 +61,7 @@ vMBPortClose( void )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     bool            bInitialized = true;
     uint16_t          cfg = 0;

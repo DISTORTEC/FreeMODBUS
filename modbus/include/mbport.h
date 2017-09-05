@@ -71,8 +71,8 @@ bool            xMBPortEventGet(  /*@out@ */ eMBEventType * eEvent );
 
 /* ----------------------- Serial port functions ----------------------------*/
 
-bool            xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate,
-                                   UCHAR ucDataBits, eMBParity eParity );
+bool            xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate,
+                                   uint8_t ucDataBits, eMBParity eParity );
 
 void            vMBPortClose( void );
 
@@ -122,9 +122,9 @@ void            vMBTCPPortClose( void );
 
 void            vMBTCPPortDisable( void );
 
-bool            xMBTCPPortGetRequest( UCHAR **ppucMBTCPFrame, uint16_t * usTCPLength );
+bool            xMBTCPPortGetRequest( uint8_t **ppucMBTCPFrame, uint16_t * usTCPLength );
 
-bool            xMBTCPPortSendResponse( const UCHAR *pucMBTCPFrame, uint16_t usTCPLength );
+bool            xMBTCPPortSendResponse( const uint8_t *pucMBTCPFrame, uint16_t usTCPLength );
 
 #ifdef __cplusplus
 }

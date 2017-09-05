@@ -41,7 +41,6 @@
 
 #define assert( x )
 
-typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 /* ----------------------- AVR platform specifics ---------------------------*/

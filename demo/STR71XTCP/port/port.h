@@ -41,7 +41,6 @@ extern "C" {
 #endif
 #define MB_TCP_DEBUG            1       /* Debug output in TCP module. */
 /* ----------------------- Type definitions ---------------------------------*/
-typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 #ifdef MB_TCP_DEBUG
@@ -58,7 +57,7 @@ typedef enum
 #ifdef MB_TCP_DEBUG
 void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
                             const CHAR * szFmt, ... );
-void            prvvMBTCPLogFrame( UCHAR * pucMsg, UCHAR * pucFrame, uint16_t usFrameLen );
+void            prvvMBTCPLogFrame( uint8_t * pucMsg, uint8_t * pucFrame, uint16_t usFrameLen );
 #endif
 
 #ifdef __cplusplus

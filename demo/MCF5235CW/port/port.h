@@ -35,7 +35,6 @@
 #define EXIT_CRITICAL_SECTION( )  prvvPortExitCritical()
 
 /* ----------------------- Type definitions -------------------------------- */
-typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 /* ----------------------- Defines ----------------------------------------- */

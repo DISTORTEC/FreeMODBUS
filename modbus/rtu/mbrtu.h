@@ -37,12 +37,12 @@
 extern "C" {
 #endif
 
-    eMBErrorCode eMBRTUInit( UCHAR slaveAddress, UCHAR ucPort, uint32_t ulBaudRate,
+    eMBErrorCode eMBRTUInit( uint8_t slaveAddress, uint8_t ucPort, uint32_t ulBaudRate,
                              eMBParity eParity );
 void            eMBRTUStart( void );
 void            eMBRTUStop( void );
-eMBErrorCode    eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, uint16_t * pusLength );
-eMBErrorCode    eMBRTUSend( UCHAR slaveAddress, const UCHAR * pucFrame, uint16_t usLength );
+eMBErrorCode    eMBRTUReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame, uint16_t * pusLength );
+eMBErrorCode    eMBRTUSend( uint8_t slaveAddress, const uint8_t * pucFrame, uint16_t usLength );
 bool            xMBRTUReceiveFSM( void );
 bool            xMBRTUTransmitFSM( void );
 bool            xMBRTUTimerT15Expired( void );

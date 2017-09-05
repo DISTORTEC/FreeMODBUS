@@ -61,11 +61,10 @@ static union
 #define ENTER_CRITICAL_SECTION( )   DisableInterrupts;
 #define EXIT_CRITICAL_SECTION( )    EnableInterrupts;
 
-typedef unsigned char           UCHAR;
 typedef char                    CHAR;
 
 /* SaveStatusReg() stores the Condition Code Register here */
-extern UCHAR                    CCR_reg;
+extern uint8_t                    CCR_reg;
 
 /* The bus clock is used for computing timer and baud rate register values */
 #define BM_BUS_CLOCK			4194304 // Hz

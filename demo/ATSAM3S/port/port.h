@@ -50,7 +50,6 @@
 
 #define assert( x )
 
-typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 #define MB_PORT_HAS_CLOSE	                    1

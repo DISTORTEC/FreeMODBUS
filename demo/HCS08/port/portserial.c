@@ -50,7 +50,7 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     /* Compute baud rate generator divider */
     SCI1BD = ( uint16_t ) ( ( ( BM_BUS_CLOCK + 16 / 2 ) / 16 + ulBaudRate / 2 ) / ulBaudRate );

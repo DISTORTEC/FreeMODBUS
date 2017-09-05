@@ -37,7 +37,6 @@
 void            EnterCriticalSection( void );
 void            ExitCriticalSection( void );
 
-typedef unsigned char UCHAR;
 typedef char    CHAR;
 
 #endif

@@ -66,12 +66,12 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 #if MB_FUNC_READ_COILS_ENABLED > 0
 
 eMBException
-eMBFuncReadCoils( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncReadCoils( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usCoilCount;
-    UCHAR           ucNBytes;
-    UCHAR          *pucFrameCur;
+    uint8_t           ucNBytes;
+    uint8_t          *pucFrameCur;
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
@@ -103,11 +103,11 @@ eMBFuncReadCoils( UCHAR * pucFrame, uint16_t * usLen )
              * byte is only partially field with unused coils set to zero. */
             if( ( usCoilCount & 0x0007 ) != 0 )
             {
-                ucNBytes = ( UCHAR )( usCoilCount / 8 + 1 );
+                ucNBytes = ( uint8_t )( usCoilCount / 8 + 1 );
             }
             else
             {
-                ucNBytes = ( UCHAR )( usCoilCount / 8 );
+                ucNBytes = ( uint8_t )( usCoilCount / 8 );
             }
             *pucFrameCur++ = ucNBytes;
             *usLen += 1;
@@ -145,10 +145,10 @@ eMBFuncReadCoils( UCHAR * pucFrame, uint16_t * usLen )
 
 #if MB_FUNC_WRITE_COIL_ENABLED > 0
 eMBException
-eMBFuncWriteCoil( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncWriteCoil( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
-    UCHAR           ucBuf[2];
+    uint8_t           ucBuf[2];
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
@@ -199,12 +199,12 @@ eMBFuncWriteCoil( UCHAR * pucFrame, uint16_t * usLen )
 
 #if MB_FUNC_WRITE_MULTIPLE_COILS_ENABLED > 0
 eMBException
-eMBFuncWriteMultipleCoils( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncWriteMultipleCoils( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usCoilCnt;
-    UCHAR           ucByteCount;
-    UCHAR           ucByteCountVerify;
+    uint8_t           ucByteCount;
+    uint8_t           ucByteCountVerify;
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
@@ -223,11 +223,11 @@ eMBFuncWriteMultipleCoils( UCHAR * pucFrame, uint16_t * usLen )
         /* Compute the number of expected bytes in the request. */
         if( ( usCoilCnt & 0x0007 ) != 0 )
         {
-            ucByteCountVerify = ( UCHAR )( usCoilCnt / 8 + 1 );
+            ucByteCountVerify = ( uint8_t )( usCoilCnt / 8 + 1 );
         }
         else
         {
-            ucByteCountVerify = ( UCHAR )( usCoilCnt / 8 );
+            ucByteCountVerify = ( uint8_t )( usCoilCnt / 8 );
         }
 
         if( ( usCoilCnt >= 1 ) &&

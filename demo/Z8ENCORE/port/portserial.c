@@ -77,9 +77,9 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
-    UCHAR           cfg = 0;
+    uint8_t           cfg = 0;
 
     if( ucDataBits != 8 )
     {
@@ -189,7 +189,7 @@ prvvUARTTxReadyISR( void )
 static void interrupt
 prvvUARTRxISR( void )
 {
-    UCHAR           tmp;
+    uint8_t           tmp;
 
     /* Verify UART error flags */
     if( U0STAT0 & UART_ERRORS )

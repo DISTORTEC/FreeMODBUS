@@ -40,8 +40,8 @@ bool            bRXEnabled;
 void
 vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
-    UCHAR           ucUCR = 0;
-    UCHAR           ucIMR = 0;
+    uint8_t           ucUCR = 0;
+    uint8_t           ucIMR = 0;
 
     if( xRxEnable )
     {
@@ -70,10 +70,10 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     bool            bStatus = true;
-    UCHAR           ucMode = 0;
+    uint8_t           ucMode = 0;
 
     ( void )ucPort;
 
@@ -116,8 +116,8 @@ xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParit
 
         /* UART 0 Clocking */
         MCF_UART_UCSR0 = MCF_UART_UCSR_RCS( 0xd ) | MCF_UART_UCSR_TCS( 0xd );
-        MCF_UART_UBG10 = ( UCHAR ) ( BAUDRATE_VALUE( FSYS_2, ulBaudRate ) >> 8U );
-        MCF_UART_UBG20 = ( UCHAR ) ( BAUDRATE_VALUE( FSYS_2, ulBaudRate ) & 0xFFU );
+        MCF_UART_UBG10 = ( uint8_t ) ( BAUDRATE_VALUE( FSYS_2, ulBaudRate ) >> 8U );
+        MCF_UART_UBG20 = ( uint8_t ) ( BAUDRATE_VALUE( FSYS_2, ulBaudRate ) & 0xFFU );
 
         /* UART 0: Enable interrupts */
         MCF_INTC0_ICR13 = MCF_INTC0_ICRn_IL( 0x2 ) | MCF_INTC0_ICRn_IP( 0x1 );
@@ -137,7 +137,7 @@ xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParit
 bool
 xMBPortSerialPutByte( CHAR ucByte )
 {
-    MCF_UART_UTB0 = ( UCHAR ) ucByte;
+    MCF_UART_UTB0 = ( uint8_t ) ucByte;
     return true;
 }
 

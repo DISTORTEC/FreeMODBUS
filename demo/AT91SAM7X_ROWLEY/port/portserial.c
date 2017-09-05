@@ -86,7 +86,7 @@ STATIC void     vUSART1ISR( void ) __attribute__ ( ( interrupt( "IRQ" ) ) );
 /* ----------------------- Start implementation -----------------------------*/
 
 bool
-xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     bool            bOkay = true;
     unsigned int    uiUARTMode = 0;

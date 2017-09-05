@@ -56,11 +56,11 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 #if MB_FUNC_READ_INPUT_ENABLED > 0
 
 eMBException
-eMBFuncReadInputRegister( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncReadInputRegister( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usRegCount;
-    UCHAR          *pucFrameCur;
+    uint8_t          *pucFrameCur;
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
@@ -89,7 +89,7 @@ eMBFuncReadInputRegister( UCHAR * pucFrame, uint16_t * usLen )
             *usLen += 1;
 
             /* Second byte in the response contain the number of bytes. */
-            *pucFrameCur++ = ( UCHAR )( usRegCount * 2 );
+            *pucFrameCur++ = ( uint8_t )( usRegCount * 2 );
             *usLen += 1;
 
             eRegStatus =

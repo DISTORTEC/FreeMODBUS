@@ -45,7 +45,6 @@ typedef int     SOCKET;
 
 #define SOCKET_ERROR (-1)
 #define INVALID_SOCKET (~0)
-typedef unsigned char UCHAR;
 typedef unsigned char BYTE;
 typedef char    CHAR;
 

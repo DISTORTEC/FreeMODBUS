@@ -57,7 +57,7 @@ prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, uint16_t usBufSize )
 }
 
 LPTSTR
-prvMBTCPPortFrameToString( UCHAR * pucFrame, uint16_t usFrameLen )
+prvMBTCPPortFrameToString( uint8_t * pucFrame, uint16_t usFrameLen )
 {
     LPTSTR          szBuf;
     int             i;

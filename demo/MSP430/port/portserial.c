@@ -53,8 +53,8 @@
 #endif
 
 /* ----------------------- Static variables ---------------------------------*/
-UCHAR           ucGIEWasEnabled = false;
-UCHAR           ucCriticalNesting = 0x00;
+uint8_t           ucGIEWasEnabled = false;
+uint8_t           ucCriticalNesting = 0x00;
 
 /* ----------------------- Start implementation -----------------------------*/
 void
@@ -82,7 +82,7 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     bool            bInitialized = true;
     uint16_t          UxCTL = 0;

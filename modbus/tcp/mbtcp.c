@@ -102,10 +102,10 @@ eMBTCPStop( void )
 }
 
 eMBErrorCode
-eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, uint16_t * pusLength )
+eMBTCPReceive( uint8_t * pucRcvAddress, uint8_t ** ppucFrame, uint16_t * pusLength )
 {
     eMBErrorCode    eStatus = MB_EIO;
-    UCHAR          *pucMBTCPFrame;
+    uint8_t          *pucMBTCPFrame;
     uint16_t          usLength;
     uint16_t          usPID;
 
@@ -134,10 +134,10 @@ eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, uint16_t * pusLength )
 }
 
 eMBErrorCode
-eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame, uint16_t usLength )
+eMBTCPSend( uint8_t _unused, const uint8_t * pucFrame, uint16_t usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
-    UCHAR          *pucMBTCPFrame = ( UCHAR * ) pucFrame - MB_TCP_FUNC;
+    uint8_t          *pucMBTCPFrame = ( uint8_t * ) pucFrame - MB_TCP_FUNC;
     uint16_t          usTCPLength = usLength + MB_TCP_FUNC;
 
     /* The MBAP header is already initialized because the caller calls this

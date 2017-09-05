@@ -42,9 +42,9 @@ extern "C" {
     eMBErrorCode eMBTCPDoInit( uint16_t ucTCPPort );
 void            eMBTCPStart( void );
 void            eMBTCPStop( void );
-eMBErrorCode    eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame,
+eMBErrorCode    eMBTCPReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame,
                                uint16_t * pusLength );
-eMBErrorCode    eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame,
+eMBErrorCode    eMBTCPSend( uint8_t _unused, const uint8_t * pucFrame,
                             uint16_t usLength );
 
 #ifdef __cplusplus

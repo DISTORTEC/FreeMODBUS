@@ -51,15 +51,15 @@ static bool     bRxEnabled;
 static bool     bTxEnabled;
 
 static uint32_t    ulTimeoutMs;
-static UCHAR    ucBuffer[BUF_SIZE];
+static uint8_t    ucBuffer[BUF_SIZE];
 static int      uiRxBufferPos;
 static int      uiTxBufferPos;
 
 static struct termios xOldTIO;
 
 /* ----------------------- Function prototypes ------------------------------*/
-static bool     prvbMBPortSerialRead( UCHAR * pucBuffer, uint16_t usNBytes, uint16_t * usNBytesRead );
-static bool     prvbMBPortSerialWrite( UCHAR * pucBuffer, uint16_t usNBytes );
+static bool     prvbMBPortSerialRead( uint8_t * pucBuffer, uint16_t usNBytes, uint16_t * usNBytesRead );
+static bool     prvbMBPortSerialWrite( uint8_t * pucBuffer, uint16_t usNBytes );
 
 /* ----------------------- Begin implementation -----------------------------*/
 void
@@ -90,7 +90,7 @@ vMBPortSerialEnable( bool bEnableRx, bool bEnableTx )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     CHAR            szDevice[16];
     bool            bStatus = true;
@@ -213,7 +213,7 @@ vMBPortClose( void )
 }
 
 bool
-prvbMBPortSerialRead( UCHAR * pucBuffer, uint16_t usNBytes, uint16_t * usNBytesRead )
+prvbMBPortSerialRead( uint8_t * pucBuffer, uint16_t usNBytes, uint16_t * usNBytesRead )
 {
     bool            bResult = true;
     ssize_t         res;
@@ -259,7 +259,7 @@ prvbMBPortSerialRead( UCHAR * pucBuffer, uint16_t usNBytes, uint16_t * usNBytesR
 }
 
 bool
-prvbMBPortSerialWrite( UCHAR * pucBuffer, uint16_t usNBytes )
+prvbMBPortSerialWrite( uint8_t * pucBuffer, uint16_t usNBytes )
 {
     ssize_t         res;
     size_t          left = ( size_t ) usNBytes;

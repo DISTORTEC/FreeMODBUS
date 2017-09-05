@@ -77,7 +77,7 @@ SOCKET          xListenSocket;
 SOCKET          xClientSocket = INVALID_SOCKET;
 static fd_set   allset;
 
-static UCHAR    aucTCPBuf[MB_TCP_BUF_SIZE];
+static uint8_t    aucTCPBuf[MB_TCP_BUF_SIZE];
 static uint16_t   usTCPBufPos;
 static uint16_t   usTCPFrameBytesLeft;
 
@@ -86,7 +86,7 @@ CHAR           *WsaError2String( int dwError );
 
 /* ----------------------- Static functions ---------------------------------*/
 bool            prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, uint16_t usBufSize );
-CHAR           *prvMBTCPPortFrameToString( UCHAR * pucFrame, uint16_t usFrameLen );
+CHAR           *prvMBTCPPortFrameToString( uint8_t * pucFrame, uint16_t usFrameLen );
 static bool     prvbMBPortAcceptClient( void );
 static void     prvvMBPortReleaseClient( void );
 
@@ -278,7 +278,7 @@ xMBPortTCPPool( void )
  */
 
 bool
-xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, uint16_t * usTCPLength )
+xMBTCPPortGetRequest( uint8_t ** ppucMBTCPFrame, uint16_t * usTCPLength )
 {
     *ppucMBTCPFrame = &aucTCPBuf[0];
     *usTCPLength = usTCPBufPos;
@@ -290,7 +290,7 @@ xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, uint16_t * usTCPLength )
 }
 
 bool
-xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, uint16_t usTCPLength )
+xMBTCPPortSendResponse( const uint8_t * pucMBTCPFrame, uint16_t usTCPLength )
 {
     bool            bFrameSent = false;
     bool            bAbort = false;

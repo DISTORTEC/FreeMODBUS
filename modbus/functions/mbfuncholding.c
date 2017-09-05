@@ -74,7 +74,7 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 #if MB_FUNC_WRITE_HOLDING_ENABLED > 0
 
 eMBException
-eMBFuncWriteHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncWriteHoldingRegister( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     eMBException    eStatus = MB_EX_NONE;
@@ -107,11 +107,11 @@ eMBFuncWriteHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
 
 #if MB_FUNC_WRITE_MULTIPLE_HOLDING_ENABLED > 0
 eMBException
-eMBFuncWriteMultipleHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncWriteMultipleHoldingRegister( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usRegCount;
-    UCHAR           ucRegByteCount;
+    uint8_t           ucRegByteCount;
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
@@ -129,7 +129,7 @@ eMBFuncWriteMultipleHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
 
         if( ( usRegCount >= 1 ) &&
             ( usRegCount <= MB_PDU_FUNC_WRITE_MUL_REGCNT_MAX ) &&
-            ( ucRegByteCount == ( UCHAR ) ( 2 * usRegCount ) ) )
+            ( ucRegByteCount == ( uint8_t ) ( 2 * usRegCount ) ) )
         {
             /* Make callback to update the register values. */
             eRegStatus =
@@ -167,11 +167,11 @@ eMBFuncWriteMultipleHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
 #if MB_FUNC_READ_HOLDING_ENABLED > 0
 
 eMBException
-eMBFuncReadHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncReadHoldingRegister( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usRegCount;
-    UCHAR          *pucFrameCur;
+    uint8_t          *pucFrameCur;
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
@@ -199,7 +199,7 @@ eMBFuncReadHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
             *usLen += 1;
 
             /* Second byte in the response contain the number of bytes. */
-            *pucFrameCur++ = ( UCHAR ) ( usRegCount * 2 );
+            *pucFrameCur++ = ( uint8_t ) ( usRegCount * 2 );
             *usLen += 1;
 
             /* Make callback to fill the buffer. */
@@ -232,14 +232,14 @@ eMBFuncReadHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
 #if MB_FUNC_READWRITE_HOLDING_ENABLED > 0
 
 eMBException
-eMBFuncReadWriteMultipleHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncReadWriteMultipleHoldingRegister( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegReadAddress;
     uint16_t          usRegReadCount;
     uint16_t          usRegWriteAddress;
     uint16_t          usRegWriteCount;
-    UCHAR           ucRegWriteByteCount;
-    UCHAR          *pucFrameCur;
+    uint8_t           ucRegWriteByteCount;
+    uint8_t          *pucFrameCur;
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
@@ -281,7 +281,7 @@ eMBFuncReadWriteMultipleHoldingRegister( UCHAR * pucFrame, uint16_t * usLen )
                 *usLen += 1;
 
                 /* Second byte in the response contain the number of bytes. */
-                *pucFrameCur++ = ( UCHAR ) ( usRegReadCount * 2 );
+                *pucFrameCur++ = ( uint8_t ) ( usRegReadCount * 2 );
                 *usLen += 1;
 
                 /* Make the read callback. */

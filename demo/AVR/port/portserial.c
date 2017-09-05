@@ -71,9 +71,9 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPORT, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
-    UCHAR ucUCSRC = 0;
+    uint8_t ucUCSRC = 0;
 
     /* prevent compiler warning. */
     (void)ucPORT;

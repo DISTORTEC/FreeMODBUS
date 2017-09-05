@@ -48,7 +48,6 @@ extern          "C"
     typedef signed char BYTE;
     typedef unsigned char UBYTE;
 
-    typedef unsigned char UCHAR;
     typedef char    CHAR;
 
 /* ----------------------- Function prototypes ------------------------------*/

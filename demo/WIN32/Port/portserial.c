@@ -40,7 +40,7 @@ static HANDLE   g_hSerial;
 static bool     bRxEnabled;
 static bool     bTxEnabled;
 
-static UCHAR    ucBuffer[BUF_SIZE];
+static uint8_t    ucBuffer[BUF_SIZE];
 static INT      uiRxBufferPos;
 static INT      uiTxBufferPos;
 
@@ -76,7 +76,7 @@ vMBPortSerialEnable( bool bEnableRx, bool bEnableTx )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits,
+xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits,
                    eMBParity eParity )
 {
     TCHAR           szDevice[8];

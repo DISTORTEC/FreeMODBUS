@@ -50,7 +50,7 @@ void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
 static struct tcp_pcb *pxPCBListen;
 static struct tcp_pcb *pxPCBClient;
 
-static UCHAR    aucTCPBuf[MB_TCP_BUF_SIZE];
+static uint8_t    aucTCPBuf[MB_TCP_BUF_SIZE];
 static uint16_t   usTCPBufPos;
 
 /* ----------------------- Static functions ---------------------------------*/
@@ -291,7 +291,7 @@ prvxMBTCPPortReceive( void *pvArg, struct tcp_pcb *pxPCB, struct pbuf *p, err_t 
 }
 
 bool
-xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, uint16_t * usTCPLength )
+xMBTCPPortGetRequest( uint8_t ** ppucMBTCPFrame, uint16_t * usTCPLength )
 {
     *ppucMBTCPFrame = &aucTCPBuf[0];
     *usTCPLength = usTCPBufPos;
@@ -302,7 +302,7 @@ xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, uint16_t * usTCPLength )
 }
 
 bool
-xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, uint16_t usTCPLength )
+xMBTCPPortSendResponse( const uint8_t * pucMBTCPFrame, uint16_t usTCPLength )
 {
     bool            bFrameSent = false;
 

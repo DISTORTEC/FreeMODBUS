@@ -41,8 +41,8 @@ bool            bRXEnabled;
 void
 vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
-    UCHAR           ucUCR = 0;
-    UCHAR           ucIMR = 0;
+    uint8_t           ucUCR = 0;
+    uint8_t           ucIMR = 0;
 
     if( xRxEnable )
     {
@@ -71,10 +71,10 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialInit( UCHAR ucPort, uint32_t ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     bool            bStatus = true;
-    UCHAR           ucMode = 0;
+    uint8_t           ucMode = 0;
 
     (void)ucPort;
 

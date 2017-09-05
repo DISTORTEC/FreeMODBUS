@@ -42,8 +42,6 @@
 #define SMCLK                       ( 4000000UL )
 #define ACLK                        ( 32768UL )
 
-typedef unsigned char UCHAR;
-
 typedef char    CHAR;
 
 void            EnterCriticalSection( void );

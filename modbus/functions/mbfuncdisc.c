@@ -46,12 +46,12 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 #if MB_FUNC_READ_COILS_ENABLED > 0
 
 eMBException
-eMBFuncReadDiscreteInputs( UCHAR * pucFrame, uint16_t * usLen )
+eMBFuncReadDiscreteInputs( uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usDiscreteCnt;
-    UCHAR           ucNBytes;
-    UCHAR          *pucFrameCur;
+    uint8_t           ucNBytes;
+    uint8_t          *pucFrameCur;
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
@@ -83,11 +83,11 @@ eMBFuncReadDiscreteInputs( UCHAR * pucFrame, uint16_t * usLen )
              * byte is only partially field with unused coils set to zero. */
             if( ( usDiscreteCnt & 0x0007 ) != 0 )
             {
-                ucNBytes = ( UCHAR ) ( usDiscreteCnt / 8 + 1 );
+                ucNBytes = ( uint8_t ) ( usDiscreteCnt / 8 + 1 );
             }
             else
             {
-                ucNBytes = ( UCHAR ) ( usDiscreteCnt / 8 );
+                ucNBytes = ( uint8_t ) ( usDiscreteCnt / 8 );
             }
             *pucFrameCur++ = ucNBytes;
             *usLen += 1;
