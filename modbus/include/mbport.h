@@ -31,6 +31,8 @@
 #ifndef _MB_PORT_H
 #define _MB_PORT_H
 
+#include "mbparity.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -47,20 +49,6 @@ typedef enum
     EV_EXECUTE,                 /*!< Execute function. */
     EV_FRAME_SENT               /*!< Frame sent. */
 } eMBEventType;
-
-/*! \ingroup modbus
- * \brief Parity used for characters in serial mode.
- *
- * The parity which should be applied to the characters sent over the serial
- * link. Please note that this values are actually passed to the porting
- * layer and therefore not all parity modes might be available.
- */
-typedef enum
-{
-    MB_PAR_NONE,                /*!< No parity. */
-    MB_PAR_ODD,                 /*!< Odd parity. */
-    MB_PAR_EVEN                 /*!< Even parity. */
-} eMBParity;
 
 /* ----------------------- Supporting functions -----------------------------*/
 bool            xMBPortEventInit( void );
