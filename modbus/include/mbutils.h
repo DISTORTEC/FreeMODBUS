@@ -31,9 +31,12 @@
 #ifndef _MB_UTILS_H
 #define _MB_UTILS_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 /*! \defgroup modbus_utils Utilities
  *
  * This module contains some utility functions which can be used by
