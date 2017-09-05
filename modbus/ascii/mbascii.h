@@ -32,7 +32,7 @@
 #define _MB_ASCII_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 
 #if MB_ASCII_ENABLED > 0
@@ -51,6 +51,6 @@ BOOL            xMBASCIITimerT1SExpired( void );
 #endif
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

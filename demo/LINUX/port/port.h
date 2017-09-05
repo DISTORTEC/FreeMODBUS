@@ -25,11 +25,9 @@
 #include <assert.h>
 
 #define INLINE
-#define PR_BEGIN_EXTERN_C           extern "C" {
-#define PR_END_EXTERN_C             }
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 /* ----------------------- Defines ------------------------------------------*/
 #define ENTER_CRITICAL_SECTION( ) vMBPortEnterCritical()
@@ -70,6 +68,6 @@ BOOL            xMBPortSerialPoll(  );
 BOOL            xMBPortSerialSetTimeout( ULONG dwTimeoutMs );
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

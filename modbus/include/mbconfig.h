@@ -32,7 +32,7 @@
 #define _MB_CONFIG_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 /* ----------------------- Defines ------------------------------------------*/
 /*! \defgroup modbus_cfg Modbus Configuration
@@ -127,6 +127,6 @@ PR_BEGIN_EXTERN_C
 
 /*! @} */
 #ifdef __cplusplus
-    PR_END_EXTERN_C
+    }
 #endif
 #endif

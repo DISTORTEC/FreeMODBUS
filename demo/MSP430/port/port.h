@@ -32,8 +32,6 @@
 
 /* ----------------------- Defines ------------------------------------------*/
 #define	INLINE
-#define PR_BEGIN_EXTERN_C           extern "C" {
-#define	PR_END_EXTERN_C             }
 
 #define ENTER_CRITICAL_SECTION( )   EnterCriticalSection( )
 #define EXIT_CRITICAL_SECTION( )    ExitCriticalSection( )

@@ -26,8 +26,6 @@
 #include <inttypes.h>
 
 #define	INLINE                      inline
-#define PR_BEGIN_EXTERN_C           extern "C" {
-#define	PR_END_EXTERN_C             }
 
 #define ENTER_CRITICAL_SECTION( )
 #define EXIT_CRITICAL_SECTION( )

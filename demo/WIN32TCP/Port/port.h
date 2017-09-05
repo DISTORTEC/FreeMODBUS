@@ -27,11 +27,9 @@
 #include <assert.h>
 
 #define	INLINE
-#define PR_BEGIN_EXTERN_C			extern "C" {
-#define	PR_END_EXTERN_C				}
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 
 /* ----------------------- Defines ------------------------------------------*/
@@ -62,6 +60,6 @@ void            vMBPortLog( eMBPortLogLevel eLevel, const TCHAR * szModule,
                             const TCHAR * szFmt, ... );
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

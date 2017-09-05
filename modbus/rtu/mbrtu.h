@@ -32,7 +32,7 @@
 #define _MB_RTU_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
     eMBErrorCode eMBRTUInit( UCHAR slaveAddress, UCHAR ucPort, ULONG ulBaudRate,
                              eMBParity eParity );
@@ -46,6 +46,6 @@ BOOL            xMBRTUTimerT15Expired( void );
 BOOL            xMBRTUTimerT35Expired( void );
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

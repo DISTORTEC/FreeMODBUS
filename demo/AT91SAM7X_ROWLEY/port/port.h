@@ -37,8 +37,6 @@ extern          "C"
 #define INLINE                         inline
 #define STATIC                         static
 
-#define PR_BEGIN_EXTERN_C              extern "C" {
-#define	PR_END_EXTERN_C                }
 
 #define MB_PORT_HAS_CLOSE              1
 #define ENTER_CRITICAL_SECTION( )      vMBPPortEnterCritical( )

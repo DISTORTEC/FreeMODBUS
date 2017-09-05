@@ -32,7 +32,7 @@
 #define _MB_FUNC_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 #if MB_FUNC_OTHER_REP_SLAVEID_BUF > 0
     eMBException eMBFuncReportSlaveID( UCHAR * pucFrame, USHORT * usLen );
@@ -75,6 +75,6 @@ eMBException    eMBFuncReadWriteMultipleHoldingRegister( UCHAR * pucFrame, USHOR
 #endif
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

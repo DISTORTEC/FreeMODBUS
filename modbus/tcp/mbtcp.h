@@ -32,7 +32,7 @@
 #define _MB_TCP_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 
 /* ----------------------- Defines ------------------------------------------*/
@@ -48,6 +48,6 @@ eMBErrorCode    eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame,
                             USHORT usLength );
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

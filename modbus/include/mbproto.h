@@ -32,7 +32,7 @@
 #define _MB_PROTO_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_ADDRESS_BROADCAST    ( 0 )   /*! Modbus broadcast address. */
@@ -78,6 +78,6 @@ typedef struct
 } xMBFunctionHandler;
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

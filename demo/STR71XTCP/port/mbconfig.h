@@ -23,7 +23,7 @@
 #define _MB_CONFIG_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 /* ----------------------- Defines ------------------------------------------*/
 /*! \defgroup modbus_cfg Modbus Configuration
@@ -87,6 +87,6 @@ PR_BEGIN_EXTERN_C
 #define MB_FUNC_READ_DISCRETE_INPUTS_ENABLED    (  1 )
 /*! @} */
 #ifdef __cplusplus
-    PR_END_EXTERN_C
+    }
 #endif
 #endif

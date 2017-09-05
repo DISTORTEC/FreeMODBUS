@@ -32,7 +32,7 @@
 #define _MB_UTILS_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 /*! \defgroup modbus_utils Utilities
  *
@@ -103,6 +103,6 @@ UCHAR           xMBUtilGetBits( UCHAR * ucByteBuf, USHORT usBitOffset,
 /*! @} */
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

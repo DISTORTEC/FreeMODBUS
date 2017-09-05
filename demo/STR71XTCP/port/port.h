@@ -34,8 +34,6 @@
 
 #define assert( x )             LWIP_ASSERT( #x, x );
 
-#define PR_BEGIN_EXTERN_C       extern "C" {
-#define PR_END_EXTERN_C         }
 /*
 #ifndef TRUE
 #define TRUE                    1
@@ -46,7 +44,7 @@
 #endif*/
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 #define MB_TCP_DEBUG            1       /* Debug output in TCP module. */
 /* ----------------------- Type definitions ---------------------------------*/
@@ -79,6 +77,6 @@ void            prvvMBTCPLogFrame( UCHAR * pucMsg, UCHAR * pucFrame, USHORT usFr
 #endif
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

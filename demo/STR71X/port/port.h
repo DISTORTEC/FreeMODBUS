@@ -32,9 +32,6 @@
 
 #define INLINE                      inline
 
-#define PR_BEGIN_EXTERN_C           extern "C" {
-#define	PR_END_EXTERN_C             }
-
 #define ENTER_CRITICAL_SECTION( )   portENTER_CRITICAL( )
 #define EXIT_CRITICAL_SECTION( )    portEXIT_CRITICAL( )
 

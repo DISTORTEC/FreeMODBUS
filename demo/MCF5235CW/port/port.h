@@ -25,8 +25,6 @@
 
 /* ----------------------- Defines ----------------------------------------- */
 #define	INLINE
-#define PR_BEGIN_EXTERN_C         extern "C" {
-#define	PR_END_EXTERN_C           }
 
 #undef assert
 #define assert( x )

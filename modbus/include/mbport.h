@@ -32,7 +32,7 @@
 #define _MB_PORT_H
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 
 /* ----------------------- Type definitions ---------------------------------*/
@@ -124,6 +124,6 @@ BOOL            xMBTCPPortGetRequest( UCHAR **ppucMBTCPFrame, USHORT * usTCPLeng
 BOOL            xMBTCPPortSendResponse( const UCHAR *pucMBTCPFrame, USHORT usTCPLength );
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

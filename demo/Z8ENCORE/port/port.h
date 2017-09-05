@@ -27,8 +27,6 @@
 #include <eZ8.h>
 
 #define	INLINE
-#define PR_BEGIN_EXTERN_C           extern "C" {
-#define	PR_END_EXTERN_C             }
 
 #define CLOCK						18432000
 

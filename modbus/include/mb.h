@@ -33,12 +33,12 @@
 
 #include "port.h"
 
-#ifdef __cplusplus
-PR_BEGIN_EXTERN_C
-#endif
-
 #include "mbport.h"
 #include "mbproto.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*! \defgroup modbus Modbus
  * \code #include "mb.h" \endcode
@@ -412,6 +412,6 @@ eMBErrorCode    eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress,
                                   USHORT usNDiscrete );
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif
