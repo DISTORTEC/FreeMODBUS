@@ -44,6 +44,8 @@
 #include "mbcrc.h"
 #include "mbport.h"
 
+#include <assert.h>
+
 #if MB_ASCII_ENABLED > 0
 
 /* ----------------------- Defines ------------------------------------------*/

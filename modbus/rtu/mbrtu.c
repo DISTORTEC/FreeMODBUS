@@ -43,6 +43,8 @@
 #include "mbcrc.h"
 #include "mbport.h"
 
+#include <assert.h>
+
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_SER_PDU_SIZE_MIN     4       /*!< Minimum size of a Modbus RTU frame. */
 #define MB_SER_PDU_SIZE_MAX     256     /*!< Maximum size of a Modbus RTU frame. */

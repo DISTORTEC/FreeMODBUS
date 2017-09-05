@@ -22,7 +22,6 @@
 #ifndef _PORT_H
 #define _PORT_H
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 
