@@ -31,7 +31,11 @@
 #ifndef _MB_RTU_H
 #define _MB_RTU_H
 
+#include "mberrorcode.h"
+#include "mbparity.h"
+
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
