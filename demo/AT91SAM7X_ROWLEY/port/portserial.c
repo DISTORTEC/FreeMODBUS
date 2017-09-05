@@ -227,7 +227,7 @@ vUSARTIRQHandler( void )
 }
 
 bool
-xMBPortSerialPutByte( CHAR ucByte )
+xMBPortSerialPutByte( int8_t ucByte )
 {
     assert( NULL != xSerialHdls[0].pxCOM );
     AT91F_US_PutChar( xSerialHdls[0].pxCOM, ucByte );
@@ -235,10 +235,10 @@ xMBPortSerialPutByte( CHAR ucByte )
 }
 
 bool
-xMBPortSerialGetByte( CHAR * pucByte )
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     assert( NULL != xSerialHdls[0].pxCOM );
-    *pucByte = ( CHAR ) AT91F_US_GetChar( xSerialHdls[0].pxCOM );
+    *pucByte = ( int8_t ) AT91F_US_GetChar( xSerialHdls[0].pxCOM );
     return true;
 }
 

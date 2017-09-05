@@ -151,14 +151,14 @@ vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 }
 
 bool
-xMBPortSerialPutByte( CHAR ucByte )
+xMBPortSerialPutByte( int8_t ucByte )
 {
     MB_UART_DEV->TxBUFR = ucByte;
     return true;
 }
 
 bool
-xMBPortSerialGetByte( CHAR * pucByte )
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     *pucByte = MB_UART_DEV->RxBUFR;
     return true;

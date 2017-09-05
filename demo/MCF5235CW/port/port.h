@@ -34,9 +34,6 @@
 #define ENTER_CRITICAL_SECTION( ) prvvPortEnterCritical()
 #define EXIT_CRITICAL_SECTION( )  prvvPortExitCritical()
 
-/* ----------------------- Type definitions -------------------------------- */
-typedef char    CHAR;
-
 /* ----------------------- Defines ----------------------------------------- */
 void            prvvPortEnterCritical(  );
 void            prvvPortExitCritical(  );

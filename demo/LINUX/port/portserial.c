@@ -92,7 +92,7 @@ vMBPortSerialEnable( bool bEnableRx, bool bEnableTx )
 bool
 xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
-    CHAR            szDevice[16];
+    char            szDevice[16];
     bool            bStatus = true;
 
     struct termios  xNewTIO;
@@ -334,7 +334,7 @@ xMBPortSerialPoll(  )
 }
 
 bool
-xMBPortSerialPutByte( CHAR ucByte )
+xMBPortSerialPutByte( int8_t ucByte )
 {
     assert( uiTxBufferPos < BUF_SIZE );
     ucBuffer[uiTxBufferPos] = ucByte;
@@ -343,7 +343,7 @@ xMBPortSerialPutByte( CHAR ucByte )
 }
 
 bool
-xMBPortSerialGetByte( CHAR * pucByte )
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     assert( uiRxBufferPos < BUF_SIZE );
     *pucByte = ucBuffer[uiRxBufferPos];

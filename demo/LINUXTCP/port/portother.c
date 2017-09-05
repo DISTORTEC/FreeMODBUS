@@ -38,28 +38,28 @@
 
 
 bool
-prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, uint16_t usBufSize )
+prvMBTCPPortAddressToString( SOCKET xSocket, int8_t * szAddr, uint16_t usBufSize )
 {
     return true;
 }
 
-CHAR           *
+int8_t           *
 prvMBTCPPortFrameToString( uint8_t * pucFrame, uint16_t usFrameLen )
 {
     return NULL;
 }
 
-CHAR           *
+int8_t           *
 WsaError2String( int iError )
 {
     return NULL;
 }
 
 void
-vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule, const CHAR * szFmt, ... )
+vMBPortLog( eMBPortLogLevel eLevel, const int8_t * szModule, const char * szFmt, ... )
 {
     va_list         args;
-    static const CHAR *arszLevel2Str[] = { "DEBUG", "INFO", "WARN", "ERROR" };
+    static const char *arszLevel2Str[] = { "DEBUG", "INFO", "WARN", "ERROR" };
 
     fprintf( stderr, "%s: %s: ", arszLevel2Str[eLevel], szModule );
 

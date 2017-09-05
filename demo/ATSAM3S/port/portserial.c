@@ -213,14 +213,14 @@ vMBPortSerialClose( void )
 }
 
 bool
-xMBPortSerialPutByte( CHAR ucByte )
+xMBPortSerialPutByte( int8_t ucByte )
 {
     USART1->US_THR = ucByte;
     return true;
 }
 
 bool
-xMBPortSerialGetByte( CHAR * pucByte )
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     *pucByte = USART1->US_RHR;
     return true;

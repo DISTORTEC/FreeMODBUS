@@ -70,7 +70,7 @@ int
 main( int argc, char *argv[] )
 {
     int             iExitCode;
-    CHAR           cCh;
+    int8_t           cCh;
     bool            bDoExit;
 
     if( eMBTCPInit( MB_TCP_PORT_USE_DEFAULT ) != MB_ENOERR )

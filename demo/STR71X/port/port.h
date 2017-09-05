@@ -37,6 +37,4 @@
 #define ENTER_CRITICAL_SECTION( )   portENTER_CRITICAL( )
 #define EXIT_CRITICAL_SECTION( )    portEXIT_CRITICAL( )
 
-typedef char    CHAR;
-
 #endif

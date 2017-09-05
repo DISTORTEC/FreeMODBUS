@@ -44,14 +44,12 @@ extern "C" {
     MB_LOG_DEBUG = 3
 } eMBPortLogLevel;
 
-typedef char    CHAR;
-
 /* ----------------------- Function prototypes ------------------------------*/
 
 void            vMBPortEnterCritical( void );
 void            vMBPortExitCritical( void );
-void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
-                            const CHAR * szFmt, ... );
+void            vMBPortLog( eMBPortLogLevel eLevel, const char * szModule,
+                            const char * szFmt, ... );
 void            vMBPortTimerPoll(  );
 bool            xMBPortSerialPoll(  );
 bool            xMBPortSerialSetTimeout( uint32_t dwTimeoutMs );

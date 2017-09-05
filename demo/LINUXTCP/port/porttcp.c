@@ -82,11 +82,11 @@ static uint16_t   usTCPBufPos;
 static uint16_t   usTCPFrameBytesLeft;
 
 /* ----------------------- External functions -------------------------------*/
-CHAR           *WsaError2String( int dwError );
+int8_t           *WsaError2String( int dwError );
 
 /* ----------------------- Static functions ---------------------------------*/
-bool            prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, uint16_t usBufSize );
-CHAR           *prvMBTCPPortFrameToString( uint8_t * pucFrame, uint16_t usFrameLen );
+bool            prvMBTCPPortAddressToString( SOCKET xSocket, int8_t * szAddr, uint16_t usBufSize );
+int8_t           *prvMBTCPPortFrameToString( uint8_t * pucFrame, uint16_t usFrameLen );
 static bool     prvbMBPortAcceptClient( void );
 static void     prvvMBPortReleaseClient( void );
 

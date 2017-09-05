@@ -34,6 +34,4 @@
 #define ENTER_CRITICAL_SECTION( )   DI()
 #define EXIT_CRITICAL_SECTION( )    EI()
 
-typedef char    CHAR;
-
 #endif

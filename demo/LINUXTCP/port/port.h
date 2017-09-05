@@ -46,7 +46,6 @@ typedef int     SOCKET;
 #define SOCKET_ERROR (-1)
 #define INVALID_SOCKET (~0)
 typedef unsigned char BYTE;
-typedef char    CHAR;
 
 typedef enum
 {
@@ -58,7 +57,7 @@ typedef enum
 
 /* ----------------------- Function prototypes ------------------------------*/
 
-void            TcpvMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule, const CHAR * szFmt,
+void            TcpvMBPortLog( eMBPortLogLevel eLevel, const char * szModule, const char * szFmt,
                                ... );
 
 #ifdef __cplusplus

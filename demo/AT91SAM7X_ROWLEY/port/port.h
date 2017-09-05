@@ -48,8 +48,6 @@ extern          "C"
     typedef signed char BYTE;
     typedef unsigned char UBYTE;
 
-    typedef char    CHAR;
-
 /* ----------------------- Function prototypes ------------------------------*/
     bool            bMBPIsWithinException( void );
     void            vMBPInit( void );

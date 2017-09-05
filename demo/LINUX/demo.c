@@ -100,7 +100,7 @@ int
 main( int argc, char *argv[] )
 {
     int             iExitCode;
-    CHAR            cCh;
+    int8_t            cCh;
 
     const uint8_t     ucSlaveID[] = { 0xAA, 0xBB, 0xCC };
     if( !bSetSignal( SIGQUIT, vSigShutdown ) ||

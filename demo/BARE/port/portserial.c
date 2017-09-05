@@ -45,7 +45,7 @@ xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBP
 }
 
 bool
-xMBPortSerialPutByte( CHAR ucByte )
+xMBPortSerialPutByte( int8_t ucByte )
 {
     /* Put a byte in the UARTs transmit buffer. This function is called
      * by the protocol stack if pxMBFrameCBTransmitterEmpty( ) has been
@@ -54,7 +54,7 @@ xMBPortSerialPutByte( CHAR ucByte )
 }
 
 bool
-xMBPortSerialGetByte( CHAR * pucByte )
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     /* Return the byte in the UARTs receive buffer. This function is called
      * by the protocol stack after pxMBFrameCBByteReceived( ) has been called.

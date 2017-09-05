@@ -33,13 +33,13 @@
 
 #ifdef MB_TCP_DEBUG
 void
-prvvMBTCPLogFrame( uint8_t * pucMsg, uint8_t * pucFrame, uint16_t usFrameLen )
+prvvMBTCPLogFrame( char * pucMsg, uint8_t * pucFrame, uint16_t usFrameLen )
 {
     int             i;
     int             res = 0;
     int             iBufPos = 0;
     size_t          iBufLeft = MB_FRAME_LOG_BUFSIZE;
-    static CHAR     arcBuffer[MB_FRAME_LOG_BUFSIZE];
+    static int8_t     arcBuffer[MB_FRAME_LOG_BUFSIZE];
 
     assert( pucFrame != NULL );
 
@@ -112,7 +112,7 @@ prvvMBTCPLogFrame( uint8_t * pucMsg, uint8_t * pucFrame, uint16_t usFrameLen )
 #endif
 
 void
-vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule, const CHAR * szFmt, ... )
+vMBPortLog( eMBPortLogLevel eLevel, const int8_t * szModule, const int8_t * szFmt, ... )
 {
     va_list         args;
     static const char *arszLevel2Str[] = { "DEBUG", "INFO", "WARN", "ERROR" };

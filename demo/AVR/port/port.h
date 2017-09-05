@@ -41,8 +41,6 @@
 
 #define assert( x )
 
-typedef char    CHAR;
-
 /* ----------------------- AVR platform specifics ---------------------------*/
 
 #if defined (__AVR_ATmega168__)

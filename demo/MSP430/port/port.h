@@ -30,7 +30,7 @@
 #if defined (__GNUC__)
 #include <signal.h>
 #endif
-#undef CHAR
+#undef int8_t
 
 /* ----------------------- Defines ------------------------------------------*/
 #define	INLINE
@@ -41,8 +41,6 @@
 
 #define SMCLK                       ( 4000000UL )
 #define ACLK                        ( 32768UL )
-
-typedef char    CHAR;
 
 void            EnterCriticalSection( void );
 void            ExitCriticalSection( void );

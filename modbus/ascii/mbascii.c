@@ -227,7 +227,7 @@ xMBASCIIReceiveFSM( void )
 
     assert( eSndState == STATE_TX_IDLE );
 
-    ( void )xMBPortSerialGetByte( ( CHAR * ) & ucByte );
+    ( void )xMBPortSerialGetByte( ( int8_t * ) & ucByte );
     switch ( eRcvState )
     {
         /* A new character is received. If the character is a ':' the input
@@ -340,7 +340,7 @@ xMBASCIITransmitFSM( void )
          * the character ':'. */
     case STATE_TX_START:
         ucByte = ':';
-        xMBPortSerialPutByte( ( CHAR )ucByte );
+        xMBPortSerialPutByte( ( int8_t )ucByte );
         eSndState = STATE_TX_DATA;
         eBytePos = BYTE_HIGH_NIBBLE;
         break;
@@ -356,13 +356,13 @@ xMBASCIITransmitFSM( void )
             {
             case BYTE_HIGH_NIBBLE:
                 ucByte = prvucMBBIN2CHAR( ( uint8_t )( *pucSndBufferCur >> 4 ) );
-                xMBPortSerialPutByte( ( CHAR ) ucByte );
+                xMBPortSerialPutByte( ( int8_t ) ucByte );
                 eBytePos = BYTE_LOW_NIBBLE;
                 break;
 
             case BYTE_LOW_NIBBLE:
                 ucByte = prvucMBBIN2CHAR( ( uint8_t )( *pucSndBufferCur & 0x0F ) );
-                xMBPortSerialPutByte( ( CHAR )ucByte );
+                xMBPortSerialPutByte( ( int8_t )ucByte );
                 pucSndBufferCur++;
                 eBytePos = BYTE_HIGH_NIBBLE;
                 usSndBufferCount--;
@@ -378,7 +378,7 @@ xMBASCIITransmitFSM( void )
 
         /* Finish the frame by sending a LF character. */
     case STATE_TX_END:
-        xMBPortSerialPutByte( ( CHAR )ucMBLFCharacter );
+        xMBPortSerialPutByte( ( int8_t )ucMBLFCharacter );
         /* We need another state to make sure that the CR character has
          * been sent. */
         eSndState = STATE_TX_NOTIFY;
@@ -479,7 +479,7 @@ prvucMBLRC( uint8_t * pucFrame, uint16_t usLen )
     }
 
     /* Return twos complement */
-    ucLRC = ( uint8_t ) ( -( ( CHAR ) ucLRC ) );
+    ucLRC = ( uint8_t ) ( -( ( int8_t ) ucLRC ) );
     return ucLRC;
 }
 

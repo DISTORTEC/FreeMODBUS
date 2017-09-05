@@ -50,8 +50,6 @@
 
 #define assert( x )
 
-typedef char    CHAR;
-
 #define MB_PORT_HAS_CLOSE	                    1
 #define MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS    2
 

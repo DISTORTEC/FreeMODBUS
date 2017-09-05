@@ -80,9 +80,9 @@ void            xMBPortSerialClose( void );
 
 void            vMBPortSerialEnable( bool xRxEnable, bool xTxEnable );
 
-bool            xMBPortSerialGetByte( CHAR * pucByte );
+bool            xMBPortSerialGetByte( int8_t * pucByte );
 
-bool            xMBPortSerialPutByte( CHAR ucByte );
+bool            xMBPortSerialPutByte( int8_t ucByte );
 
 /* ----------------------- Timers functions ---------------------------------*/
 bool            xMBPortTimersInit( uint16_t usTimeOut50us );

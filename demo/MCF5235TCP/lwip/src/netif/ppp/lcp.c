@@ -555,7 +555,7 @@ static void lcp_addci(fsm *f, u_char *ucp, int *lenp)
 	}
 #define ADDCICHAR(opt, neg, val) \
 	if (neg) { \
-	    LCPDEBUG((LOG_INFO, "lcp_addci: CHAR opt=%d %X '%z'\n", opt, val, val)); \
+	    LCPDEBUG((LOG_INFO, "lcp_addci: int8_t opt=%d %X '%z'\n", opt, val, val)); \
 		PUTCHAR(opt, ucp); \
 		PUTCHAR(CILEN_CHAR, ucp); \
 		PUTCHAR(val, ucp); \

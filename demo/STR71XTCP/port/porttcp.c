@@ -43,8 +43,8 @@
 
 /* ----------------------- Prototypes ---------------------------------------*/
 void            vMBPortEventClose( void );
-void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
-                            const CHAR * szFmt, ... );
+void            vMBPortLog( eMBPortLogLevel eLevel, const char * szModule,
+                            const char * szFmt, ... );
 
 /* ----------------------- Static variables ---------------------------------*/
 static struct tcp_pcb *pxPCBListen;

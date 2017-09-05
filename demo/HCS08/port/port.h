@@ -61,8 +61,6 @@ static union
 #define ENTER_CRITICAL_SECTION( )   DisableInterrupts;
 #define EXIT_CRITICAL_SECTION( )    EnableInterrupts;
 
-typedef char                    CHAR;
-
 /* SaveStatusReg() stores the Condition Code Register here */
 extern uint8_t                    CCR_reg;
 

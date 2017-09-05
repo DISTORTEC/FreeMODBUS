@@ -129,7 +129,7 @@ xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBP
 }
 
 bool
-xMBPortSerialPutByte( CHAR ucByte )
+xMBPortSerialPutByte( int8_t ucByte )
 {
     U1THR = ucByte;
 
@@ -142,7 +142,7 @@ xMBPortSerialPutByte( CHAR ucByte )
 }
 
 bool
-xMBPortSerialGetByte( CHAR * pucByte )
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     while( !( U1LSR & 0x01 ) )
     {

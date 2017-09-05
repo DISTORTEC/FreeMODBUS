@@ -279,7 +279,7 @@ xMBPortSerialPoll(  )
 }
 
 bool
-xMBPortSerialPutByte( CHAR ucByte )
+xMBPortSerialPutByte( int8_t ucByte )
 {
     assert( uiTxBufferPos < BUF_SIZE );
     ucBuffer[uiTxBufferPos] = ucByte;
@@ -288,7 +288,7 @@ xMBPortSerialPutByte( CHAR ucByte )
 }
 
 bool
-xMBPortSerialGetByte( CHAR * pucByte )
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     assert( uiRxBufferPos < BUF_SIZE );
     *pucByte = ucBuffer[uiRxBufferPos];

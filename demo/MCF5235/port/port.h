@@ -35,6 +35,4 @@
 inline void     prvvPortEnterCritical(  );
 inline void     prvvPortExitCritical(  );
 
-typedef char    CHAR;
-
 #endif

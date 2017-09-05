@@ -37,6 +37,4 @@
 void            EnterCriticalSection( void );
 void            ExitCriticalSection( void );
 
-typedef char    CHAR;
-
 #endif

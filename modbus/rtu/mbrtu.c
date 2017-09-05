@@ -229,7 +229,7 @@ xMBRTUReceiveFSM( void )
     assert( eSndState == STATE_TX_IDLE );
 
     /* Always read the character. */
-    ( void )xMBPortSerialGetByte( ( CHAR * ) & ucByte );
+    ( void )xMBPortSerialGetByte( ( int8_t * ) & ucByte );
 
     switch ( eRcvState )
     {
@@ -300,7 +300,7 @@ xMBRTUTransmitFSM( void )
         /* check if we are finished. */
         if( usSndBufferCount != 0 )
         {
-            xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur );
+            xMBPortSerialPutByte( ( int8_t )*pucSndBufferCur );
             pucSndBufferCur++;  /* next byte in sendbuffer. */
             usSndBufferCount--;
         }
