@@ -43,10 +43,6 @@ extern          "C"
 #define ENTER_CRITICAL_SECTION( )      vMBPPortEnterCritical( )
 #define EXIT_CRITICAL_SECTION( )       vMBPPortExitCritical( )
 
-/* ----------------------- Type definitions ---------------------------------*/
-
-    typedef unsigned char UBYTE;
-
 /* ----------------------- Function prototypes ------------------------------*/
     bool            bMBPIsWithinException( void );
     void            vMBPInit( void );
