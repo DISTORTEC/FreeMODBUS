@@ -31,6 +31,11 @@
 #ifndef _MB_FUNC_H
 #define _MB_FUNC_H
 
+#include "mbconfig.h"
+#include "mbexception.h"
+
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
