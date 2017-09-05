@@ -23,35 +23,15 @@
 #define _PORT_H
 
 #include <assert.h>
+#include <stdbool.h>
 
 #include <eZ8.h>
 
 #define	INLINE
-#define PR_BEGIN_EXTERN_C           extern "C" {
-#define	PR_END_EXTERN_C             }
 
 #define CLOCK						18432000
 
 #define ENTER_CRITICAL_SECTION( )   DI()
 #define EXIT_CRITICAL_SECTION( )    EI()
-
-typedef unsigned char BOOL;
-
-typedef unsigned char UCHAR;
-typedef char    CHAR;
-
-typedef unsigned int USHORT;
-typedef int     SHORT;
-
-typedef unsigned long ULONG;
-typedef long    LONG;
-
-#ifndef TRUE
-#define TRUE            1
-#endif
-
-#ifndef FALSE
-#define FALSE           0
-#endif
 
 #endif

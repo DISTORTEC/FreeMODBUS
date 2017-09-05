@@ -25,48 +25,48 @@
 
 /* ----------------------- Variables ----------------------------------------*/
 static eMBEventType eQueuedEvent;
-static BOOL     xEventInQueue;
+static bool     xEventInQueue;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortEventInit( void )
 {
-    xEventInQueue = FALSE;
-    return TRUE;
+    xEventInQueue = false;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventPost( eMBEventType eEvent )
 {
-    xEventInQueue = TRUE;
+    xEventInQueue = true;
     eQueuedEvent = eEvent;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventGet( eMBEventType * eEvent )
 {
-    BOOL            xEventHappened = FALSE;
+    bool            xEventHappened = false;
 
     if( xEventInQueue )
     {
         *eEvent = eQueuedEvent;
-        xEventInQueue = FALSE;
-        xEventHappened = TRUE;
+        xEventInQueue = false;
+        xEventHappened = true;
     }
     else
-    {        
+    {
         /* Poll the serial device. The serial device timeouts if no
          * characters have been received within for t3.5 during an
          * active transmission or if nothing happens within a specified
          * amount of time. Both timeouts are configured from the timer
          * init functions.
          */
-        ( void )xMBPortSerialPoll(  );  
+        ( void )xMBPortSerialPoll(  );
 
         /* Check if any of the timers have expired. */
         vMBPortTimerPoll(  );
-     
+
     }
     return xEventHappened;
 }

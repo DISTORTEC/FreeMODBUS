@@ -8,20 +8,12 @@
 #ifndef _CPU_MCF5XXX_H
 #define _CPU_MCF5XXX_H
 
+#include <stdbool.h>
+
 /***********************************************************************/
 /*
  * Misc. Defines
  */
-
-#ifdef	FALSE
-#undef	FALSE
-#endif
-#define FALSE	(0)
-
-#ifdef	TRUE
-#undef	TRUE
-#endif
-#define	TRUE	(1)
 
 #ifdef	NULL
 #undef	NULL
@@ -159,7 +151,7 @@ typedef volatile uint32		vuint32; /* 32 bits */
 /*
  * Functions provided by mcf5xxx.s
  */
- 
+
 int 	asm_set_ipl (uint32);
 void	mcf5xxx_wr_cacr (uint32);
 void	mcf5xxx_wr_acr0 (uint32);
@@ -187,4 +179,3 @@ void	mcf5xxx_wr_mbar1 (uint32);
 /********************************************************************/
 
 #endif	/* _CPU_MCF5XXX_H */
-

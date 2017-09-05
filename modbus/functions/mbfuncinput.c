@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -28,18 +28,10 @@
  * File: $Id: mbfuncinput.c,v 1.10 2007/09/12 10:15:56 wolti Exp $
  */
 
-/* ----------------------- System includes ----------------------------------*/
-#include "stdlib.h"
-#include "string.h"
+ #include "mbfunc.h"
 
-/* ----------------------- Platform includes --------------------------------*/
-#include "port.h"
-
-/* ----------------------- Modbus includes ----------------------------------*/
-#include "mb.h"
-#include "mbframe.h"
-#include "mbproto.h"
-#include "mbconfig.h"
+ #include "mb.h"
+ #include "mbframe.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_PDU_FUNC_READ_ADDR_OFF           ( MB_PDU_DATA_OFF )
@@ -56,26 +48,26 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 #if MB_FUNC_READ_INPUT_ENABLED > 0
 
 eMBException
-eMBFuncReadInputRegister( UCHAR * pucFrame, USHORT * usLen )
+eMBFuncReadInputRegister( uint8_t * pucFrame, uint16_t * usLen )
 {
-    USHORT          usRegAddress;
-    USHORT          usRegCount;
-    UCHAR          *pucFrameCur;
+    uint16_t          usRegAddress;
+    uint16_t          usRegCount;
+    uint8_t          *pucFrameCur;
 
     eMBException    eStatus = MB_EX_NONE;
     eMBErrorCode    eRegStatus;
 
     if( *usLen == ( MB_PDU_FUNC_READ_SIZE + MB_PDU_SIZE_MIN ) )
     {
-        usRegAddress = ( USHORT )( pucFrame[MB_PDU_FUNC_READ_ADDR_OFF] << 8 );
-        usRegAddress |= ( USHORT )( pucFrame[MB_PDU_FUNC_READ_ADDR_OFF + 1] );
+        usRegAddress = ( uint16_t )( pucFrame[MB_PDU_FUNC_READ_ADDR_OFF] << 8 );
+        usRegAddress |= ( uint16_t )( pucFrame[MB_PDU_FUNC_READ_ADDR_OFF + 1] );
         usRegAddress++;
 
-        usRegCount = ( USHORT )( pucFrame[MB_PDU_FUNC_READ_REGCNT_OFF] << 8 );
-        usRegCount |= ( USHORT )( pucFrame[MB_PDU_FUNC_READ_REGCNT_OFF + 1] );
+        usRegCount = ( uint16_t )( pucFrame[MB_PDU_FUNC_READ_REGCNT_OFF] << 8 );
+        usRegCount |= ( uint16_t )( pucFrame[MB_PDU_FUNC_READ_REGCNT_OFF + 1] );
 
         /* Check if the number of registers to read is valid. If not
-         * return Modbus illegal data value exception. 
+         * return Modbus illegal data value exception.
          */
         if( ( usRegCount >= 1 )
             && ( usRegCount <= MB_PDU_FUNC_READ_REGCNT_MAX ) )
@@ -89,7 +81,7 @@ eMBFuncReadInputRegister( UCHAR * pucFrame, USHORT * usLen )
             *usLen += 1;
 
             /* Second byte in the response contain the number of bytes. */
-            *pucFrameCur++ = ( UCHAR )( usRegCount * 2 );
+            *pucFrameCur++ = ( uint8_t )( usRegCount * 2 );
             *usLen += 1;
 
             eRegStatus =

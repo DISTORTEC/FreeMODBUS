@@ -21,7 +21,7 @@
 
  /**********************************************************
  *	Linux TCP support.
- *	Based on Walter's project. 
+ *	Based on Walter's project.
  *	Modified by Steven Guo <gotop167@163.com>
  ***********************************************************/
 
@@ -31,37 +31,37 @@
 
 /* ----------------------- Variables ----------------------------------------*/
 static eMBEventType eQueuedEvent;
-static BOOL     xEventInQueue;
+static bool     xEventInQueue;
 
 /* ----------------------- Function prototypes ------------------------------*/
-BOOL            xMBPortTCPPool( void );
+bool            xMBPortTCPPool( void );
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortEventInit( void )
 {
-    xEventInQueue = FALSE;
-    return TRUE;
+    xEventInQueue = false;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventPost( eMBEventType eEvent )
 {
-    xEventInQueue = TRUE;
+    xEventInQueue = true;
     eQueuedEvent = eEvent;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventGet( eMBEventType * eEvent )
 {
-    BOOL            xEventHappened = FALSE;
+    bool            xEventHappened = false;
 
     if( xEventInQueue )
     {
         *eEvent = eQueuedEvent;
-        xEventInQueue = FALSE;
-        xEventHappened = TRUE;
+        xEventInQueue = false;
+        xEventHappened = true;
     }
     else
     {

@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -31,9 +31,14 @@
 #ifndef _MB_FRAME_H
 #define _MB_FRAME_H
 
+#include "mberrorcode.h"
+
+#include <stdint.h>
+
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
+
 
 /*!
  * Constants which defines the format of a modbus frame. The example is
@@ -71,17 +76,17 @@ typedef void    ( *pvMBFrameStart ) ( void );
 
 typedef void    ( *pvMBFrameStop ) ( void );
 
-typedef eMBErrorCode( *peMBFrameReceive ) ( UCHAR * pucRcvAddress,
-                                            UCHAR ** pucFrame,
-                                            USHORT * pusLength );
+typedef eMBErrorCode( *peMBFrameReceive ) ( uint8_t * pucRcvAddress,
+                                            uint8_t ** pucFrame,
+                                            uint16_t * pusLength );
 
-typedef eMBErrorCode( *peMBFrameSend ) ( UCHAR slaveAddress,
-                                         const UCHAR * pucFrame,
-                                         USHORT usLength );
+typedef eMBErrorCode( *peMBFrameSend ) ( uint8_t slaveAddress,
+                                         const uint8_t * pucFrame,
+                                         uint16_t usLength );
 
 typedef void( *pvMBFrameClose ) ( void );
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

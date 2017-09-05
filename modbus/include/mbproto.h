@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -31,9 +31,14 @@
 #ifndef _MB_PROTO_H
 #define _MB_PROTO_H
 
+#include "mbexception.h"
+
+#include <stdint.h>
+
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
+
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_ADDRESS_BROADCAST    ( 0 )   /*! Modbus broadcast address. */
 #define MB_ADDRESS_MIN          ( 1 )   /*! Smallest possible slave address. */
@@ -55,29 +60,16 @@ PR_BEGIN_EXTERN_C
 #define MB_FUNC_OTHER_REPORT_SLAVEID          ( 17 )
 #define MB_FUNC_ERROR                         ( 128 )
 /* ----------------------- Type definitions ---------------------------------*/
-    typedef enum
-{
-    MB_EX_NONE = 0x00,
-    MB_EX_ILLEGAL_FUNCTION = 0x01,
-    MB_EX_ILLEGAL_DATA_ADDRESS = 0x02,
-    MB_EX_ILLEGAL_DATA_VALUE = 0x03,
-    MB_EX_SLAVE_DEVICE_FAILURE = 0x04,
-    MB_EX_ACKNOWLEDGE = 0x05,
-    MB_EX_SLAVE_BUSY = 0x06,
-    MB_EX_MEMORY_PARITY_ERROR = 0x08,
-    MB_EX_GATEWAY_PATH_FAILED = 0x0A,
-    MB_EX_GATEWAY_TGT_FAILED = 0x0B
-} eMBException;
 
-typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+typedef         eMBException( *pxMBFunctionHandler ) ( uint8_t * pucFrame, uint16_t * pusLength );
 
 typedef struct
 {
-    UCHAR           ucFunctionCode;
+    uint8_t           ucFunctionCode;
     pxMBFunctionHandler pxHandler;
 } xMBFunctionHandler;
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

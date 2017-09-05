@@ -51,14 +51,14 @@
 #define MB_TIMER_TICKS          ( 20000UL )
 
 /* ----------------------- Static variables ---------------------------------*/
-static USHORT   usTimerDeltaOCRA;
+static uint16_t   usTimerDeltaOCRA;
 
 /* ----------------------- Static functions ---------------------------------*/
 void            prvvMBTimerIRQHandler( void ) __attribute__ ( ( naked ) );
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+bool
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     /* Calculate output compare value for timer1. */
     usTimerDeltaOCRA =
@@ -77,7 +77,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     EIC_IRQChannelConfig( MB_TIMER_IRQ_CH, ENABLE );
     EIC_IRQChannelPriorityConfig( MB_TIMER_IRQ_CH, MB_IRQ_PRIORITY );
 
-    return TRUE;
+    return true;
 }
 
 void

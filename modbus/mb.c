@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -28,21 +28,15 @@
  * File: $Id: mb.c,v 1.28 2010/06/06 13:54:40 wolti Exp $
  */
 
-/* ----------------------- System includes ----------------------------------*/
-#include "stdlib.h"
-#include "string.h"
+#include "mb.h"
 
-/* ----------------------- Platform includes --------------------------------*/
 #include "port.h"
 
-/* ----------------------- Modbus includes ----------------------------------*/
-#include "mb.h"
 #include "mbconfig.h"
 #include "mbframe.h"
-#include "mbproto.h"
 #include "mbfunc.h"
-
 #include "mbport.h"
+
 #if MB_RTU_ENABLED == 1
 #include "mbrtu.h"
 #endif
@@ -53,13 +47,17 @@
 #include "mbtcp.h"
 #endif
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
 #ifndef MB_PORT_HAS_CLOSE
 #define MB_PORT_HAS_CLOSE 0
 #endif
 
 /* ----------------------- Static variables ---------------------------------*/
 
-static UCHAR    ucMBAddress;
+static uint8_t    ucMBAddress;
 static eMBMode  eMBCurrentMode;
 
 static enum
@@ -82,12 +80,12 @@ static pvMBFrameClose pvMBFrameCloseCur;
  * an external event has happend which includes a timeout or the reception
  * or transmission of a character.
  */
-BOOL( *pxMBFrameCBByteReceived ) ( void );
-BOOL( *pxMBFrameCBTransmitterEmpty ) ( void );
-BOOL( *pxMBPortCBTimerExpired ) ( void );
+bool( *pxMBFrameCBByteReceived ) ( void );
+bool( *pxMBFrameCBTransmitterEmpty ) ( void );
+bool( *pxMBPortCBTimerExpired ) ( void );
 
-BOOL( *pxMBFrameCBReceiveFSMCur ) ( void );
-BOOL( *pxMBFrameCBTransmitFSMCur ) ( void );
+bool( *pxMBFrameCBReceiveFSMCur ) ( void );
+bool( *pxMBFrameCBTransmitFSMCur ) ( void );
 
 /* An array of Modbus functions handlers which associates Modbus function
  * codes with implementing functions.
@@ -127,7 +125,7 @@ static xMBFunctionHandler xFuncHandlers[MB_FUNC_HANDLERS_MAX] = {
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBInit( eMBMode eMode, UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity )
+eMBInit( eMBMode eMode, uint8_t ucSlaveAddress, uint8_t ucPort, uint32_t ulBaudRate, eMBParity eParity )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -194,7 +192,7 @@ eMBInit( eMBMode eMode, UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eM
 
 #if MB_TCP_ENABLED > 0
 eMBErrorCode
-eMBTCPInit( USHORT ucTCPPort )
+eMBTCPInit( uint16_t ucTCPPort )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -223,7 +221,7 @@ eMBTCPInit( USHORT ucTCPPort )
 #endif
 
 eMBErrorCode
-eMBRegisterCB( UCHAR ucFunctionCode, pxMBFunctionHandler pxHandler )
+eMBRegisterCB( uint8_t ucFunctionCode, pxMBFunctionHandler pxHandler )
 {
     int             i;
     eMBErrorCode    eStatus;
@@ -331,10 +329,10 @@ eMBDisable( void )
 eMBErrorCode
 eMBPoll( void )
 {
-    static UCHAR   *ucMBFrame;
-    static UCHAR    ucRcvAddress;
-    static UCHAR    ucFunctionCode;
-    static USHORT   usLength;
+    static uint8_t   *ucMBFrame;
+    static uint8_t    ucRcvAddress;
+    static uint8_t    ucFunctionCode;
+    static uint16_t   usLength;
     static eMBException eException;
 
     int             i;
@@ -349,7 +347,7 @@ eMBPoll( void )
 
     /* Check if there is a event available. If not return control to caller.
      * Otherwise we will handle the event. */
-    if( xMBPortEventGet( &eEvent ) == TRUE )
+    if( xMBPortEventGet( &eEvent ) == true )
     {
         switch ( eEvent )
         {
@@ -393,13 +391,13 @@ eMBPoll( void )
                 {
                     /* An exception occured. Build an error frame. */
                     usLength = 0;
-                    ucMBFrame[usLength++] = ( UCHAR )( ucFunctionCode | MB_FUNC_ERROR );
+                    ucMBFrame[usLength++] = ( uint8_t )( ucFunctionCode | MB_FUNC_ERROR );
                     ucMBFrame[usLength++] = eException;
                 }
                 if( ( eMBCurrentMode == MB_ASCII ) && MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS )
                 {
                     vMBPortTimersDelay( MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS );
-                }                
+                }
                 eStatus = peMBFrameSendCur( ucMBAddress, ucMBFrame, usLength );
             }
             break;

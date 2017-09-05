@@ -41,7 +41,7 @@
   { \
     DEBUG_PORT_DIR |= ( 1 << DEBUG_PIN_RX ) | ( 1 << DEBUG_PIN_TX ); \
     DEBUG_PORT_OUT &= ~( ( 1 << DEBUG_PIN_RX ) | ( 1 << DEBUG_PIN_TX ) ); \
-  } while( 0 ); 
+  } while( 0 );
 #define DEBUG_TOGGLE_RX( ) DEBUG_PORT_OUT ^= ( 1 << DEBUG_PIN_RX )
 #define DEBUG_TOGGLE_TX( ) DEBUG_PORT_OUT ^= ( 1 << DEBUG_PIN_TX )
 
@@ -53,12 +53,12 @@
 #endif
 
 /* ----------------------- Static variables ---------------------------------*/
-UCHAR           ucGIEWasEnabled = FALSE;
-UCHAR           ucCriticalNesting = 0x00;
+uint8_t           ucGIEWasEnabled = false;
+uint8_t           ucCriticalNesting = 0x00;
 
 /* ----------------------- Start implementation -----------------------------*/
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     ENTER_CRITICAL_SECTION(  );
     if( xRxEnable )
@@ -81,12 +81,12 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     EXIT_CRITICAL_SECTION(  );
 }
 
-BOOL
-xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+bool
+xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
-    BOOL            bInitialized = TRUE;
-    USHORT          UxCTL = 0;
-    USHORT          UxBR = ( USHORT ) ( SMCLK / ulBaudRate );
+    bool            bInitialized = true;
+    uint16_t          UxCTL = 0;
+    uint16_t          UxBR = ( uint16_t ) ( SMCLK / ulBaudRate );
 
     switch ( eParity )
     {
@@ -107,7 +107,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     case 7:
         break;
     default:
-        bInitialized = FALSE;
+        bInitialized = false;
     }
     if( bInitialized )
     {
@@ -139,18 +139,18 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     return bInitialized;
 }
 
-BOOL
-xMBPortSerialPutByte( CHAR ucByte )
+bool
+xMBPortSerialPutByte( int8_t ucByte )
 {
     TXBUF0 = ucByte;
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialGetByte( CHAR * pucByte )
+bool
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     *pucByte = RXBUF0;
-    return TRUE;
+    return true;
 }
 
 #if defined (__GNUC__)
@@ -178,7 +178,7 @@ prvvMBSerialTXIRQHandler( void ) __interrupt[USART0TX_VECTOR]
 void
 EnterCriticalSection( void )
 {
-    USHORT usOldSR;
+    uint16_t usOldSR;
     if( ucCriticalNesting == 0 )
     {
 #if defined (__GNUC__)
@@ -187,7 +187,7 @@ EnterCriticalSection( void )
 #else
         usOldSR = _DINT( );
 #endif
-        ucGIEWasEnabled = usOldSR & GIE ? TRUE : FALSE;
+        ucGIEWasEnabled = usOldSR & GIE ? true : false;
     }
     ucCriticalNesting++;
 }

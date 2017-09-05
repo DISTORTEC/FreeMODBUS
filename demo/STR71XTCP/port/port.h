@@ -23,6 +23,8 @@
 #ifndef _PORT_H
 #define _PORT_H
 
+#include <stdbool.h>
+
 /* ----------------------- Platform includes --------------------------------*/
 #include "71x_type.h"
 #include "lwip/opt.h"
@@ -34,33 +36,11 @@
 
 #define assert( x )             LWIP_ASSERT( #x, x );
 
-#define PR_BEGIN_EXTERN_C       extern "C" {
-#define PR_END_EXTERN_C         }
-/*
-#ifndef TRUE
-#define TRUE                    1
-#endif
-
-#ifndef FALSE
-#define FALSE                   0
-#endif*/
-
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 #define MB_TCP_DEBUG            1       /* Debug output in TCP module. */
 /* ----------------------- Type definitions ---------------------------------*/
-typedef char    BOOL;
-
-typedef unsigned char UCHAR;
-typedef char    CHAR;
-
-typedef unsigned short USHORT;
-typedef short   SHORT;
-
-typedef unsigned long ULONG;
-typedef long    LONG;
-
 #ifdef MB_TCP_DEBUG
 typedef enum
 {
@@ -73,12 +53,12 @@ typedef enum
 
 /* ----------------------- Function prototypes ------------------------------*/
 #ifdef MB_TCP_DEBUG
-void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
-                            const CHAR * szFmt, ... );
-void            prvvMBTCPLogFrame( UCHAR * pucMsg, UCHAR * pucFrame, USHORT usFrameLen );
+void            vMBPortLog( eMBPortLogLevel eLevel, const char * szModule,
+                            const char * szFmt, ... );
+void            prvvMBTCPLogFrame( char * pucMsg, uint8_t * pucFrame, uint16_t usFrameLen );
 #endif
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

@@ -32,7 +32,7 @@
 
  /**********************************************************
  *	Linux TCP support.
- *	Based on Walter's project. 
+ *	Based on Walter's project.
  *	Modified by Steven Guo <gotop167@163.com>
  ***********************************************************/
 
@@ -77,26 +77,26 @@ SOCKET          xListenSocket;
 SOCKET          xClientSocket = INVALID_SOCKET;
 static fd_set   allset;
 
-static UCHAR    aucTCPBuf[MB_TCP_BUF_SIZE];
-static USHORT   usTCPBufPos;
-static USHORT   usTCPFrameBytesLeft;
+static uint8_t    aucTCPBuf[MB_TCP_BUF_SIZE];
+static uint16_t   usTCPBufPos;
+static uint16_t   usTCPFrameBytesLeft;
 
 /* ----------------------- External functions -------------------------------*/
-CHAR           *WsaError2String( int dwError );
+int8_t           *WsaError2String( int dwError );
 
 /* ----------------------- Static functions ---------------------------------*/
-BOOL            prvMBTCPPortAddressToString( SOCKET xSocket, CHAR * szAddr, USHORT usBufSize );
-CHAR           *prvMBTCPPortFrameToString( UCHAR * pucFrame, USHORT usFrameLen );
-static BOOL     prvbMBPortAcceptClient( void );
+bool            prvMBTCPPortAddressToString( SOCKET xSocket, int8_t * szAddr, uint16_t usBufSize );
+int8_t           *prvMBTCPPortFrameToString( uint8_t * pucFrame, uint16_t usFrameLen );
+static bool     prvbMBPortAcceptClient( void );
 static void     prvvMBPortReleaseClient( void );
 
 
 /* ----------------------- Begin implementation -----------------------------*/
 
-BOOL
-xMBTCPPortInit( USHORT usTCPPort )
+bool
+xMBTCPPortInit( uint16_t usTCPPort )
 {
-    USHORT          usPort;
+    uint16_t          usPort;
     struct sockaddr_in serveraddr;
 
     if( usTCPPort == 0 )
@@ -105,7 +105,7 @@ xMBTCPPortInit( USHORT usTCPPort )
     }
     else
     {
-        usPort = ( USHORT ) usTCPPort;
+        usPort = ( uint16_t ) usTCPPort;
     }
     memset( &serveraddr, 0, sizeof( serveraddr ) );
     serveraddr.sin_family = AF_INET;
@@ -114,27 +114,27 @@ xMBTCPPortInit( USHORT usTCPPort )
     if( ( xListenSocket = socket( AF_INET, SOCK_STREAM, IPPROTO_TCP ) ) == -1 )
     {
         fprintf( stderr, "Create socket failed.\r\n" );
-        return FALSE;
+        return false;
     }
     else if( bind( xListenSocket, ( struct sockaddr * )&serveraddr, sizeof( serveraddr ) ) == -1 )
     {
         fprintf( stderr, "Bind socket failed.\r\n" );
-        return FALSE;
+        return false;
     }
     else if( listen( xListenSocket, 5 ) == -1 )
     {
         fprintf( stderr, "Listen socket failed.\r\n" );
-        return FALSE;
+        return false;
     }
     FD_ZERO( &allset );
     FD_SET( xListenSocket, &allset );
-    return TRUE;
+    return true;
 }
 
 void
 vMBTCPPortClose(  )
 {
-    // Close all client sockets. 
+    // Close all client sockets.
     if( xClientSocket != SOCKET_ERROR )
     {
         prvvMBPortReleaseClient(  );
@@ -162,8 +162,8 @@ vMBTCPPortDisable( void )
  *   for new events.
  * \internal
  *
- * This function checks if new clients want to connect or if already connected 
- * clients are sending requests. If a new client is connected and there are 
+ * This function checks if new clients want to connect or if already connected
+ * clients are sending requests. If a new client is connected and there are
  * still client slots left (The current implementation supports only one)
  * then the connection is accepted and an event object for the new client
  * socket is activated (See prvbMBPortAcceptClient() ).
@@ -172,11 +172,11 @@ vMBTCPPortDisable( void )
  * In case of an \c FD_READ command the existing data is read from the client
  * and if a complete frame has been received the Modbus Stack is notified.
  *
- * \return FALSE in case of an internal I/O error. For example if the internal
- *   event objects are in an invalid state. Note that this does not include any 
- *   client errors. In all other cases returns TRUE.
+ * \return false in case of an internal I/O error. For example if the internal
+ *   event objects are in an invalid state. Note that this does not include any
+ *   client errors. In all other cases returns true.
  */
-BOOL
+bool
 xMBPortTCPPool( void )
 {
     int             n;
@@ -186,7 +186,7 @@ xMBPortTCPPool( void )
     tval.tv_sec = 0;
     tval.tv_usec = 5000;
     int             ret;
-    USHORT          usLength;
+    uint16_t          usLength;
 
     if( xClientSocket == INVALID_SOCKET )
     {
@@ -207,7 +207,7 @@ xMBPortTCPPool( void )
             ( void )prvbMBPortAcceptClient(  );
         }
     }
-    while( TRUE )
+    while( true )
     {
         FD_ZERO( &fread );
         FD_SET( xClientSocket, &fread );
@@ -226,7 +226,7 @@ xMBPortTCPPool( void )
                 {
                     close( xClientSocket );
                     xClientSocket = INVALID_SOCKET;
-                    return TRUE;
+                    return true;
                 }
                 usTCPBufPos += ret;
                 usTCPFrameBytesLeft -= ret;
@@ -246,7 +246,7 @@ xMBPortTCPPool( void )
                     else if( usTCPBufPos == ( MB_TCP_UID + usLength ) )
                     {
                         ( void )xMBPortEventPost( EV_FRAME_RECEIVED );
-                        return TRUE;
+                        return true;
                     }
                     /* This can not happend because we always calculate the number of bytes
                      * to receive. */
@@ -258,27 +258,27 @@ xMBPortTCPPool( void )
             }
         }
     }
-    return TRUE;
+    return true;
 }
 
 /*!
  * \ingroup port_win32tcp
  * \brief Receives parts of a Modbus TCP frame and if complete notifies
  *    the protocol stack.
- * \internal 
+ * \internal
  *
  * This function reads a complete Modbus TCP frame from the protocol stack.
  * It starts by reading the header with an initial request size for
- * usTCPFrameBytesLeft = MB_TCP_FUNC. If the header is complete the 
+ * usTCPFrameBytesLeft = MB_TCP_FUNC. If the header is complete the
  * number of bytes left can be calculated from it (See Length in MBAP header).
  * Further read calls are issued until the frame is complete.
  *
- * \return \c TRUE if part of a Modbus TCP frame could be processed. In case
- *   of a communication error the function returns \c FALSE.
+ * \return \c true if part of a Modbus TCP frame could be processed. In case
+ *   of a communication error the function returns \c false.
  */
 
-BOOL
-xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
+bool
+xMBTCPPortGetRequest( uint8_t ** ppucMBTCPFrame, uint16_t * usTCPLength )
 {
     *ppucMBTCPFrame = &aucTCPBuf[0];
     *usTCPLength = usTCPBufPos;
@@ -286,14 +286,14 @@ xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
     /* Reset the buffer. */
     usTCPBufPos = 0;
     usTCPFrameBytesLeft = MB_TCP_FUNC;
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
+bool
+xMBTCPPortSendResponse( const uint8_t * pucMBTCPFrame, uint16_t usTCPLength )
 {
-    BOOL            bFrameSent = FALSE;
-    BOOL            bAbort = FALSE;
+    bool            bFrameSent = false;
+    bool            bAbort = false;
     int             res;
     int             iBytesSent = 0;
     int             iTimeOut = MB_TCP_READ_TIMEOUT;
@@ -311,12 +311,12 @@ xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
             }
             else
             {
-                bAbort = TRUE;
+                bAbort = true;
             }
             break;
         case 0:
             prvvMBPortReleaseClient(  );
-            bAbort = TRUE;
+            bAbort = true;
             break;
         default:
             iBytesSent += res;
@@ -325,7 +325,7 @@ xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
     }
     while( ( iBytesSent != usTCPLength ) && !bAbort );
 
-    bFrameSent = iBytesSent == usTCPLength ? TRUE : FALSE;
+    bFrameSent = iBytesSent == usTCPLength ? true : false;
 
     return bFrameSent;
 }
@@ -339,29 +339,29 @@ prvvMBPortReleaseClient(  )
     xClientSocket = INVALID_SOCKET;
 }
 
-BOOL
+bool
 prvbMBPortAcceptClient(  )
 {
     SOCKET          xNewSocket;
-    BOOL            bOkay;
+    bool            bOkay;
 
     /* Check if we can handle a new connection. */
 
     if( xClientSocket != INVALID_SOCKET )
     {
         fprintf( stderr, "can't accept new client. all connections in use.\n" );
-        bOkay = FALSE;
+        bOkay = false;
     }
     else if( ( xNewSocket = accept( xListenSocket, NULL, NULL ) ) == INVALID_SOCKET )
     {
-        bOkay = FALSE;
+        bOkay = false;
     }
     else
     {
         xClientSocket = xNewSocket;
         usTCPBufPos = 0;
         usTCPFrameBytesLeft = MB_TCP_FUNC;
-        bOkay = TRUE;
+        bOkay = true;
     }
     return bOkay;
 }

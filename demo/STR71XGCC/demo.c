@@ -77,7 +77,7 @@ vInitTask( void *pvParameters )
     assert( eStatus == MB_ENOERR );
 
     /* Configure the slave id of the device. */
-    eStatus = eMBSetSlaveID( 44, TRUE, ucSlaveIDAdditonal, 3 );
+    eStatus = eMBSetSlaveID( 44, true, ucSlaveIDAdditonal, 3 );
     assert( eStatus == MB_ENOERR );
 
     /* Enable the Modbus Protocol Stack. */
@@ -86,7 +86,7 @@ vInitTask( void *pvParameters )
     for( ;; )
     {
         /* Call the main polling loop of the Modbus protocol stack. Internally
-         * the polling loop waits for a new event by calling the port 
+         * the polling loop waits for a new event by calling the port
          * dependent function xMBPortEventGet(  ). In the FreeRTOS port the
          * event layer is built with queues.
          */
@@ -98,7 +98,7 @@ vInitTask( void *pvParameters )
 }
 
 eMBErrorCode
-eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
+eMBRegInputCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     int             iRegIndex;
@@ -124,20 +124,20 @@ eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 }
 
 eMBErrorCode
-eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
+eMBRegHoldingCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs, eMBRegisterMode eMode )
 {
     return MB_ENOREG;
 }
 
 
 eMBErrorCode
-eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils, eMBRegisterMode eMode )
+eMBRegCoilsCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNCoils, eMBRegisterMode eMode )
 {
     return MB_ENOREG;
 }
 
 eMBErrorCode
-eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
+eMBRegDiscreteCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNDiscrete )
 {
     return MB_ENOREG;
 }

@@ -24,37 +24,17 @@
 #define _PORT_H
 
 #include <assert.h>
+#include <stdbool.h>
 
 /* ----------------------- Defines ------------------------------------------*/
 
 #define INLINE                  inline
-#define PR_BEGIN_EXTERN_C       extern "C" {
-#define PR_END_EXTERN_C         }
-
-#ifndef TRUE
-#define TRUE                    1
-#endif
-
-#ifndef FALSE
-#define FALSE                   0
-#endif
 
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
 #define MB_TCP_DEBUG            1       /* Debug output in TCP module. */
 /* ----------------------- Type definitions ---------------------------------*/
-typedef char    BOOL;
-
-typedef unsigned char UCHAR;
-typedef char    CHAR;
-
-typedef unsigned short USHORT;
-typedef short   SHORT;
-
-typedef unsigned long ULONG;
-typedef long    LONG;
-
 #ifdef MB_TCP_DEBUG
 typedef enum
 {
@@ -67,11 +47,11 @@ typedef enum
 
 /* ----------------------- Function prototypes ------------------------------*/
 #ifdef MB_TCP_DEBUG
-void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
-                            const CHAR * szFmt, ... );
+void            vMBPortLog( eMBPortLogLevel eLevel, const char * szModule,
+                            const char * szFmt, ... );
 #endif
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

@@ -30,13 +30,13 @@
 
 /* ----------------------- Static variables ---------------------------------*/
 DWORD           dwTimeOut;
-BOOL            bTimeoutEnable;
+bool            bTimeoutEnable;
 DWORD           dwTimeLast;
 extern HANDLE   g_hSerial;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+bool
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     dwTimeOut = usTim1Timerout50us / 20U;
     if( dwTimeOut == 0 )
@@ -63,7 +63,7 @@ vMBPortTimerPoll(  )
 
         if( ( dwTimeCurrent - dwTimeLast ) > dwTimeOut )
         {
-            bTimeoutEnable = FALSE;
+            bTimeoutEnable = false;
             ( void )pxMBPortCBTimerExpired(  );
         }
     }
@@ -72,12 +72,12 @@ vMBPortTimerPoll(  )
 void
 vMBPortTimersEnable(  )
 {
-    bTimeoutEnable = TRUE;
+    bTimeoutEnable = true;
     dwTimeLast = GetTickCount(  );
 }
 
 void
 vMBPortTimersDisable(  )
 {
-    bTimeoutEnable = FALSE;
+    bTimeoutEnable = false;
 }

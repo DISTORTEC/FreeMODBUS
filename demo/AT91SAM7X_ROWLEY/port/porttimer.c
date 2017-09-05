@@ -1,4 +1,4 @@
-/* 
+/*
  * MODBUS Library: AT91SAM7X/FreeRTOS port
  * Copyright (c) 2007 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -26,22 +26,22 @@
 /* ----------------------- Type definitions ---------------------------------*/
 typedef struct
 {
-    volatile USHORT usNTimeOutMS;
-    volatile USHORT usNTimeLeft;
+    volatile uint16_t usNTimeOutMS;
+    volatile uint16_t usNTimeLeft;
 } xTimerInternalHandle;
 
 /* ----------------------- Static variables ---------------------------------*/
 STATIC xTimerInternalHandle arxTimerHdls[1];
-STATIC BOOL     bIsInitalized = FALSE;
+STATIC bool     bIsInitalized = false;
 
 /* ----------------------- Static functions ---------------------------------*/
 
 /* ----------------------- Start implementation -----------------------------*/
 
-BOOL
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+bool
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
-    USHORT          usTimeoutMS;
+    uint16_t          usTimeoutMS;
 
     ENTER_CRITICAL_SECTION(  );
     usTimeoutMS = ( usTim1Timerout50us + 10 ) / 20;
@@ -51,10 +51,10 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     }
     arxTimerHdls[0].usNTimeOutMS = usTimeoutMS;
     arxTimerHdls[0].usNTimeLeft = TIMER_TIMEOUT_INVALID;
-    bIsInitalized = TRUE;
+    bIsInitalized = true;
     EXIT_CRITICAL_SECTION(  );
 
-    return TRUE;
+    return true;
 }
 
 void
@@ -64,7 +64,7 @@ vMBPortTimerClose( void )
     if( bIsInitalized )
     {
         arxTimerHdls[0].usNTimeLeft = TIMER_TIMEOUT_INVALID;
-        bIsInitalized = FALSE;
+        bIsInitalized = false;
     }
     EXIT_CRITICAL_SECTION(  );
 }

@@ -63,27 +63,27 @@ SOCKET          xListenSocket;
 SOCKET          xClientSocket;
 WSAEVENT        xEvents[EV_NEVENTS];
 
-static UCHAR    aucTCPBuf[MB_TCP_BUF_SIZE];
-static USHORT   usTCPBufPos;
-static USHORT   usTCPFrameBytesLeft;
+static uint8_t    aucTCPBuf[MB_TCP_BUF_SIZE];
+static uint16_t   usTCPBufPos;
+static uint16_t   usTCPFrameBytesLeft;
 
 /* ----------------------- External functions -------------------------------*/
 TCHAR          *WsaError2String( DWORD dwError );
 
 /* ----------------------- Static functions ---------------------------------*/
-BOOL            prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, USHORT usBufSize );
-LPTSTR          prvMBTCPPortFrameToString( UCHAR * pucFrame, USHORT usFrameLen );
-static BOOL     prvbMBPortAcceptClient( void );
+bool            prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, uint16_t usBufSize );
+LPTSTR          prvMBTCPPortFrameToString( uint8_t * pucFrame, uint16_t usFrameLen );
+static bool     prvbMBPortAcceptClient( void );
 static void     prvvMBPortReleaseClient( void );
-static BOOL     prvMBTCPGetFrame( void );
+static bool     prvMBTCPGetFrame( void );
 
 /* ----------------------- Begin implementation -----------------------------*/
 
-BOOL
-xMBTCPPortInit( USHORT usTCPPort )
+bool
+xMBTCPPortInit( uint16_t usTCPPort )
 {
-    BOOL            bOkay = FALSE;
-    USHORT          usPort;
+    bool            bOkay = false;
+    uint16_t          usPort;
     SOCKADDR_IN     xService;
     WSADATA         wsaData;
 
@@ -91,7 +91,7 @@ xMBTCPPortInit( USHORT usTCPPort )
 
     if( WSAStartup( MAKEWORD( 2, 2 ), &wsaData ) != 0 )
     {
-        return FALSE;
+        return false;
     }
 
     if( usTCPPort == 0 )
@@ -100,7 +100,7 @@ xMBTCPPortInit( USHORT usTCPPort )
     }
     else
     {
-        usPort = ( USHORT ) usTCPPort;
+        usPort = ( uint16_t ) usTCPPort;
     }
 
     xService.sin_family = AF_INET;
@@ -142,11 +142,11 @@ xMBTCPPortInit( USHORT usTCPPort )
     {
         vMBPortLog( MB_LOG_INFO, _T( "TCP-POLL" ), _T( "Modbus TCP server listening on %S:%d\r\n" ),
                     inet_ntoa( xService.sin_addr ), ntohs( xService.sin_port ) );
-        bOkay = TRUE;
+        bOkay = true;
     }
 
     /* Perform cleanup on error. */
-    if( bOkay != TRUE )
+    if( bOkay != true )
     {
         for( i = 0; i < EV_NEVENTS; i++ )
         {
@@ -200,8 +200,8 @@ vMBTCPPortDisable( void )
  *   for new events.
  * \internal
  *
- * This function checks if new clients want to connect or if already connected 
- * clients are sending requests. If a new client is connected and there are 
+ * This function checks if new clients want to connect or if already connected
+ * clients are sending requests. If a new client is connected and there are
  * still client slots left (The current implementation supports only one)
  * then the connection is accepted and an event object for the new client
  * socket is activated (See prvbMBPortAcceptClient() ).
@@ -210,22 +210,22 @@ vMBTCPPortDisable( void )
  * In case of an \c FD_READ command the existing data is read from the client
  * and if a complete frame has been received the Modbus Stack is notified.
  *
- * \return FALSE in case of an internal I/O error. For example if the internal
- *   event objects are in an invalid state. Note that this does not include any 
- *   client errors. In all other cases returns TRUE.
+ * \return false in case of an internal I/O error. For example if the internal
+ *   event objects are in an invalid state. Note that this does not include any
+ *   client errors. In all other cases returns true.
  */
-BOOL
+bool
 xMBPortTCPPool( void )
 {
 
-    BOOL            bOkay = TRUE;
+    bool            bOkay = true;
     DWORD           dwWaitResult;
     WSANETWORKEVENTS xNetworkEvents;
     int             iEventNr;
     int             iRes;
 
-    dwWaitResult = WSAWaitForMultipleEvents( EV_NEVENTS, xEvents, FALSE,
-                                             MB_TCP_POOL_TIMEOUT, FALSE );
+    dwWaitResult = WSAWaitForMultipleEvents( EV_NEVENTS, xEvents, false,
+                                             MB_TCP_POOL_TIMEOUT, false );
 
     /* Do nothing because only the timeout has expired. */
     if( ( dwWaitResult == WAIT_IO_COMPLETION ) || ( dwWaitResult == WSA_WAIT_TIMEOUT ) )
@@ -236,7 +236,7 @@ xMBPortTCPPool( void )
     {
         vMBPortLog( MB_LOG_ERROR, _T( "TCP-POLL" ), _T( "can't wait for network events: %s" ),
                     WsaError2String( WSAGetLastError(  ) ) );
-        bOkay = FALSE;
+        bOkay = false;
     }
     /* A event occured on one of the sockets */
     else
@@ -253,7 +253,7 @@ xMBPortTCPPool( void )
             }
 
             /* Get additional event information from the socket. In addition the event
-             * object is reseted. 
+             * object is reseted.
              */
             iRes = WSAEnumNetworkEvents( xListenSocket, xEvents[iEventNr], &xNetworkEvents );
             if( iRes == SOCKET_ERROR )
@@ -268,7 +268,7 @@ xMBPortTCPPool( void )
             }
         }
 
-        /* An already connected client has new data or the connection has 
+        /* An already connected client has new data or the connection has
          * been closed. */
         else if( iEventNr == EV_CLIENT )
         {
@@ -293,7 +293,7 @@ xMBPortTCPPool( void )
                 /* Process part of the Modbus TCP frame. In case of an I/O error we have to drop
                  * the client connection.
                  */
-                if( prvMBTCPGetFrame(  ) != TRUE )
+                if( prvMBTCPGetFrame(  ) != true )
                 {
                     prvvMBPortReleaseClient(  );
                 }
@@ -324,22 +324,22 @@ xMBPortTCPPool( void )
  * \ingroup port_win32tcp
  * \brief Receives parts of a Modbus TCP frame and if complete notifies
  *    the protocol stack.
- * \internal 
+ * \internal
  *
  * This function reads a complete Modbus TCP frame from the protocol stack.
  * It starts by reading the header with an initial request size for
- * usTCPFrameBytesLeft = MB_TCP_FUNC. If the header is complete the 
+ * usTCPFrameBytesLeft = MB_TCP_FUNC. If the header is complete the
  * number of bytes left can be calculated from it (See Length in MBAP header).
  * Further read calls are issued until the frame is complete.
  *
- * \return \c TRUE if part of a Modbus TCP frame could be processed. In case
- *   of a communication error the function returns \c FALSE.
+ * \return \c true if part of a Modbus TCP frame could be processed. In case
+ *   of a communication error the function returns \c false.
  */
-BOOL
+bool
 prvMBTCPGetFrame(  )
 {
-    BOOL            bOkay = TRUE;
-    USHORT          usLength;
+    bool            bOkay = true;
+    uint16_t          usLength;
     int             iRes;
     LPTSTR          szFrameAsStr;
 
@@ -350,7 +350,7 @@ prvMBTCPGetFrame(  )
     {
         vMBPortLog( MB_LOG_WARN, _T( "MBTCP-RCV" ),
                     _T( "Detected buffer overrun. Dropping client.\r\n" ) );
-        return FALSE;
+        return false;
     }
 
     iRes = recv( xClientSocket, &aucTCPBuf[usTCPBufPos], usTCPFrameBytesLeft, 0 );
@@ -361,11 +361,11 @@ prvMBTCPGetFrame(  )
                     WsaError2String( WSAGetLastError(  ) ) );
         if( WSAGetLastError(  ) != WSAEWOULDBLOCK )
         {
-            bOkay = FALSE;
+            bOkay = false;
         }
         break;
     case 0:
-        bOkay = FALSE;
+        bOkay = false;
         break;
     default:
         usTCPBufPos += iRes;
@@ -413,8 +413,8 @@ prvMBTCPGetFrame(  )
     return bOkay;
 }
 
-BOOL
-xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
+bool
+xMBTCPPortGetRequest( uint8_t ** ppucMBTCPFrame, uint16_t * usTCPLength )
 {
     *ppucMBTCPFrame = &aucTCPBuf[0];
     *usTCPLength = usTCPBufPos;
@@ -422,14 +422,14 @@ xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
     /* Reset the buffer. */
     usTCPBufPos = 0;
     usTCPFrameBytesLeft = MB_TCP_FUNC;
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
+bool
+xMBTCPPortSendResponse( const uint8_t * pucMBTCPFrame, uint16_t usTCPLength )
 {
-    BOOL            bFrameSent = FALSE;
-    BOOL            bAbort = FALSE;
+    bool            bFrameSent = false;
+    bool            bAbort = false;
     int             res;
     int             iBytesSent = 0;
     int             iTimeOut = MB_TCP_READ_TIMEOUT;
@@ -458,12 +458,12 @@ xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
             }
             else
             {
-                bAbort = TRUE;
+                bAbort = true;
             }
             break;
         case 0:
             prvvMBPortReleaseClient(  );
-            bAbort = TRUE;
+            bAbort = true;
             break;
         default:
             iBytesSent += res;
@@ -472,7 +472,7 @@ xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
     }
     while( ( iBytesSent != usTCPLength ) && !bAbort );
 
-    bFrameSent = iBytesSent == usTCPLength ? TRUE : FALSE;
+    bFrameSent = iBytesSent == usTCPLength ? true : false;
 
     return bFrameSent;
 }
@@ -483,7 +483,7 @@ prvvMBPortReleaseClient(  )
     TCHAR           szIPAddr[32];
 
 
-    if( prvMBTCPPortAddressToString( xClientSocket, szIPAddr, _countof( szIPAddr ) ) == TRUE )
+    if( prvMBTCPPortAddressToString( xClientSocket, szIPAddr, _countof( szIPAddr ) ) == true )
     {
         vMBPortLog( MB_LOG_INFO, _T( "MBTCP-CMGT" ), _T( "client %s disconnected.\r\n" ),
                     szIPAddr );
@@ -516,7 +516,7 @@ prvvMBPortReleaseClient(  )
                     WsaError2String( WSAGetLastError(  ) ) );
     }
 
-    /* Read any unread data from the socket. Note that this is not the strictly 
+    /* Read any unread data from the socket. Note that this is not the strictly
      * correct way to do it because our sockets are non blocking and therefore
      * some bytes could remain.
      */
@@ -526,11 +526,11 @@ prvvMBPortReleaseClient(  )
     xClientSocket = INVALID_SOCKET;
 }
 
-BOOL
+bool
 prvbMBPortAcceptClient(  )
 {
     SOCKET          xNewSocket;
-    BOOL            bOkay;
+    bool            bOkay;
 
     TCHAR           szIPAddr[32];
 
@@ -540,16 +540,16 @@ prvbMBPortAcceptClient(  )
     {
         vMBPortLog( MB_LOG_ERROR, _T( "MBTCP-CMGT" ),
                     _T( "can't accept new client. all connections in use.\r\n" ) );
-        bOkay = FALSE;
+        bOkay = false;
     }
     else if( ( xNewSocket = accept( xListenSocket, NULL, NULL ) ) == INVALID_SOCKET )
     {
-        bOkay = FALSE;
+        bOkay = false;
     }
     /* Register READ events on the socket file descriptor. */
     else if( WSAEventSelect( xNewSocket, xEvents[EV_CLIENT], FD_READ | FD_CLOSE ) == SOCKET_ERROR )
     {
-        bOkay = FALSE;
+        bOkay = false;
         ( void )closesocket( xNewSocket );
     }
     /* Everything okay - Register the client connection. */
@@ -559,7 +559,7 @@ prvbMBPortAcceptClient(  )
         usTCPBufPos = 0;
         usTCPFrameBytesLeft = MB_TCP_FUNC;
 
-        if( prvMBTCPPortAddressToString( xClientSocket, szIPAddr, _countof( szIPAddr ) ) == TRUE )
+        if( prvMBTCPPortAddressToString( xClientSocket, szIPAddr, _countof( szIPAddr ) ) == true )
         {
             vMBPortLog( MB_LOG_INFO, _T( "MBTCP-CMGT" ), _T( "accepted new client %s.\r\n" ),
                         szIPAddr );
@@ -568,7 +568,7 @@ prvbMBPortAcceptClient(  )
         {
             vMBPortLog( MB_LOG_INFO, _T( "MBTCP-CMGT" ), _T( "accepted unknown client.\r\n" ) );
         }
-        bOkay = TRUE;
+        bOkay = true;
 
     }
     return bOkay;

@@ -51,7 +51,7 @@ static void interrupt prvvUARTRxISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     /* If xRXEnable enable serial receive interrupts. If xTxENable enable
      * transmitter empty interrupts.
@@ -76,14 +76,14 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     }
 }
 
-BOOL
-xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+bool
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
-    UCHAR           cfg = 0;
+    uint8_t           cfg = 0;
 
     if( ucDataBits != 8 )
     {
-        return FALSE;
+        return false;
     }
 
     switch ( eParity )
@@ -100,7 +100,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         break;
 
     default:
-        return FALSE;
+        return false;
     }
 
     /* Baud Rate -> U0BR = (CLOCK/(16*BAUD) */
@@ -120,7 +120,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     /* Low Priority Rx/Tx Interrupts */
     IRQ0ENH &= ~UART0_TXD_INT_EN_H & ~UART0_RXD_INT_EN_H;
 
-    vMBPortSerialEnable( FALSE, FALSE );
+    vMBPortSerialEnable( false, false );
 
     /* Set Rx/Tx Interruption Vectors */
     SET_VECTOR( UART0_RX, prvvUARTRxISR );
@@ -129,11 +129,11 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     /* Enable Interrupts */
     EI(  );
 
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialPutByte( CHAR ucByte )
+bool
+xMBPortSerialPutByte( int8_t ucByte )
 {
     /* Put a byte in the UARTs transmit buffer. This function is called
      * by the protocol stack if pxMBFrameCBTransmitterEmpty( ) has been
@@ -144,11 +144,11 @@ xMBPortSerialPutByte( CHAR ucByte )
 
     U0D = ucByte;
 
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialGetByte( CHAR * pucByte )
+bool
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     /* Return the byte in the UARTs receive buffer. This function is called
      * by the protocol stack after pxMBFrameCBByteReceived( ) has been called.
@@ -159,14 +159,14 @@ xMBPortSerialGetByte( CHAR * pucByte )
 
     *pucByte = U0D;
 
-    return TRUE;
+    return true;
 }
 
 /*
  * Create an interrupt handler for the transmit buffer empty interrupt
  * (or an equivalent) for your target processor. This function should then
  * call pxMBFrameCBTransmitterEmpty( ) which tells the protocol stack that
- * a new character can be sent. The protocol stack will then call 
+ * a new character can be sent. The protocol stack will then call
  * xMBPortSerialPutByte( ) to send the character.
  */
 static unsigned int uiCnt = 0;
@@ -189,7 +189,7 @@ prvvUARTTxReadyISR( void )
 static void interrupt
 prvvUARTRxISR( void )
 {
-    UCHAR           tmp;
+    uint8_t           tmp;
 
     /* Verify UART error flags */
     if( U0STAT0 & UART_ERRORS )

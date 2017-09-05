@@ -16,7 +16,7 @@
  *                                                                                  *
  *                                                                                  *
  * HISTORY                                                                          *
- *                                                                                  *	
+ *                                                                                  *
  ************************************************************************************/
 
 #ifndef _CPU_MCF5XXX_H
@@ -27,15 +27,15 @@
  * Misc. Defines
  */
 
-#ifdef	FALSE
-#undef	FALSE
+#ifdef	false
+#undef	false
 #endif
-#define FALSE	(0)
+#define false	(0)
 
-#ifdef	TRUE
-#undef	TRUE
+#ifdef	true
+#undef	true
 #endif
-#define	TRUE	(1)
+#define	true	(1)
 
 #ifdef	NULL
 #undef	NULL

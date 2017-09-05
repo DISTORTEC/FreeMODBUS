@@ -30,10 +30,10 @@
 static void prvvTIMERExpiredISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+bool
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
-    return FALSE;
+    return false;
 }
 
 

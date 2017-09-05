@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------------
- *         ATMEL Microcontroller Software Support 
+ *         ATMEL Microcontroller Software Support
  * ----------------------------------------------------------------------------
  * Copyright (c) 2008, Atmel Corporation
  *
@@ -47,11 +47,11 @@
 //------------------------------------------------------------------------------
 void PIO_KeyPadConfig(AT91S_PIO *pPIO, KeyPadConfig *config)
 {
-    //enable/disable keypad controller 
+    //enable/disable keypad controller
     pPIO->PIO_KER = config->enable;
 
     //if enable, set keypad matrix and debouncing
-    if(config->enable == TRUE) {
+    if(config->enable == true) {
         //set key matrix
         pPIO->PIO_KRCR = (config->row | config->col<<8) ;
 
@@ -70,9 +70,9 @@ void PIO_KeyPadConfig(AT91S_PIO *pPIO, KeyPadConfig *config)
 void PIO_GetKeyStatus(AT91S_PIO *pPIO, KeyEvent *event)
 {
     int i,j;
-    
+
     //get key press event
-    event->kdEvent.press = (pPIO->KSR&0x1)?TRUE:FALSE;
+    event->kdEvent.press = (pPIO->KSR&0x1)?true:false;
     event->kdEvent.keyPressNum = (pPIO->KSR>>8)&0x3;
     j=event->kdEvent.keyPressNum+1;
     for(i=0; i<j; i++) {
@@ -81,7 +81,7 @@ void PIO_GetKeyStatus(AT91S_PIO *pPIO, KeyEvent *event)
     }
 
     //get key release event
-    event->kuEvent.release = ((pPIO->KSR>>1) & 0x1)?TRUE:FALSE;
+    event->kuEvent.release = ((pPIO->KSR>>1) & 0x1)?true:false;
     event->kuEvent.keyRelNum = (pPIO->KSR>>16)&0x3;
     j=event->kdEvent.keyPressNum+1;
     for(i=0;i<j;i++) {
@@ -95,7 +95,7 @@ void PIO_GetKeyStatus(AT91S_PIO *pPIO, KeyEvent *event)
 //------------------------------------------------------------------------------
 /// Enable keypad interrupt as Key Press Interrupt or Key Release Interrupt or both
 /// \param pPIO Pointer to a PIO instance
-/// \param mode  Select key interrupt mode to enable, 
+/// \param mode  Select key interrupt mode to enable,
 ///		0x1 		Key Press Interrupt
 ///		0x2		Key Release Interrupt
 ///		0x3		both of two type
@@ -121,7 +121,7 @@ void PIO_KeypadEnableIt(AT91S_PIO *pPIO, unsigned int mode)
 //------------------------------------------------------------------------------
 /// Disable Key Press Interrupt or Key Release Interrupt or both of them
 /// \param pPIO Pointer to a PIO instance
-/// \param mode  Select key interrupt mode to disable, 
+/// \param mode  Select key interrupt mode to disable,
 ///		0x1 		Key Press Interrupt
 ///		0x2		Key Release Interrupt
 ///		0x3		both of two type

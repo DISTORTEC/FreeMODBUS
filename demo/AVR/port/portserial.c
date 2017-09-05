@@ -40,7 +40,7 @@
 //#define UART_UCSRB  UCSR0B
 
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
 #ifdef RTS_ENABLE
     UCSRB |= _BV( TXEN ) | _BV(TXCIE);
@@ -70,14 +70,14 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     }
 }
 
-BOOL
-xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+bool
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
-    UCHAR ucUCSRC = 0;
+    uint8_t ucUCSRC = 0;
 
     /* prevent compiler warning. */
     (void)ucPORT;
-	
+
     UBRR = UART_BAUD_CALC( ulBaudRate, F_CPU );
 
     switch ( eParity )
@@ -116,26 +116,26 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     UCSRC |= ucUCSRC;
 #endif
 
-    vMBPortSerialEnable( FALSE, FALSE );
+    vMBPortSerialEnable( false, false );
 
 #ifdef RTS_ENABLE
     RTS_INIT;
 #endif
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialPutByte( CHAR ucByte )
+bool
+xMBPortSerialPutByte( int8_t ucByte )
 {
     UDR = ucByte;
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialGetByte( CHAR * pucByte )
+bool
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     *pucByte = UDR;
-    return TRUE;
+    return true;
 }
 
 SIGNAL( SIG_USART_DATA )

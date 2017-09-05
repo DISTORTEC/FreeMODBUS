@@ -43,15 +43,15 @@
 
 /* ----------------------- Prototypes ---------------------------------------*/
 void            vMBPortEventClose( void );
-void            vMBPortLog( eMBPortLogLevel eLevel, const CHAR * szModule,
-                            const CHAR * szFmt, ... );
+void            vMBPortLog( eMBPortLogLevel eLevel, const char * szModule,
+                            const char * szFmt, ... );
 
 /* ----------------------- Static variables ---------------------------------*/
 static struct tcp_pcb *pxPCBListen;
 static struct tcp_pcb *pxPCBClient;
 
-static UCHAR    aucTCPBuf[MB_TCP_BUF_SIZE];
-static USHORT   usTCPBufPos;
+static uint8_t    aucTCPBuf[MB_TCP_BUF_SIZE];
+static uint16_t   usTCPBufPos;
 
 /* ----------------------- Static functions ---------------------------------*/
 static err_t    prvxMBTCPPortAccept( void *pvArg, struct tcp_pcb *pxPCB, err_t xErr );
@@ -60,12 +60,12 @@ static err_t    prvxMBTCPPortReceive( void *pvArg, struct tcp_pcb *pxPCB, struct
 static void     prvvMBTCPPortError( void *pvArg, err_t xErr );
 
 /* ----------------------- Begin implementation -----------------------------*/
-BOOL
-xMBTCPPortInit( USHORT usTCPPort )
+bool
+xMBTCPPortInit( uint16_t usTCPPort )
 {
     struct tcp_pcb *pxPCBListenNew, *pxPCBListenOld;
-    BOOL            bOkay = FALSE;
-    USHORT          usPort;
+    bool            bOkay = false;
+    uint16_t          usPort;
 
     if( usTCPPort == 0 )
     {
@@ -73,24 +73,24 @@ xMBTCPPortInit( USHORT usTCPPort )
     }
     else
     {
-        usPort = ( USHORT ) usTCPPort;
+        usPort = ( uint16_t ) usTCPPort;
     }
 
     if( ( pxPCBListenNew = pxPCBListenOld = tcp_new(  ) ) == NULL )
     {
         /* Can't create TCP socket. */
-        bOkay = FALSE;
+        bOkay = false;
     }
     else if( tcp_bind( pxPCBListenNew, IP_ADDR_ANY, ( u16_t ) usPort ) != ERR_OK )
     {
         /* Bind failed - Maybe illegal port value or in use. */
         ( void )tcp_close( pxPCBListenOld );
-        bOkay = FALSE;
+        bOkay = false;
     }
     else if( ( pxPCBListenNew = tcp_listen( pxPCBListenNew ) ) == NULL )
     {
         ( void )tcp_close( pxPCBListenOld );
-        bOkay = FALSE;
+        bOkay = false;
     }
     else
     {
@@ -104,7 +104,7 @@ xMBTCPPortInit( USHORT usTCPPort )
         vMBPortLog( MB_LOG_DEBUG, "MBTCP-ACCEPT", "Protocol stack ready.\r\n" );
 #endif
     }
-    bOkay = TRUE;
+    bOkay = true;
     return bOkay;
 }
 
@@ -218,7 +218,7 @@ prvvMBTCPPortError( void *pvArg, err_t xErr )
 err_t
 prvxMBTCPPortReceive( void *pvArg, struct tcp_pcb *pxPCB, struct pbuf *p, err_t xErr )
 {
-    USHORT          usLength;
+    uint16_t          usLength;
 
     err_t           error;
 
@@ -288,21 +288,21 @@ prvxMBTCPPortReceive( void *pvArg, struct tcp_pcb *pxPCB, struct pbuf *p, err_t 
     return error;
 }
 
-BOOL
-xMBTCPPortGetRequest( UCHAR ** ppucMBTCPFrame, USHORT * usTCPLength )
+bool
+xMBTCPPortGetRequest( uint8_t ** ppucMBTCPFrame, uint16_t * usTCPLength )
 {
     *ppucMBTCPFrame = &aucTCPBuf[0];
     *usTCPLength = usTCPBufPos;
 
     /* Reset the buffer. */
     usTCPBufPos = 0;
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
+bool
+xMBTCPPortSendResponse( const uint8_t * pucMBTCPFrame, uint16_t usTCPLength )
 {
-    BOOL            bFrameSent = FALSE;
+    bool            bFrameSent = false;
 
     if( pxPCBClient )
     {
@@ -316,7 +316,7 @@ xMBTCPPortSendResponse( const UCHAR * pucMBTCPFrame, USHORT usTCPLength )
 #endif
             /* Make sure data gets sent immediately. */
             ( void )tcp_output( pxPCBClient );
-            bFrameSent = TRUE;
+            bFrameSent = true;
         }
         else
         {

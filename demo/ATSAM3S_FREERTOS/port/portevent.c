@@ -2,7 +2,7 @@
  * FreeModbus Libary: Atmel AT91SAM3S Demo Application
  * Copyright (C) 2010 Christian Walter <cwalter@embedded-solutions.at>
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,7 +13,7 @@
  *   documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * IF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -42,13 +42,13 @@ static xQueueHandle xQueueHdl;
 
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortEventInit( void )
 {
-    BOOL            bStatus = FALSE;
+    bool            bStatus = false;
     if( 0 != ( xQueueHdl = xQueueCreate( 1, sizeof( eMBEventType ) ) ) )
     {
-        bStatus = TRUE;
+        bStatus = true;
     }
     return bStatus;
 }
@@ -63,10 +63,10 @@ vMBPortEventClose( void )
     }
 }
 
-BOOL
+bool
 xMBPortEventPost( eMBEventType eEvent )
 {
-    BOOL            bStatus = TRUE;
+    bool            bStatus = true;
     if( bMBPortIsWithinException(  ) )
     {
         ( void )xQueueSendFromISR( xQueueHdl, ( const void * )&eEvent, pdFALSE );
@@ -79,14 +79,14 @@ xMBPortEventPost( eMBEventType eEvent )
     return bStatus;
 }
 
-BOOL
+bool
 xMBPortEventGet( eMBEventType * peEvent )
 {
-    BOOL            xEventHappened = FALSE;
+    bool            xEventHappened = false;
 
     if( pdTRUE == xQueueReceive( xQueueHdl, peEvent, portTICK_RATE_MS * 50 ) )
     {
-        xEventHappened = TRUE;
+        xEventHappened = true;
     }
     return xEventHappened;
 }

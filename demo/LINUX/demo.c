@@ -41,10 +41,10 @@
 #define REG_HOLDING_NREGS 130
 
 /* ----------------------- Static variables ---------------------------------*/
-static USHORT   usRegInputStart = REG_INPUT_START;
-static USHORT   usRegInputBuf[REG_INPUT_NREGS];
-static USHORT   usRegHoldingStart = REG_HOLDING_START;
-static USHORT   usRegHoldingBuf[REG_HOLDING_NREGS];
+static uint16_t   usRegInputStart = REG_INPUT_START;
+static uint16_t   usRegInputBuf[REG_INPUT_NREGS];
+static uint16_t   usRegHoldingStart = REG_HOLDING_START;
+static uint16_t   usRegHoldingBuf[REG_HOLDING_NREGS];
 
 static enum ThreadState
 {
@@ -54,19 +54,19 @@ static enum ThreadState
 } ePollThreadState;
 
 static pthread_mutex_t xLock = PTHREAD_MUTEX_INITIALIZER;
-static BOOL     bDoExit;
+static bool     bDoExit;
 
 /* ----------------------- Static functions ---------------------------------*/
-static BOOL     bCreatePollingThread( void );
+static bool     bCreatePollingThread( void );
 static enum ThreadState eGetPollingThreadState( void );
 static void     vSetPollingThreadState( enum ThreadState eNewState );
 static void    *pvPollingThread( void *pvParameter );
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 bSetSignal( int iSignalNr, void ( *pSigHandler ) ( int ) )
 {
-    BOOL            bResult;
+    bool            bResult;
     struct sigaction xNewSig, xOldSig;
 
     xNewSig.sa_handler = pSigHandler;
@@ -74,11 +74,11 @@ bSetSignal( int iSignalNr, void ( *pSigHandler ) ( int ) )
     xNewSig.sa_flags = 0;
     if( sigaction( iSignalNr, &xNewSig, &xOldSig ) != 0 )
     {
-        bResult = FALSE;
+        bResult = false;
     }
     else
     {
-        bResult = TRUE;
+        bResult = true;
     }
     return bResult;
 }
@@ -92,17 +92,17 @@ vSigShutdown( int xSigNr )
     case SIGINT:
     case SIGTERM:
         vSetPollingThreadState( SHUTDOWN );
-        bDoExit = TRUE;
+        bDoExit = true;
     }
 }
 
 int
-main( int argc, char *argv[] )
+main( void )
 {
     int             iExitCode;
-    CHAR            cCh;
+    int8_t            cCh;
 
-    const UCHAR     ucSlaveID[] = { 0xAA, 0xBB, 0xCC };
+    const uint8_t     ucSlaveID[] = { 0xAA, 0xBB, 0xCC };
     if( !bSetSignal( SIGQUIT, vSigShutdown ) ||
         !bSetSignal( SIGINT, vSigShutdown ) || !bSetSignal( SIGTERM, vSigShutdown ) )
     {
@@ -114,7 +114,7 @@ main( int argc, char *argv[] )
         fprintf( stderr, "%s: can't initialize modbus stack!\n", PROG );
         iExitCode = EXIT_FAILURE;
     }
-    else if( eMBSetSlaveID( 0x34, TRUE, ucSlaveID, 3 ) != MB_ENOERR )
+    else if( eMBSetSlaveID( 0x34, true, ucSlaveID, 3 ) != MB_ENOERR )
     {
         fprintf( stderr, "%s: can't set slave id!\n", PROG );
         iExitCode = EXIT_FAILURE;
@@ -125,7 +125,7 @@ main( int argc, char *argv[] )
 
         /* CLI interface. */
         printf( "Type 'q' for quit or 'h' for help!\n" );
-        bDoExit = FALSE;
+        bDoExit = false;
         do
         {
             printf( "> " );
@@ -134,13 +134,13 @@ main( int argc, char *argv[] )
             switch ( cCh )
             {
             case 'q':
-                bDoExit = TRUE;
+                bDoExit = true;
                 break;
             case 'd':
                 vSetPollingThreadState( SHUTDOWN );
                 break;
             case 'e':
-                if( bCreatePollingThread(  ) != TRUE )
+                if( bCreatePollingThread(  ) != true )
                 {
                     printf( "Can't start protocol stack! Already running?\n" );
                 }
@@ -192,26 +192,26 @@ main( int argc, char *argv[] )
     return iExitCode;
 }
 
-BOOL
+bool
 bCreatePollingThread( void )
 {
-    BOOL            bResult;
+    bool            bResult;
     pthread_t       xThread;
 
     if( eGetPollingThreadState(  ) == STOPPED )
     {
         if( pthread_create( &xThread, NULL, pvPollingThread, NULL ) != 0 )
         {
-            bResult = FALSE;
+            bResult = false;
         }
         else
         {
-            bResult = TRUE;
+            bResult = true;
         }
     }
     else
     {
-        bResult = FALSE;
+        bResult = false;
     }
 
     return bResult;
@@ -220,6 +220,7 @@ bCreatePollingThread( void )
 void           *
 pvPollingThread( void *pvParameter )
 {
+    (void)pvParameter;
     vSetPollingThreadState( RUNNING );
 
     if( eMBEnable(  ) == MB_ENOERR )
@@ -228,7 +229,7 @@ pvPollingThread( void *pvParameter )
         {
             if( eMBPoll(  ) != MB_ENOERR )
                 break;
-            usRegInputBuf[0] = ( USHORT ) rand(  );
+            usRegInputBuf[0] = ( uint16_t ) rand(  );
         }
         while( eGetPollingThreadState(  ) != SHUTDOWN );
     }
@@ -261,7 +262,7 @@ vSetPollingThreadState( enum ThreadState eNewState )
 }
 
 eMBErrorCode
-eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
+eMBRegInputCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     int             iRegIndex;
@@ -287,7 +288,7 @@ eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 }
 
 eMBErrorCode
-eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
+eMBRegHoldingCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs, eMBRegisterMode eMode )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     int             iRegIndex;
@@ -302,8 +303,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
         case MB_REG_READ:
             while( usNRegs > 0 )
             {
-                *pucRegBuffer++ = ( UCHAR ) ( usRegHoldingBuf[iRegIndex] >> 8 );
-                *pucRegBuffer++ = ( UCHAR ) ( usRegHoldingBuf[iRegIndex] & 0xFF );
+                *pucRegBuffer++ = ( uint8_t ) ( usRegHoldingBuf[iRegIndex] >> 8 );
+                *pucRegBuffer++ = ( uint8_t ) ( usRegHoldingBuf[iRegIndex] & 0xFF );
                 iRegIndex++;
                 usNRegs--;
             }
@@ -330,13 +331,20 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 
 eMBErrorCode
-eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils, eMBRegisterMode eMode )
+eMBRegCoilsCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNCoils, eMBRegisterMode eMode )
 {
+    (void)pucRegBuffer;
+    (void)usAddress;
+    (void)usNCoils;
+    (void)eMode;
     return MB_ENOREG;
 }
 
 eMBErrorCode
-eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
+eMBRegDiscreteCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNDiscrete )
 {
+    (void)pucRegBuffer;
+    (void)usAddress;
+    (void)usNDiscrete;
     return MB_ENOREG;
 }

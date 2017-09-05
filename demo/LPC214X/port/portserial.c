@@ -34,7 +34,7 @@ sio_irq( void )
      static void     prvvUARTRxISR( void );
 
 /* ----------------------- Start implementation -----------------------------*/
-     void            vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+     void            vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     if( xRxEnable )
     {
@@ -60,12 +60,12 @@ vMBPortClose( void )
 {
 }
 
-BOOL
-xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+bool
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
-    BOOL            bInitialized = TRUE;
-    USHORT          cfg = 0;
-    ULONG           reload = ( ( PCLK / ulBaudRate ) / 16UL );
+    bool            bInitialized = true;
+    uint16_t          cfg = 0;
+    uint32_t           reload = ( ( PCLK / ulBaudRate ) / 16UL );
     volatile char   dummy;
 
     ( void )ucPORT;
@@ -90,7 +90,7 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         break;
 
     default:
-        bInitialized = FALSE;
+        bInitialized = false;
     }
 
     switch ( eParity )
@@ -128,8 +128,8 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     return bInitialized;
 }
 
-BOOL
-xMBPortSerialPutByte( CHAR ucByte )
+bool
+xMBPortSerialPutByte( int8_t ucByte )
 {
     U1THR = ucByte;
 
@@ -138,11 +138,11 @@ xMBPortSerialPutByte( CHAR ucByte )
     {
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialGetByte( CHAR * pucByte )
+bool
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     while( !( U1LSR & 0x01 ) )
     {
@@ -151,7 +151,7 @@ xMBPortSerialGetByte( CHAR * pucByte )
     /* Receive Byte */
     *pucByte = U1RBR;
 
-    return TRUE;
+    return true;
 }
 
 
@@ -192,11 +192,11 @@ sio_irq( void )
 }
 
 
-/* 
+/*
  * Create an interrupt handler for the transmit buffer empty interrupt
  * (or an equivalent) for your target processor. This function should then
  * call pxMBFrameCBTransmitterEmpty( ) which tells the protocol stack that
- * a new character can be sent. The protocol stack will then call 
+ * a new character can be sent. The protocol stack will then call
  * xMBPortSerialPutByte( ) to send the character.
  */
 static void
@@ -205,7 +205,7 @@ prvvUARTTxReadyISR( void )
     pxMBFrameCBTransmitterEmpty(  );
 }
 
-/* 
+/*
  * Create an interrupt handler for the receive interrupt for your target
  * processor. This function should then call pxMBFrameCBByteReceived( ). The
  * protocol stack will then call xMBPortSerialGetByte( ) to retrieve the

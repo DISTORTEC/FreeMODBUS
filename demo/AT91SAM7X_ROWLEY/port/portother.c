@@ -59,7 +59,7 @@ vMBPInit( void )
 void
 __assert( const char *pcFile, const char *pcAssertion, int iLine )
 {
-    volatile BOOL   bBreakOut = FALSE;
+    volatile bool   bBreakOut = false;
 
     ( void )pcFile;
     ( void )pcAssertion;
@@ -68,10 +68,10 @@ __assert( const char *pcFile, const char *pcAssertion, int iLine )
     while( !bBreakOut );
 }
 
-BOOL
+bool
 bMBPIsWithinException( void )
 {
-    BOOL            bMBPIsWithinException = TRUE;
+    bool            bMBPIsWithinException = true;
     unsigned int    uiCPSR;
     asm volatile    ( "MRS  %0, CPSR":"=r" ( uiCPSR ): );
 
@@ -79,7 +79,7 @@ bMBPIsWithinException( void )
     {
     case 0x00000010U:          /* User Mode */
     case 0x0000001FU:          /* System Mode */
-        bMBPIsWithinException = FALSE;
+        bMBPIsWithinException = false;
         break;
     }
     return bMBPIsWithinException;

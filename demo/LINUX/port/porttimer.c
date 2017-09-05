@@ -20,6 +20,7 @@
  */
 
 /* ----------------------- Standard includes --------------------------------*/
+#include <assert.h>
 #include <stdlib.h>
 #include <sys/time.h>
 
@@ -32,14 +33,14 @@
 /* ----------------------- Defines ------------------------------------------*/
 
 /* ----------------------- Static variables ---------------------------------*/
-ULONG           ulTimeOut;
-BOOL            bTimeoutEnable;
+uint32_t           ulTimeOut;
+bool            bTimeoutEnable;
 
 static struct timeval xTimeLast;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+bool
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     ulTimeOut = usTim1Timerout50us / 20U;
     if( ulTimeOut == 0 )
@@ -57,7 +58,7 @@ xMBPortTimersClose(  )
 void
 vMBPortTimerPoll(  )
 {
-    ULONG           ulDeltaMS;
+    uint32_t           ulDeltaMS;
     struct timeval  xTimeCur;
 
     /* Timers are called from the serial layer because we have no high
@@ -74,7 +75,7 @@ vMBPortTimerPoll(  )
                 ( xTimeCur.tv_usec - xTimeLast.tv_usec ) * 1000L;
             if( ulDeltaMS > ulTimeOut )
             {
-                bTimeoutEnable = FALSE;
+                bTimeoutEnable = false;
                 ( void )pxMBPortCBTimerExpired(  );
             }
         }
@@ -87,11 +88,11 @@ vMBPortTimersEnable(  )
     int             res = gettimeofday( &xTimeLast, NULL );
 
     assert( res == 0 );
-    bTimeoutEnable = TRUE;
+    bTimeoutEnable = true;
 }
 
 void
 vMBPortTimersDisable(  )
 {
-    bTimeoutEnable = FALSE;
+    bTimeoutEnable = false;
 }

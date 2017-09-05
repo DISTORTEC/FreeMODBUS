@@ -28,27 +28,27 @@
 #include "mbport.h"
 
 /* ----------------------- Persistent variable ------------------------------*/
-static USHORT   usDelta;
+static uint16_t   usDelta;
 
 /* ----------------------- Start implementation -----------------------------*/
 
-USHORT
-usMBMulDiv( USHORT a, USHORT b, USHORT c )
+uint16_t
+usMBMulDiv( uint16_t a, uint16_t b, uint16_t c )
 {
-    ULONG           x;
+    uint32_t           x;
 
     x = a;
     x *= b;
     x /= c;
 
-    return ( USHORT ) x;
+    return ( uint16_t ) x;
 }
 
 
 /* Initialize Timer 1 as free running, and Channel 0 as output compare (with no pin)
  */
-BOOL
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+bool
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
     /* We assume 4194304 Hz bus clock and let the timer run at 1/128 of this frequency, ie. 32768 Hz */
     ( void )assert( BM_BUS_CLOCK == 4194304 );
@@ -58,7 +58,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     /* Compute numer of timer tics corresponding to the given timeout periode */
     usDelta = usMBMulDiv( usTim1Timerout50us, 1024, 625 );
 
-    return TRUE;
+    return true;
 }
 
 /* Set the output compare register value and enable timer interrupt
@@ -71,8 +71,8 @@ vMBPortTimersEnable(  )
     TPM1C0V = TPM1CNT + usDelta;
     RestoreStatusReg(  );
     if( TPM1C0SC_CH0F )
-        TPM1C0SC_CH0F = FALSE;
-    TPM1C0SC_CH0IE = TRUE;
+        TPM1C0SC_CH0F = false;
+    TPM1C0SC_CH0IE = true;
 }
 
 /* Disable timer interrupts
@@ -80,7 +80,7 @@ vMBPortTimersEnable(  )
 INLINE void
 vMBPortTimersDisable(  )
 {
-    TPM1C0SC_CH0IE = FALSE;
+    TPM1C0SC_CH0IE = false;
 }
 
 /* Handle the interrupt and disable further timeouts
@@ -88,6 +88,6 @@ vMBPortTimersDisable(  )
 interrupt VectorNumber_Vtpm1ch0 void
 prvvTIMERExpiredISR( void )
 {
-    TPM1C0SC_CH0IE = FALSE;
+    TPM1C0SC_CH0IE = false;
     ( void )pxMBPortCBTimerExpired(  );
 }

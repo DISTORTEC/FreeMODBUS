@@ -29,10 +29,10 @@
 #define REG_INPUT_NREGS 4
 
 /* ----------------------- Static variables ---------------------------------*/
-static USHORT   usRegInputStart = REG_INPUT_START;
-static USHORT   usRegInputBuf[REG_INPUT_NREGS];
+static uint16_t   usRegInputStart = REG_INPUT_START;
+static uint16_t   usRegInputBuf[REG_INPUT_NREGS];
 
-UCHAR           CCR_reg;        // SaveStatusReg stores the Condition Code Register here
+uint8_t           CCR_reg;        // SaveStatusReg stores the Condition Code Register here
 
 /* ----------------------- Start implementation -----------------------------*/
 
@@ -83,9 +83,9 @@ main( void )
     EnableInterrupts;
     for( ;; )
     {
-        UCHAR           ucByte;
+        uint8_t           ucByte;
 
-        vMBPortSerialEnable( TRUE, FALSE );
+        vMBPortSerialEnable( true, false );
         _Wait;                  // wait for an interrupt
         assert( xMBPortSerialGetByte( &ucByte ) );
 
@@ -97,7 +97,7 @@ main( void )
          * Comment out call to pxMBFrameCBTransmitterEmpty() in prvvUARTTxReadyISR() when testing the transmitter
          */
 #if 0
-        vMBPortSerialEnable( FALSE, TRUE );
+        vMBPortSerialEnable( false, true );
         assert( xMBPortSerialPutByte( ucByte ) );
         _Wait;                  // wait for an interrupt
 
@@ -146,7 +146,7 @@ main( void )
 }
 
 eMBErrorCode
-eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
+eMBRegInputCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     int             iRegIndex;
@@ -172,20 +172,20 @@ eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 }
 
 eMBErrorCode
-eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
+eMBRegHoldingCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs, eMBRegisterMode eMode )
 {
     return MB_ENOREG;
 }
 
 
 eMBErrorCode
-eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils, eMBRegisterMode eMode )
+eMBRegCoilsCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNCoils, eMBRegisterMode eMode )
 {
     return MB_ENOREG;
 }
 
 eMBErrorCode
-eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
+eMBRegDiscreteCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNDiscrete )
 {
     return MB_ENOREG;
 }

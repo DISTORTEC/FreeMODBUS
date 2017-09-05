@@ -33,48 +33,48 @@
 #define BAUDRATE_VALUE(fsys, baud)  ( ( fsys )/(32UL * baud) )
 
 /* ----------------------- Static variables -------------------------------- */
-BOOL            bTXEnabled;
-BOOL            bRXEnabled;
+bool            bTXEnabled;
+bool            bRXEnabled;
 
 /* ----------------------- Start implementation ---------------------------- */
 
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
-    UCHAR           ucUCR = 0;
-    UCHAR           ucIMR = 0;
+    uint8_t           ucUCR = 0;
+    uint8_t           ucIMR = 0;
 
     if( xRxEnable )
     {
         ucUCR |= MCF_UART_UCR_RXC( 0x1 );
         ucIMR |= MCF_UART_UIMR_RXRDY_FU;
-        bRXEnabled = TRUE;
+        bRXEnabled = true;
     }
     else
     {
         ucUCR |= MCF_UART_UCR_RXC( 0x2 );
-        bRXEnabled = FALSE;
+        bRXEnabled = false;
     }
     if( xTxEnable )
     {
         ucUCR |= MCF_UART_UCR_TXC( 0x1 );
         ucIMR |= MCF_UART_UIMR_TXRDY;
-        bTXEnabled = TRUE;
+        bTXEnabled = true;
     }
     else
     {
         ucUCR |= MCF_UART_UCR_TXC( 0x2 );
-        bTXEnabled = FALSE;
+        bTXEnabled = false;
     }
     MCF_UART_UCR0 = ucUCR;
     MCF_UART_UIMR0 = ucIMR;
 }
 
-BOOL
-xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+bool
+xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
-    BOOL            bStatus = TRUE;
-    UCHAR           ucMode = 0;
+    bool            bStatus = true;
+    uint8_t           ucMode = 0;
 
     (void)ucPort;
 
@@ -90,7 +90,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
             ucMode |= MCF_UART_UMR_PM( 0x3 );
             break;
         default:
-            bStatus = FALSE;
+            bStatus = false;
     }
 
     switch ( ucDataBits )
@@ -102,9 +102,9 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
             ucMode |= MCF_UART_UMR_BC( 0x2 );
             break;
         default:
-            bStatus = FALSE;
+            bStatus = false;
     }
-    if( bStatus == TRUE )
+    if( bStatus == true )
     {
         /* UART 0: Reset transmitter, receiver and mode register pointer */
         MCF_UART_UCR0 = MCF_UART_UCR_MISC( 0x3 );
@@ -130,24 +130,24 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         /* UART 0: Enable pins */
         MCF_GPIO_PAR_UART = MCF_GPIO_PAR_UART_PAR_U0RXD |
             MCF_GPIO_PAR_UART_PAR_U0TXD;
-        vMBPortSerialEnable( FALSE, FALSE );
+        vMBPortSerialEnable( false, false );
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialPutByte( CHAR ucByte )
+bool
+xMBPortSerialPutByte( int8_t ucByte )
 {
     MCF_UART_UTB0 = ucByte;
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialGetByte( CHAR * pucByte )
+bool
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     *pucByte = MCF_UART_URB0;
-    return TRUE;
+    return true;
 }
 
 void

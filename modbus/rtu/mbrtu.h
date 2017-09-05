@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -31,21 +31,28 @@
 #ifndef _MB_RTU_H
 #define _MB_RTU_H
 
+#include "mberrorcode.h"
+#include "mbparity.h"
+
+#include <stdbool.h>
+#include <stdint.h>
+
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
-    eMBErrorCode eMBRTUInit( UCHAR slaveAddress, UCHAR ucPort, ULONG ulBaudRate,
+
+    eMBErrorCode eMBRTUInit( uint8_t slaveAddress, uint8_t ucPort, uint32_t ulBaudRate,
                              eMBParity eParity );
 void            eMBRTUStart( void );
 void            eMBRTUStop( void );
-eMBErrorCode    eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * pusLength );
-eMBErrorCode    eMBRTUSend( UCHAR slaveAddress, const UCHAR * pucFrame, USHORT usLength );
-BOOL            xMBRTUReceiveFSM( void );
-BOOL            xMBRTUTransmitFSM( void );
-BOOL            xMBRTUTimerT15Expired( void );
-BOOL            xMBRTUTimerT35Expired( void );
+eMBErrorCode    eMBRTUReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame, uint16_t * pusLength );
+eMBErrorCode    eMBRTUSend( uint8_t slaveAddress, const uint8_t * pucFrame, uint16_t usLength );
+bool            xMBRTUReceiveFSM( void );
+bool            xMBRTUTransmitFSM( void );
+bool            xMBRTUTimerT15Expired( void );
+bool            xMBRTUTimerT35Expired( void );
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

@@ -2,7 +2,7 @@
  * FreeModbus Libary: Atmel AT91SAM3S Demo Application
  * Copyright (C) 2010 Christian Walter <cwalter@embedded-solutions.at>
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,7 +13,7 @@
  *   documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * IF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -42,17 +42,17 @@
 #include <intrinsics.h>
 
 /* ----------------------- Variables ----------------------------------------*/
-static BOOL     bIsWithinException = FALSE;
+static bool     bIsWithinException = false;
 
 /* ----------------------- Start implementation -----------------------------*/
 
 void
-vMBPortSetWithinException( BOOL bInException )
+vMBPortSetWithinException( bool bInException )
 {
     bIsWithinException = bInException;
 }
 
-BOOL
+bool
 bMBPortIsWithinException( void )
 {
     return bIsWithinException;

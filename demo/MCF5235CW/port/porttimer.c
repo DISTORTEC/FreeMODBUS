@@ -37,14 +37,14 @@
 	( (t50us * PIT_TIMER_TICKS )/20000UL - 1UL)
 
 /* ----------------------- Static variables -------------------------------- */
-USHORT          usTimerModulus;
+uint16_t          usTimerModulus;
 
 /* ----------------------- Start implementation ---------------------------- */
 
-BOOL
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+bool
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
-    usTimerModulus = ( USHORT ) PIT_MODULUS_REGISTER( usTim1Timerout50us );
+    usTimerModulus = ( uint16_t ) PIT_MODULUS_REGISTER( usTim1Timerout50us );
     /* Configure prescaler */
     MCF_PIT_PCSR1 = MCF_PIT_PCSR_PRE( 12 ) | MCF_PIT_PCSR_OVW;
     /* Configure interrupt priority and level */
@@ -52,7 +52,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     /* Unmask interrupt */
     MCF_INTC0_IMRH &= ~MCF_INTC0_IMRH_INT_MASK37;
 
-    return TRUE;
+    return true;
 }
 
 void
@@ -68,7 +68,7 @@ vMBPortTimersEnable(  )
 void
 vMBPortTimersDisable(  )
 {
-    MCF_GPIO_PCLRR_FECI2C = ( UCHAR ) ~ MCF_GPIO_PODR_FECI2C_PODR_FECI2C0;
+    MCF_GPIO_PCLRR_FECI2C = ( uint8_t ) ~ MCF_GPIO_PODR_FECI2C_PODR_FECI2C0;
 
     MCF_PIT_PCSR1 |= MCF_PIT_PCSR_PIF;
     MCF_PIT_PCSR1 &= ~MCF_PIT_PCSR_PIE;
@@ -77,7 +77,7 @@ vMBPortTimersDisable(  )
 
 extern volatile void *pxCurrentTCB;
 
-static          BOOL
+static          bool
 prvvMBPortTimerISRImpl( void )
 {
     MCF_PIT_PCSR1 |= MCF_PIT_PCSR_PIF;

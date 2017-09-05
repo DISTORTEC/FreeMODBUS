@@ -30,7 +30,7 @@
 #include "mbport.h"
 
 /* ----------------------- Static variables ---------------------------------*/
-static USHORT   usRegSR;
+static uint16_t   usRegSR;
 static char    *heap_ptr;
 
 /* ----------------------- Start implementation -----------------------------*/

@@ -35,24 +35,24 @@
 #define REG_INPUT_NREGS 4
 
 /* ----------------------- Static variables ---------------------------------*/
-static USHORT   usRegInputStart = REG_INPUT_START;
-static USHORT   usRegInputBuf[REG_INPUT_NREGS];
+static uint16_t   usRegInputStart = REG_INPUT_START;
+static uint16_t   usRegInputBuf[REG_INPUT_NREGS];
 
 
 int
 main( int argc, char *argv[], char *envp[] )
 {
     //xMBPortSerialInit (9600UL, 8, MB_PAR_EVEN);
-    //vMBPortSerialEnable (TRUE , FALSE);
+    //vMBPortSerialEnable (true , false);
     //xMBPortTimersInit( 200 );
     //vMBPortTimersEnable();
-    // 
-    const UCHAR     ucSlaveID[] = { 0xAA, 0xBB, 0xCC };
+    //
+    const uint8_t     ucSlaveID[] = { 0xAA, 0xBB, 0xCC };
     eMBErrorCode    eStatus;
 
     eStatus = eMBInit( MB_RTU, 0x0A, 0, 38400, MB_PAR_EVEN );
 
-    eStatus = eMBSetSlaveID( 0x34, TRUE, ucSlaveID, 3 );
+    eStatus = eMBSetSlaveID( 0x34, true, ucSlaveID, 3 );
 
     /* Enable the Modbus Protocol Stack. */
     eStatus = eMBEnable(  );
@@ -68,7 +68,7 @@ main( int argc, char *argv[], char *envp[] )
 }
 
 eMBErrorCode
-eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
+eMBRegInputCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     int             iRegIndex;
@@ -96,7 +96,7 @@ eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 }
 
 eMBErrorCode
-eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
+eMBRegHoldingCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNRegs,
                  eMBRegisterMode eMode )
 {
     return MB_ENOREG;
@@ -104,14 +104,14 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
 
 
 eMBErrorCode
-eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
+eMBRegCoilsCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNCoils,
                eMBRegisterMode eMode )
 {
     return MB_ENOREG;
 }
 
 eMBErrorCode
-eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
+eMBRegDiscreteCB( uint8_t * pucRegBuffer, uint16_t usAddress, uint16_t usNDiscrete )
 {
     return MB_ENOREG;
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * MODBUS Library: SAM7X Port
  * Copyright (c) 2007 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -14,25 +14,25 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * FreeRTOS.org is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with FreeRTOS.org; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
  * A special exception to the GPL can be applied should you wish to distribute
  * a combined work that includes FreeRTOS.org, without being obliged to provide
- * the source code for any proprietary components.  See the licensing section 
+ * the source code for any proprietary components.  See the licensing section
  * of http://www.FreeRTOS.org for full details of how and when the exception
  * can be applied.
- * 
+ *
  ****************************************************************************
- * See http://www.FreeRTOS.org for documentation, latest information, license 
- * and contact details.  Please ensure to read the configuration and relevant 
+ * See http://www.FreeRTOS.org for documentation, latest information, license
+ * and contact details.  Please ensure to read the configuration and relevant
  * port sections of the online documentation.
  *
  * Also see http://www.SafeRTOS.com for an IEC 61508 compliant version along
@@ -162,7 +162,7 @@ typedef unsigned portLONG       portTickType;
     /* pointer left where it is.  The IRQ stack will get used for any */    \
     /* functions calls made by this ISR. */                                 \
     asm volatile ( "SUB		R11, LR, #4" );                                   \
-    {                                                                       
+    {
 
 #define portEXIT_SWITCHING_ISR( SwitchRequired )                            \
         /* If a switch is required then we just need to call */             \
@@ -182,8 +182,8 @@ typedef unsigned portLONG       portTickType;
 
 /*
  * The interrupt management utilities can only be called from ARM mode.  When
- * THUMB_INTERWORK is defined the utilities are defined as functions in 
- * portISR.c to ensure a switch to ARM mode.  When THUMB_INTERWORK is not 
+ * THUMB_INTERWORK is defined the utilities are defined as functions in
+ * portISR.c to ensure a switch to ARM mode.  When THUMB_INTERWORK is not
  * defined then the utilities are defined as macros here - as per other ports.
  */
 #ifdef THUMB_INTERWORK

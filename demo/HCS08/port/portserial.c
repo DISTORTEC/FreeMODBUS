@@ -33,7 +33,7 @@ static void     prvvUARTRxISR( void );
 /* ----------------------- Start implementation -----------------------------*/
 
 void
-vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
+vMBPortSerialEnable( bool xRxEnable, bool xTxEnable )
 {
     /* If xRXEnable enable serial receive interrupts.
      * If xTxENable enable transmitter empty interrupts.
@@ -49,11 +49,11 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
         SCI1C2_TIE = 1;
 }
 
-BOOL
-xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+bool
+xMBPortSerialInit( uint8_t ucPORT, uint32_t ulBaudRate, uint8_t ucDataBits, eMBParity eParity )
 {
     /* Compute baud rate generator divider */
-    SCI1BD = ( USHORT ) ( ( ( BM_BUS_CLOCK + 16 / 2 ) / 16 + ulBaudRate / 2 ) / ulBaudRate );
+    SCI1BD = ( uint16_t ) ( ( ( BM_BUS_CLOCK + 16 / 2 ) / 16 + ulBaudRate / 2 ) / ulBaudRate );
 
     /* Configure the serial port */
 //      SCI1C1 = 0x00;          // LOOPS=0,SCISWAI=0,RSRC=0,M=0,ILT=0,PE=0,PT=0
@@ -64,31 +64,31 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     if( eParity == MB_PAR_ODD || ( eParity == MB_PAR_NONE && ucDataBits == 7 ) )
         SCI1C1_PT = 1;
 
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialPutByte( CHAR ucByte )
+bool
+xMBPortSerialPutByte( int8_t ucByte )
 {
     /* Put a byte in the UARTs transmit buffer. This function is called
      * by the protocol stack if pxMBFrameCBTransmitterEmpty( ) has been
      * called. */
-    while( SCI1S1_TDRE == FALSE );
+    while( SCI1S1_TDRE == false );
     SCI1D = ucByte;
-    SCI1C2_TIE = TRUE;
+    SCI1C2_TIE = true;
 
-    return TRUE;
+    return true;
 }
 
-BOOL
-xMBPortSerialGetByte( CHAR * pucByte )
+bool
+xMBPortSerialGetByte( int8_t * pucByte )
 {
     /* Return the byte in the UARTs receive buffer. This function is called
      * by the protocol stack after pxMBFrameCBByteReceived( ) has been called.
      */
-    BOOL            parityOK;
+    bool            parityOK;
 
-    while( SCI1S1_RDRF == FALSE );
+    while( SCI1S1_RDRF == false );
     parityOK = !SCI1S1_PF;
     if( SCI1C1_M )
         *pucByte = SCI1C3;      // for coherent 9 bit reads of the receiver buffer
@@ -96,21 +96,21 @@ xMBPortSerialGetByte( CHAR * pucByte )
     if( !SCI1C1_M )
         if( SCI1C1_PE || ( !SCI1C1_PE && SCI1C1_PT ) )
             *pucByte &= 0x7F;
-    SCI1C2_RIE = TRUE;
+    SCI1C2_RIE = true;
 
-    return parityOK;            // return TRUE if Parity Error Flag was not set
+    return parityOK;            // return true if Parity Error Flag was not set
 }
 
 /* Create an interrupt handler for the transmit buffer empty interrupt
  * (or an equivalent) for your target processor. This function should then
  * call pxMBFrameCBTransmitterEmpty( ) which tells the protocol stack that
- * a new character can be sent. The protocol stack will then call 
+ * a new character can be sent. The protocol stack will then call
  * xMBPortSerialPutByte( ) to send the character.
  */
 interrupt VectorNumber_Vsci1tx void
 prvvUARTTxReadyISR( void )
 {
-    SCI1C2_TIE = FALSE;
+    SCI1C2_TIE = false;
     ( void )pxMBFrameCBTransmitterEmpty(  );
 }
 
@@ -122,18 +122,18 @@ prvvUARTTxReadyISR( void )
 interrupt VectorNumber_Vsci1rx void
 prvvUARTRxISR( void )
 {
-    SCI1C2_RIE = FALSE;
+    SCI1C2_RIE = false;
     ( void )pxMBFrameCBByteReceived(  );
 }
 
 
-/* assert( FALSE ) generate software interrupts so they should be handled somehow
+/* assert( false ) generate software interrupts so they should be handled somehow
  * This implementation will generate padding charactres until the stack overflows
  */
 interrupt VectorNumber_Vswi void
 prvvAssertISR( void )
 {
     ( void )xMBPortSerialPutByte( 0x00 );
-    SCI1C2_TIE = FALSE;
+    SCI1C2_TIE = false;
     EnableInterrupts;
 }

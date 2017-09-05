@@ -31,10 +31,10 @@
 #include "mbconfig.h"
 
 
-BOOL
-prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, USHORT usBufSize )
+bool
+prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, uint16_t usBufSize )
 {
-    BOOL            bOkay;
+    bool            bOkay;
     SOCKADDR_IN     xClientAddr;
     int             iAddrLen = sizeof( SOCKADDR_IN );
     DWORD           dwBufSize = usBufSize;
@@ -42,22 +42,22 @@ prvMBTCPPortAddressToString( SOCKET xSocket, LPTSTR szAddr, USHORT usBufSize )
     assert( ( szAddr != NULL ) && ( usBufSize > 0 ) );
     if( getsockname( xSocket, ( SOCKADDR * ) & xClientAddr, &iAddrLen ) == SOCKET_ERROR )
     {
-        bOkay = FALSE;
+        bOkay = false;
     }
     else if( WSAAddressToString( ( SOCKADDR * ) & xClientAddr, iAddrLen, NULL, szAddr,
                                  &dwBufSize ) == SOCKET_ERROR )
     {
-        bOkay = FALSE;
+        bOkay = false;
     }
     else
     {
-        bOkay = TRUE;
+        bOkay = true;
     }
     return bOkay;
 }
 
 LPTSTR
-prvMBTCPPortFrameToString( UCHAR * pucFrame, USHORT usFrameLen )
+prvMBTCPPortFrameToString( uint8_t * pucFrame, uint16_t usFrameLen )
 {
     LPTSTR          szBuf;
     int             i;

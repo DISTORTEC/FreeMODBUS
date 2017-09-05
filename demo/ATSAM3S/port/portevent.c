@@ -2,7 +2,7 @@
  * FreeModbus Libary: Atmel AT91SAM3S Demo Application
  * Copyright (C) 2010 Christian Walter <cwalter@embedded-solutions.at>
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,7 +13,7 @@
  *   documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * IF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -34,34 +34,34 @@
 
 /* ----------------------- Variables ----------------------------------------*/
 static eMBEventType eQueuedEvent;
-static BOOL     xEventInQueue;
+static bool     xEventInQueue;
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
+bool
 xMBPortEventInit( void )
 {
-    xEventInQueue = FALSE;
-    return TRUE;
+    xEventInQueue = false;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventPost( eMBEventType eEvent )
 {
-    xEventInQueue = TRUE;
+    xEventInQueue = true;
     eQueuedEvent = eEvent;
-    return TRUE;
+    return true;
 }
 
-BOOL
+bool
 xMBPortEventGet( eMBEventType * eEvent )
 {
-    BOOL            xEventHappened = FALSE;
+    bool            xEventHappened = false;
 
     if( xEventInQueue )
     {
         *eEvent = eQueuedEvent;
-        xEventInQueue = FALSE;
-        xEventHappened = TRUE;
+        xEventInQueue = false;
+        xEventHappened = true;
     }
     return xEventHappened;
 }

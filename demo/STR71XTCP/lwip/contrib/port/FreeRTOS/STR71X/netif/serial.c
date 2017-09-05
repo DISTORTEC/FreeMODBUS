@@ -110,7 +110,7 @@ static err_t    sio_open_low_level( u8_t devnr, serdev_t * dev );
 static err_t    sio_close_low_level( u8_t devnr, serdev_t * dev );
 
 /* ----------------------- Static variables ---------------------------------*/
-static u8_t     initialized = FALSE;
+static u8_t     initialized = false;
 static volatile serdev_t devices[UART_DEVICES_MAX];
 
 /* ----------------------- Start implementation -----------------------------*/
@@ -443,8 +443,8 @@ sio_read( sio_fd_t fd, u8_t * buf, u32_t size )
                 if( xSemaphoreTake( dev->rx_sem, MS_TO_TICKS( DEFAULT_READTIMEOUT_MS ) ) ==
                     pdFALSE )
                 {
-                    /* A timeout. Abort the read and return the characters 
-                     * received so far. 
+                    /* A timeout. Abort the read and return the characters
+                     * received so far.
                      */
                     dev->abort = 1;
                 }
@@ -520,7 +520,7 @@ sio_serial_isr( UART_TypeDef * UARTx, u8_t * need_ctx_switch )
     {
         status = UART_FlagStatus( dev->UARTx );
 
-        /* If there are characters in the UART fifo place them into the 
+        /* If there are characters in the UART fifo place them into the
          * ring buffer. In case the buffer is filled half or the requested
          * number of bytes has been read wakeup the receiver.
          */

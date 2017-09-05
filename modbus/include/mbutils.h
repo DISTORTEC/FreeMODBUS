@@ -1,4 +1,4 @@
-/* 
+/*
  * FreeModbus Libary: A portable Modbus implementation for Modbus ASCII/RTU.
  * Copyright (c) 2006 Christian Walter <wolti@sil.at>
  * All rights reserved.
@@ -31,9 +31,12 @@
 #ifndef _MB_UTILS_H
 #define _MB_UTILS_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
-PR_BEGIN_EXTERN_C
+extern "C" {
 #endif
+
 /*! \defgroup modbus_utils Utilities
  *
  * This module contains some utility functions which can be used by
@@ -75,8 +78,8 @@ PR_BEGIN_EXTERN_C
  * xMBUtilSetBits( ucBits, 8, 8, 0x5A);
  * \endcode
  */
-void            xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset,
-                                UCHAR ucNBits, UCHAR ucValues );
+void            xMBUtilSetBits( uint8_t * ucByteBuf, uint16_t usBitOffset,
+                                uint8_t ucNBits, uint8_t ucValues );
 
 /*! \brief Function to read bits in a byte buffer.
  *
@@ -90,19 +93,19 @@ void            xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset,
  *   than 8.
  *
  * \code
- * UCHAR ucBits[2] = {0, 0};
- * UCHAR ucResult;
+ * uint8_t ucBits[2] = {0, 0};
+ * uint8_t ucResult;
  *
  * // Extract the bits 3 - 10.
  * ucResult = xMBUtilGetBits( ucBits, 3, 8 );
  * \endcode
  */
-UCHAR           xMBUtilGetBits( UCHAR * ucByteBuf, USHORT usBitOffset,
-                                UCHAR ucNBits );
+uint8_t           xMBUtilGetBits( uint8_t * ucByteBuf, uint16_t usBitOffset,
+                                uint8_t ucNBits );
 
 /*! @} */
 
 #ifdef __cplusplus
-PR_END_EXTERN_C
+}
 #endif
 #endif

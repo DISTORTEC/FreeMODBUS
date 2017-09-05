@@ -50,7 +50,7 @@ void CAN_SetBitrate(u32 bitrate)
   CAN->BTR = CanTimings[bitrate];
 
   /* clear the Extended Baud Rate Prescaler */
-  CAN->BRPR = 0; 		
+  CAN->BRPR = 0;
 }
 
 /*******************************************************************************
@@ -120,8 +120,8 @@ static u32 CAN_GetFreeIF(void)
 
 /*******************************************************************************
 * Macro Name     : xxx_ID_MSK, xxx_ID_ARB
-* Description    : Form the Mask and Arbitration registers value to filter a 
-*                  range of identifiers or a fixed identifier, for standard 
+* Description    : Form the Mask and Arbitration registers value to filter a
+*                  range of identifiers or a fixed identifier, for standard
 *                  and extended IDs
 *******************************************************************************/
 #define RANGE_ID_MSK(range_start, range_end)	(~((range_end) - (range_start)))
@@ -232,9 +232,9 @@ void CAN_SetTxMsgObj(u32 msgobj, u32 idType)
 * Input 2        : CAN_STD_ID or CAN_EXT_ID
 * Input 3        : low part of the identifier range used for acceptance filtering
 * Input 4        : high part of the identifier range used for acceptance filtering
-* Input 5        : TRUE for a single receive object or a FIFO receive object that
+* Input 5        : true for a single receive object or a FIFO receive object that
 *                  is the last one of the FIFO
-*                  FALSE for a FIFO receive object that is not the last one
+*                  false for a FIFO receive object that is not the last one
 * Output         : None
 * Return         : None
 *******************************************************************************/
@@ -383,8 +383,8 @@ u32 CAN_SendMessage(u32 msgobj, canmsg* pCanMsg)
 * Function Name  : CAN_ReceiveMessage
 * Description    : Get the message, if received
 * Input 1        : message object number, from 0 to 31
-* Input 2        : if TRUE, the message object is released when getting the data
-*                  if FALSE, the message object is not released
+* Input 2        : if true, the message object is released when getting the data
+*                  if false, the message object is not released
 * Input 3        : pointer to the message structure where received data is stored
 * Output         : None
 * Return         : 1 if reception was OK, else 0 (no message pending)

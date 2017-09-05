@@ -2,7 +2,7 @@
  * FreeModbus Libary: Atmel AT91SAM3S Demo Application
  * Copyright (C) 2010 Christian Walter <cwalter@embedded-solutions.at>
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,7 +13,7 @@
  *   documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * IF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -68,8 +68,8 @@ const static Pin xTimerDebugPins[] = { TIMER_PIN };
 #endif
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
-xMBPortTimersInit( USHORT usTim1Timerout50us )
+bool
+xMBPortTimersInit( uint16_t usTim1Timerout50us )
 {
 #if MB_TIMER_DEBUG == 1
     PIO_Configure( xTimerDebugPins, PIO_LISTSIZE( xTimerDebugPins ) );
@@ -85,7 +85,7 @@ xMBPortTimersInit( USHORT usTim1Timerout50us )
     NVIC_SetPriority( TCXIRQ, 0xF << 4 );
     NVIC_EnableIRQ( TCXIRQ );
 
-    return TRUE;
+    return true;
 }
 
 void
@@ -115,7 +115,7 @@ vMBPortTimersDisable(  )
 }
 
 void
-vMBPortTimersDelay( USHORT usTimeOutMS )
+vMBPortTimersDelay( uint16_t usTimeOutMS )
 {
     vTaskDelay( usTimeOutMS / portTICK_RATE_MS );
 }
@@ -126,9 +126,9 @@ TCX_IRQHANDLER( void )
     uint32_t        xTCX_IMRX = TCX->TC_CHANNEL[TCCHANNEL].TC_IMR;
     uint32_t        xTCX_SRX = TCX->TC_CHANNEL[TCCHANNEL].TC_SR;
     uint32_t        uiSRMasked = xTCX_SRX & xTCX_IMRX;
-    BOOL            bTaskWoken = FALSE;
+    bool            bTaskWoken = false;
 
-    vMBPortSetWithinException( TRUE );
+    vMBPortSetWithinException( true );
 
     if( ( uiSRMasked & TC_SRX_CPAS ) > 0 )
     {
@@ -137,7 +137,7 @@ TCX_IRQHANDLER( void )
 #endif
         ( void )pxMBPortCBTimerExpired(  );
     }
-    vMBPortSetWithinException( FALSE );
+    vMBPortSetWithinException( false );
 
     portEND_SWITCHING_ISR( bTaskWoken ? pdTRUE : pdFALSE );
 }
