@@ -31,7 +31,12 @@
 #ifndef _MB_ASCII_H
 #define _MB_ASCII_H
 
+#include "mbconfig.h"
+#include "mberrorcode.h"
+#include "mbparity.h"
+
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
