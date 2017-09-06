@@ -33,6 +33,7 @@
 #include "port.h"
 
 #include "mbport.h"
+#include "mbrcvstate.h"
 
 #include <assert.h>
 #include <stdbool.h>
@@ -50,13 +51,6 @@
 #define MB_SER_PDU_PDU_OFF      1       /*!< Offset of Modbus-PDU in Ser-PDU. */
 
 /* ----------------------- Type definitions ---------------------------------*/
-typedef enum
-{
-    STATE_RX_IDLE,              /*!< Receiver is in idle state. */
-    STATE_RX_RCV,               /*!< Frame is beeing received. */
-    STATE_RX_WAIT_EOF           /*!< Wait for End of Frame. */
-} eMBRcvState;
-
 typedef enum
 {
     STATE_TX_IDLE,              /*!< Transmitter is in idle state. */
