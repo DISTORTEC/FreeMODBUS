@@ -84,9 +84,6 @@ struct xMBInstance
     bool( *pxMBFrameCBTransmitterEmpty ) ( struct xMBInstance * xInstance );
     bool( *pxMBPortCBTimerExpired ) ( struct xMBInstance * xInstance );
 
-    bool( *pxMBFrameCBReceiveFSMCur ) ( struct xMBInstance * xInstance );
-    bool( *pxMBFrameCBTransmitFSMCur ) ( struct xMBInstance * xInstance );
-
     eMBStateType eMBState;
     eMBMode  eMBCurrentMode;
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
