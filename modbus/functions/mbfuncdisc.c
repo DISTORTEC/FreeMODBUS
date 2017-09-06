@@ -21,6 +21,7 @@
 
 #include "mb.h"
 #include "mbframe.h"
+#include "mbinstance.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_PDU_FUNC_READ_ADDR_OFF           ( MB_PDU_DATA_OFF )
@@ -36,7 +37,7 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 #if MB_FUNC_READ_COILS_ENABLED > 0
 
 eMBException
-eMBFuncReadDiscreteInputs( uint8_t * pucFrame, uint16_t * usLen )
+eMBFuncReadDiscreteInputs( struct xMBInstance * xInstance, uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usDiscreteCnt;
@@ -83,7 +84,7 @@ eMBFuncReadDiscreteInputs( uint8_t * pucFrame, uint16_t * usLen )
             *usLen += 1;
 
             eRegStatus =
-                eMBRegDiscreteCB( pucFrameCur, usRegAddress, usDiscreteCnt );
+                eMBRegDiscreteCB( xInstance, pucFrameCur, usRegAddress, usDiscreteCnt );
 
             /* If an error occured convert it into a Modbus exception. */
             if( eRegStatus != MB_ENOERR )

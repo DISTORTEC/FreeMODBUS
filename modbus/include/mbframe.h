@@ -39,6 +39,7 @@
 extern "C" {
 #endif
 
+struct xMBInstance;
 
 /*!
  * Constants which defines the format of a modbus frame. The example is
@@ -72,19 +73,21 @@ extern "C" {
 #define MB_PDU_DATA_OFF     1   /*!< Offset for response data in PDU. */
 
 /* ----------------------- Prototypes  0-------------------------------------*/
-typedef void    ( *pvMBFrameStart ) ( void );
+typedef void    ( *pvMBFrameStart ) ( struct xMBInstance * xInstance );
 
-typedef void    ( *pvMBFrameStop ) ( void );
+typedef void    ( *pvMBFrameStop ) ( struct xMBInstance * xInstance );
 
-typedef eMBErrorCode( *peMBFrameReceive ) ( uint8_t * pucRcvAddress,
+typedef eMBErrorCode( *peMBFrameReceive ) ( struct xMBInstance * xInstance,
+                                            uint8_t * pucRcvAddress,
                                             uint8_t ** pucFrame,
                                             uint16_t * pusLength );
 
-typedef eMBErrorCode( *peMBFrameSend ) ( uint8_t slaveAddress,
+typedef eMBErrorCode( *peMBFrameSend ) ( struct xMBInstance * xInstance,
+                                         uint8_t slaveAddress,
                                          const uint8_t * pucFrame,
                                          uint16_t usLength );
 
-typedef void( *pvMBFrameClose ) ( void );
+typedef void( *pvMBFrameClose ) ( struct xMBInstance * xInstance );
 
 #ifdef __cplusplus
 }

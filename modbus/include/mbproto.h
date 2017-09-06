@@ -39,6 +39,8 @@
 extern "C" {
 #endif
 
+struct xMBInstance;
+
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_ADDRESS_BROADCAST    ( 0 )   /*! Modbus broadcast address. */
 #define MB_ADDRESS_MIN          ( 1 )   /*! Smallest possible slave address. */
@@ -61,7 +63,9 @@ extern "C" {
 #define MB_FUNC_ERROR                         ( 128 )
 /* ----------------------- Type definitions ---------------------------------*/
 
-typedef         eMBException( *pxMBFunctionHandler ) ( uint8_t * pucFrame, uint16_t * pusLength );
+typedef eMBException( *pxMBFunctionHandler ) ( struct xMBInstance * xInstance,
+                                               uint8_t * pucFrame,
+                                               uint16_t * pusLength );
 
 typedef struct
 {

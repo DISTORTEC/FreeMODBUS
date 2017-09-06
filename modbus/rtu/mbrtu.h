@@ -41,16 +41,21 @@
 extern "C" {
 #endif
 
-    eMBErrorCode eMBRTUInit( uint8_t slaveAddress, uint8_t ucPort, uint32_t ulBaudRate,
-                             eMBParity eParity );
-void            eMBRTUStart( void );
-void            eMBRTUStop( void );
-eMBErrorCode    eMBRTUReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame, uint16_t * pusLength );
-eMBErrorCode    eMBRTUSend( uint8_t slaveAddress, const uint8_t * pucFrame, uint16_t usLength );
-bool            xMBRTUReceiveFSM( void );
-bool            xMBRTUTransmitFSM( void );
-bool            xMBRTUTimerT15Expired( void );
-bool            xMBRTUTimerT35Expired( void );
+struct xMBInstance;
+
+eMBErrorCode eMBRTUInit( struct xMBInstance * xInstance, uint8_t slaveAddress,
+                         uint8_t ucPort, uint32_t ulBaudRate, eMBParity eParity );
+void eMBRTUStart( struct xMBInstance * xInstance );
+void eMBRTUStop( struct xMBInstance * xInstance );
+eMBErrorCode eMBRTUReceive( struct xMBInstance * xInstance,
+                            uint8_t * pucRcvAddress, uint8_t ** pucFrame,
+                            uint16_t * pusLength );
+eMBErrorCode eMBRTUSend( struct xMBInstance * xInstance, uint8_t slaveAddress,
+                         const uint8_t * pucFrame, uint16_t usLength );
+bool xMBRTUReceiveFSM( struct xMBInstance * xInstance );
+bool xMBRTUTransmitFSM( struct xMBInstance * xInstance );
+bool xMBRTUTimerT15Expired( struct xMBInstance * xInstance );
+bool xMBRTUTimerT35Expired( struct xMBInstance * xInstance );
 
 #ifdef __cplusplus
 }

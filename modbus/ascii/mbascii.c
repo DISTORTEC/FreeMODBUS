@@ -98,55 +98,57 @@ static volatile uint8_t ucMBLFCharacter;
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBASCIIInit( uint8_t ucSlaveAddress, uint8_t ucPort, uint32_t ulBaudRate, eMBParity eParity )
+eMBASCIIInit( struct xMBInstance * xInstance, uint8_t ucSlaveAddress,
+              uint8_t ucPort, uint32_t ulBaudRate, eMBParity eParity )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     ( void )ucSlaveAddress;
 
-    ENTER_CRITICAL_SECTION(  );
+    ENTER_CRITICAL_SECTION( xInstance );
     ucMBLFCharacter = MB_ASCII_DEFAULT_LF;
 
-    if( xMBPortSerialInit( ucPort, ulBaudRate, 7, eParity ) != true )
+    if( xMBPortSerialInit( xInstance, ucPort, ulBaudRate, 7, eParity ) != true )
     {
         eStatus = MB_EPORTERR;
     }
-    else if( xMBPortTimersInit( MB_ASCII_TIMEOUT_SEC * 20000UL ) != true )
+    else if( xMBPortTimersInit( xInstance, MB_ASCII_TIMEOUT_SEC * 20000UL ) != true )
     {
         eStatus = MB_EPORTERR;
     }
 
-    EXIT_CRITICAL_SECTION(  );
+    EXIT_CRITICAL_SECTION( xInstance );
 
     return eStatus;
 }
 
 void
-eMBASCIIStart( void )
+eMBASCIIStart( struct xMBInstance * xInstance )
 {
-    ENTER_CRITICAL_SECTION(  );
-    vMBPortSerialEnable( true, false );
+    ENTER_CRITICAL_SECTION( xInstance );
+    vMBPortSerialEnable( xInstance, true, false );
     eRcvState = STATE_RX_IDLE;
-    EXIT_CRITICAL_SECTION(  );
+    EXIT_CRITICAL_SECTION( xInstance );
 
     /* No special startup required for ASCII. */
-    ( void )xMBPortEventPost( EV_READY );
+    ( void )xMBPortEventPost( xInstance, EV_READY );
 }
 
 void
-eMBASCIIStop( void )
+eMBASCIIStop( struct xMBInstance * xInstance )
 {
-    ENTER_CRITICAL_SECTION(  );
-    vMBPortSerialEnable( false, false );
-    vMBPortTimersDisable(  );
-    EXIT_CRITICAL_SECTION(  );
+    ENTER_CRITICAL_SECTION( xInstance );
+    vMBPortSerialEnable( xInstance, false, false );
+    vMBPortTimersDisable( xInstance );
+    EXIT_CRITICAL_SECTION( xInstance );
 }
 
 eMBErrorCode
-eMBASCIIReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame, uint16_t * pusLength )
+eMBASCIIReceive( struct xMBInstance * xInstance, uint8_t * pucRcvAddress,
+                 uint8_t ** pucFrame, uint16_t * pusLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
-    ENTER_CRITICAL_SECTION(  );
+    ENTER_CRITICAL_SECTION( xInstance );
     assert( usRcvBufferPos < MB_SER_PDU_SIZE_MAX );
 
     /* Length and CRC check */
@@ -170,17 +172,18 @@ eMBASCIIReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame, uint16_t * pusLen
     {
         eStatus = MB_EIO;
     }
-    EXIT_CRITICAL_SECTION(  );
+    EXIT_CRITICAL_SECTION( xInstance );
     return eStatus;
 }
 
 eMBErrorCode
-eMBASCIISend( uint8_t ucSlaveAddress, const uint8_t * pucFrame, uint16_t usLength )
+eMBASCIISend( struct xMBInstance * xInstance, uint8_t ucSlaveAddress,
+              const uint8_t * pucFrame, uint16_t usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     uint8_t           usLRC;
 
-    ENTER_CRITICAL_SECTION(  );
+    ENTER_CRITICAL_SECTION( xInstance );
     /* Check if the receiver is still in idle state. If not we where too
      * slow with processing the received frame and the master sent another
      * frame on the network. We have to abort sending the frame.
@@ -201,18 +204,18 @@ eMBASCIISend( uint8_t ucSlaveAddress, const uint8_t * pucFrame, uint16_t usLengt
 
         /* Activate the transmitter. */
         eSndState = STATE_TX_START;
-        vMBPortSerialEnable( false, true );
+        vMBPortSerialEnable( xInstance, false, true );
     }
     else
     {
         eStatus = MB_EIO;
     }
-    EXIT_CRITICAL_SECTION(  );
+    EXIT_CRITICAL_SECTION( xInstance );
     return eStatus;
 }
 
 bool
-xMBASCIIReceiveFSM( void )
+xMBASCIIReceiveFSM( struct xMBInstance * xInstance )
 {
     bool            xNeedPoll = false;
     uint8_t           ucByte;
@@ -220,7 +223,7 @@ xMBASCIIReceiveFSM( void )
 
     assert( eSndState == STATE_TX_IDLE );
 
-    ( void )xMBPortSerialGetByte( ( int8_t * ) & ucByte );
+    ( void )xMBPortSerialGetByte( xInstance, ( int8_t * ) & ucByte );
     switch ( eRcvState )
     {
         /* A new character is received. If the character is a ':' the input
@@ -230,7 +233,7 @@ xMBASCIIReceiveFSM( void )
          */
     case STATE_RX_RCV:
         /* Enable timer for character timeout. */
-        vMBPortTimersEnable(  );
+        vMBPortTimersEnable( xInstance );
         if( ucByte == ':' )
         {
             /* Empty receive buffer. */
@@ -261,7 +264,7 @@ xMBASCIIReceiveFSM( void )
                      * a resonable implementation. */
                     eRcvState = STATE_RX_IDLE;
                     /* Disable previously activated timer because of error state. */
-                    vMBPortTimersDisable(  );
+                    vMBPortTimersDisable( xInstance );
                 }
                 break;
 
@@ -279,13 +282,13 @@ xMBASCIIReceiveFSM( void )
         {
             /* Disable character timeout timer because all characters are
              * received. */
-            vMBPortTimersDisable(  );
+            vMBPortTimersDisable( xInstance );
             /* Receiver is again in idle state. */
             eRcvState = STATE_RX_IDLE;
 
             /* Notify the caller of eMBASCIIReceive that a new frame
              * was received. */
-            xNeedPoll = xMBPortEventPost( EV_FRAME_RECEIVED );
+            xNeedPoll = xMBPortEventPost( xInstance, EV_FRAME_RECEIVED );
         }
         else if( ucByte == ':' )
         {
@@ -295,7 +298,7 @@ xMBASCIIReceiveFSM( void )
             eRcvState = STATE_RX_RCV;
 
             /* Enable timer for character timeout. */
-            vMBPortTimersEnable(  );
+            vMBPortTimersEnable( xInstance );
         }
         else
         {
@@ -308,7 +311,7 @@ xMBASCIIReceiveFSM( void )
         if( ucByte == ':' )
         {
             /* Enable timer for character timeout. */
-            vMBPortTimersEnable(  );
+            vMBPortTimersEnable( xInstance );
             /* Reset the input buffers to store the frame. */
             usRcvBufferPos = 0;;
             eBytePos = BYTE_HIGH_NIBBLE;
@@ -321,7 +324,7 @@ xMBASCIIReceiveFSM( void )
 }
 
 bool
-xMBASCIITransmitFSM( void )
+xMBASCIITransmitFSM( struct xMBInstance * xInstance )
 {
     bool            xNeedPoll = false;
     uint8_t           ucByte;
@@ -333,7 +336,7 @@ xMBASCIITransmitFSM( void )
          * the character ':'. */
     case STATE_TX_START:
         ucByte = ':';
-        xMBPortSerialPutByte( ( int8_t )ucByte );
+        xMBPortSerialPutByte( xInstance, ( int8_t )ucByte );
         eSndState = STATE_TX_DATA;
         eBytePos = BYTE_HIGH_NIBBLE;
         break;
@@ -349,13 +352,13 @@ xMBASCIITransmitFSM( void )
             {
             case BYTE_HIGH_NIBBLE:
                 ucByte = prvucMBBIN2CHAR( ( uint8_t )( *pucSndBufferCur >> 4 ) );
-                xMBPortSerialPutByte( ( int8_t ) ucByte );
+                xMBPortSerialPutByte( xInstance, ( int8_t ) ucByte );
                 eBytePos = BYTE_LOW_NIBBLE;
                 break;
 
             case BYTE_LOW_NIBBLE:
                 ucByte = prvucMBBIN2CHAR( ( uint8_t )( *pucSndBufferCur & 0x0F ) );
-                xMBPortSerialPutByte( ( int8_t )ucByte );
+                xMBPortSerialPutByte( xInstance, ( int8_t )ucByte );
                 pucSndBufferCur++;
                 eBytePos = BYTE_HIGH_NIBBLE;
                 usSndBufferCount--;
@@ -364,14 +367,14 @@ xMBASCIITransmitFSM( void )
         }
         else
         {
-            xMBPortSerialPutByte( MB_ASCII_DEFAULT_CR );
+            xMBPortSerialPutByte( xInstance, MB_ASCII_DEFAULT_CR );
             eSndState = STATE_TX_END;
         }
         break;
 
         /* Finish the frame by sending a LF character. */
     case STATE_TX_END:
-        xMBPortSerialPutByte( ( int8_t )ucMBLFCharacter );
+        xMBPortSerialPutByte( xInstance, ( int8_t )ucMBLFCharacter );
         /* We need another state to make sure that the CR character has
          * been sent. */
         eSndState = STATE_TX_NOTIFY;
@@ -381,11 +384,11 @@ xMBASCIITransmitFSM( void )
          * been sent. */
     case STATE_TX_NOTIFY:
         eSndState = STATE_TX_IDLE;
-        xNeedPoll = xMBPortEventPost( EV_FRAME_SENT );
+        xNeedPoll = xMBPortEventPost( xInstance, EV_FRAME_SENT );
 
         /* Disable transmitter. This prevents another transmit buffer
          * empty interrupt. */
-        vMBPortSerialEnable( true, false );
+        vMBPortSerialEnable( xInstance, true, false );
         eSndState = STATE_TX_IDLE;
         break;
 
@@ -393,7 +396,7 @@ xMBASCIITransmitFSM( void )
          * idle state.  */
     case STATE_TX_IDLE:
         /* enable receiver/disable transmitter. */
-        vMBPortSerialEnable( true, false );
+        vMBPortSerialEnable( xInstance, true, false );
         break;
     }
 
@@ -401,7 +404,7 @@ xMBASCIITransmitFSM( void )
 }
 
 bool
-xMBASCIITimerT1SExpired( void )
+xMBASCIITimerT1SExpired( struct xMBInstance * xInstance )
 {
     switch ( eRcvState )
     {
@@ -417,7 +420,7 @@ xMBASCIITimerT1SExpired( void )
         assert( ( eRcvState == STATE_RX_RCV ) || ( eRcvState == STATE_RX_WAIT_EOF ) );
         break;
     }
-    vMBPortTimersDisable(  );
+    vMBPortTimersDisable( xInstance );
 
     /* no context switch required. */
     return false;

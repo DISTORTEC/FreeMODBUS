@@ -43,18 +43,23 @@ extern "C" {
 #endif
 
 #if MB_ASCII_ENABLED > 0
-eMBErrorCode    eMBASCIIInit( uint8_t slaveAddress, uint8_t ucPort,
-                              uint32_t ulBaudRate, eMBParity eParity );
-void            eMBASCIIStart( void );
-void            eMBASCIIStop( void );
+struct xMBInstance;
 
-eMBErrorCode    eMBASCIIReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame,
-                                 uint16_t * pusLength );
-eMBErrorCode    eMBASCIISend( uint8_t slaveAddress, const uint8_t * pucFrame,
-                              uint16_t usLength );
-bool            xMBASCIIReceiveFSM( void );
-bool            xMBASCIITransmitFSM( void );
-bool            xMBASCIITimerT1SExpired( void );
+eMBErrorCode eMBASCIIInit( struct xMBInstance * xInstance,
+                           uint8_t slaveAddress, uint8_t ucPort,
+                           uint32_t ulBaudRate, eMBParity eParity );
+void eMBASCIIStart( struct xMBInstance * xInstance );
+void eMBASCIIStop( struct xMBInstance * xInstance );
+
+eMBErrorCode eMBASCIIReceive( struct xMBInstance * xInstance,
+                              uint8_t * pucRcvAddress, uint8_t ** pucFrame,
+                              uint16_t * pusLength );
+eMBErrorCode eMBASCIISend( struct xMBInstance * xInstance,
+                           uint8_t slaveAddress, const uint8_t * pucFrame,
+                           uint16_t usLength );
+bool xMBASCIIReceiveFSM( struct xMBInstance * xInstance );
+bool xMBASCIITransmitFSM( struct xMBInstance * xInstance );
+bool xMBASCIITimerT1SExpired( struct xMBInstance * xInstance );
 #endif
 
 #ifdef __cplusplus

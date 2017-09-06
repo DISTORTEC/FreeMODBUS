@@ -28,12 +28,13 @@
  * File: $Id: mbfuncother.c,v 1.8 2006/12/07 22:10:34 wolti Exp $
  */
 
- #include "mbfunc.h"
+#include "mbfunc.h"
 
- #include "mb.h"
- #include "mbframe.h"
+#include "mb.h"
+#include "mbframe.h"
+#include "mbinstance.h"
 
- #include <string.h>
+#include <string.h>
 
 #if MB_FUNC_OTHER_REP_SLAVEID_ENABLED > 0
 
@@ -44,7 +45,7 @@ static uint16_t   usMBSlaveIDLen;
 /* ----------------------- Start implementation -----------------------------*/
 
 eMBErrorCode
-eMBSetSlaveID( uint8_t ucSlaveID, bool xIsRunning,
+eMBSetSlaveID( struct xMBInstance * xInstance, uint8_t ucSlaveID, bool xIsRunning,
                uint8_t const *pucAdditional, uint16_t usAdditionalLen )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
@@ -72,7 +73,7 @@ eMBSetSlaveID( uint8_t ucSlaveID, bool xIsRunning,
 }
 
 eMBException
-eMBFuncReportSlaveID( uint8_t * pucFrame, uint16_t * usLen )
+eMBFuncReportSlaveID( struct xMBInstance * xInstance, uint8_t * pucFrame, uint16_t * usLen )
 {
     memcpy( &pucFrame[MB_PDU_DATA_OFF], &ucMBSlaveID[0], ( size_t )usMBSlaveIDLen );
     *usLen = ( uint16_t )( MB_PDU_DATA_OFF + usMBSlaveIDLen );

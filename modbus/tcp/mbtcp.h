@@ -42,17 +42,21 @@ extern "C" {
 #endif
 
 #if MB_TCP_ENABLED > 0
+
+struct xMBInstance;
+
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_TCP_PSEUDO_ADDRESS   255
 
 /* ----------------------- Function prototypes ------------------------------*/
-    eMBErrorCode eMBTCPDoInit( uint16_t ucTCPPort );
-void            eMBTCPStart( void );
-void            eMBTCPStop( void );
-eMBErrorCode    eMBTCPReceive( uint8_t * pucRcvAddress, uint8_t ** pucFrame,
-                               uint16_t * pusLength );
-eMBErrorCode    eMBTCPSend( uint8_t _unused, const uint8_t * pucFrame,
-                            uint16_t usLength );
+eMBErrorCode eMBTCPDoInit( struct xMBInstance * xInstance, uint16_t ucTCPPort );
+void eMBTCPStart( struct xMBInstance * xInstance );
+void eMBTCPStop( struct xMBInstance * xInstance );
+eMBErrorCode eMBTCPReceive( struct xMBInstance * xInstance,
+                            uint8_t * pucRcvAddress, uint8_t ** pucFrame,
+                            uint16_t * pusLength );
+eMBErrorCode eMBTCPSend( struct xMBInstance * xInstance, uint8_t _unused,
+                         const uint8_t * pucFrame, uint16_t usLength );
 
 #endif
 

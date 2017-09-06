@@ -30,6 +30,8 @@
 
 #include "mbtcp.h"
 
+#include "mbinstance.h"
+
 #include <stdbool.h>
 
 #if MB_TCP_ENABLED > 0
@@ -68,11 +70,11 @@
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBTCPDoInit( uint16_t ucTCPPort )
+eMBTCPDoInit( struct xMBInstance * xInstance, uint16_t ucTCPPort )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
-    if( xMBTCPPortInit( ucTCPPort ) == false )
+    if( xMBTCPPortInit( xInstance, ucTCPPort ) == false )
     {
         eStatus = MB_EPORTERR;
     }
@@ -80,26 +82,26 @@ eMBTCPDoInit( uint16_t ucTCPPort )
 }
 
 void
-eMBTCPStart( void )
+eMBTCPStart( struct xMBInstance * xInstance )
 {
 }
 
 void
-eMBTCPStop( void )
+eMBTCPStop( struct xMBInstance * xInstance )
 {
     /* Make sure that no more clients are connected. */
-    vMBTCPPortDisable( );
+    vMBTCPPortDisable( xInstance );
 }
 
 eMBErrorCode
-eMBTCPReceive( uint8_t * pucRcvAddress, uint8_t ** ppucFrame, uint16_t * pusLength )
+eMBTCPReceive( struct xMBInstance * xInstance, uint8_t * pucRcvAddress, uint8_t ** ppucFrame, uint16_t * pusLength )
 {
     eMBErrorCode    eStatus = MB_EIO;
     uint8_t          *pucMBTCPFrame;
     uint16_t          usLength;
     uint16_t          usPID;
 
-    if( xMBTCPPortGetRequest( &pucMBTCPFrame, &usLength ) != false )
+    if( xMBTCPPortGetRequest( xInstance, &pucMBTCPFrame, &usLength ) != false )
     {
         usPID = pucMBTCPFrame[MB_TCP_PID] << 8U;
         usPID |= pucMBTCPFrame[MB_TCP_PID + 1];
@@ -124,7 +126,7 @@ eMBTCPReceive( uint8_t * pucRcvAddress, uint8_t ** ppucFrame, uint16_t * pusLeng
 }
 
 eMBErrorCode
-eMBTCPSend( uint8_t _unused, const uint8_t * pucFrame, uint16_t usLength )
+eMBTCPSend( struct xMBInstance * xInstance, uint8_t _unused, const uint8_t * pucFrame, uint16_t usLength )
 {
     (void)_unused;
 
@@ -140,7 +142,7 @@ eMBTCPSend( uint8_t _unused, const uint8_t * pucFrame, uint16_t usLength )
      */
     pucMBTCPFrame[MB_TCP_LEN] = ( usLength + 1 ) >> 8U;
     pucMBTCPFrame[MB_TCP_LEN + 1] = ( usLength + 1 ) & 0xFF;
-    if( xMBTCPPortSendResponse( pucMBTCPFrame, usTCPLength ) == false )
+    if( xMBTCPPortSendResponse( xInstance, pucMBTCPFrame, usTCPLength ) == false )
     {
         eStatus = MB_EIO;
     }
