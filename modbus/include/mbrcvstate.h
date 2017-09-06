@@ -36,9 +36,11 @@ extern "C" {
 /* ----------------------- Type definitions ---------------------------------*/
 typedef enum
 {
+    STATE_RX_INIT,              /*!< Receiver is in initial state. */
     STATE_RX_IDLE,              /*!< Receiver is in idle state. */
     STATE_RX_RCV,               /*!< Frame is beeing received. */
-    STATE_RX_WAIT_EOF           /*!< Wait for End of Frame. */
+    STATE_RX_WAIT_EOF,          /*!< Wait for End of Frame. */
+    STATE_RX_ERROR              /*!< If the frame is invalid. */
 } eMBRcvState;
 
 #ifdef __cplusplus

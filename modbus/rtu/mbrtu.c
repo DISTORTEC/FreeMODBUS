@@ -34,6 +34,7 @@
 
 #include "mbcrc.h"
 #include "mbport.h"
+#include "mbrcvstate.h"
 
 #include <assert.h>
 #include <stdbool.h>
@@ -47,14 +48,6 @@
 #define MB_SER_PDU_PDU_OFF      1       /*!< Offset of Modbus-PDU in Ser-PDU. */
 
 /* ----------------------- Type definitions ---------------------------------*/
-typedef enum
-{
-    STATE_RX_INIT,              /*!< Receiver is in initial state. */
-    STATE_RX_IDLE,              /*!< Receiver is in idle state. */
-    STATE_RX_RCV,               /*!< Frame is beeing received. */
-    STATE_RX_ERROR              /*!< If the frame is invalid. */
-} eMBRcvState;
-
 typedef enum
 {
     STATE_TX_IDLE,              /*!< Transmitter is in idle state. */
@@ -275,6 +268,9 @@ xMBRTUReceiveFSM( struct xMBInstance * xInstance )
         }
         vMBPortTimersEnable( xInstance );
         break;
+    default:
+        assert( ( eRcvState == STATE_RX_INIT ) || ( eRcvState == STATE_RX_IDLE ) ||
+            ( eRcvState == STATE_RX_RCV ) || ( eRcvState == STATE_RX_ERROR ) );
     }
     return xTaskNeedSwitch;
 }

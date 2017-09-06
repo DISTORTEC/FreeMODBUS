@@ -281,6 +281,9 @@ xMBASCIIReceiveFSM( struct xMBInstance * xInstance )
             xInstance->eRcvState = STATE_RX_RCV;
         }
         break;
+    default:
+        assert( ( xInstance->eRcvState == STATE_RX_RCV ) ||  ( xInstance->eRcvState == STATE_RX_WAIT_EOF ) ||
+                ( xInstance->eRcvState == STATE_RX_IDLE ) );
     }
 
     return xNeedPoll;
