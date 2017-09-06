@@ -58,6 +58,9 @@ struct xMBInstance
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint8_t ucBuf[MB_SER_SIZE_MAX];
     #endif
+    #if MB_FUNC_OTHER_REP_SLAVEID_ENABLED > 0
+    uint8_t    ucMBSlaveID[MB_FUNC_OTHER_REP_SLAVEID_BUF];
+    #endif
 
     /* Functions pointer which are initialized in eMBInit( ). Depending on the
      * mode (RTU or ASCII) the are set to the correct implementations.
@@ -96,6 +99,9 @@ struct xMBInstance
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint16_t usSndBufferCount;
     volatile uint16_t usRcvBufferPos;
+    #endif
+    #if MB_FUNC_OTHER_REP_SLAVEID_ENABLED > 0
+    uint16_t   usMBSlaveIDLen;
     #endif
 
     uint8_t ucMBAddress;
