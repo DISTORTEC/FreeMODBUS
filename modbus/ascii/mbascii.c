@@ -34,6 +34,7 @@
 
 #include "mbport.h"
 #include "mbrcvstate.h"
+#include "mbsndstate.h"
 
 #include <assert.h>
 #include <stdbool.h>
@@ -51,15 +52,6 @@
 #define MB_SER_PDU_PDU_OFF      1       /*!< Offset of Modbus-PDU in Ser-PDU. */
 
 /* ----------------------- Type definitions ---------------------------------*/
-typedef enum
-{
-    STATE_TX_IDLE,              /*!< Transmitter is in idle state. */
-    STATE_TX_START,             /*!< Starting transmission (':' sent). */
-    STATE_TX_DATA,              /*!< Sending of data (Address, Data, LRC). */
-    STATE_TX_END,               /*!< End of transmission. */
-    STATE_TX_NOTIFY             /*!< Notify sender that the frame has been sent. */
-} eMBSndState;
-
 typedef enum
 {
     BYTE_HIGH_NIBBLE,           /*!< Character for high nibble of byte. */
