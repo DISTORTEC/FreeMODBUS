@@ -98,8 +98,9 @@ static const xMBFunctionHandler xFuncHandlersDefault[MB_FUNC_HANDLERS_MAX] =
 
 /* ----------------------- Start implementation -----------------------------*/
 eMBErrorCode
-eMBInit( struct xMBInstance * xInstance, eMBMode eMode, uint8_t ucSlaveAddress,
-         uint8_t ucPort, uint32_t ulBaudRate, eMBParity eParity )
+eMBInit( struct xMBInstance * xInstance, const struct xMBCallbacks * xCallbacks,
+         eMBMode eMode, uint8_t ucSlaveAddress, uint8_t ucPort,
+         uint32_t ulBaudRate, eMBParity eParity )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -112,6 +113,7 @@ eMBInit( struct xMBInstance * xInstance, eMBMode eMode, uint8_t ucSlaveAddress,
     else
     {
         xInstance->ucMBAddress = ucSlaveAddress;
+        xInstance->xCallbacks = xCallbacks;
         memcpy(xInstance->xFuncHandlers, xFuncHandlersDefault, sizeof(xFuncHandlersDefault));
 
         switch ( eMode )
@@ -167,7 +169,7 @@ eMBInit( struct xMBInstance * xInstance, eMBMode eMode, uint8_t ucSlaveAddress,
 
 #if MB_TCP_ENABLED > 0
 eMBErrorCode
-eMBTCPInit( struct xMBInstance * xInstance, uint16_t ucTCPPort )
+eMBTCPInit( struct xMBInstance * xInstance, const struct xMBCallbacks * xCallbacks, uint16_t ucTCPPort )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
@@ -182,6 +184,8 @@ eMBTCPInit( struct xMBInstance * xInstance, uint16_t ucTCPPort )
     }
     else
     {
+        memcpy(xInstance->xFuncHandlers, xFuncHandlersDefault, sizeof(xFuncHandlersDefault));
+        xInstance->xCallbacks = xCallbacks;
         xInstance->pvMBFrameStartCur = eMBTCPStart;
         xInstance->pvMBFrameStopCur = eMBTCPStop;
         xInstance->peMBFrameReceiveCur = eMBTCPReceive;

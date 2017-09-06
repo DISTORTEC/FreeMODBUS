@@ -31,6 +31,7 @@
 #include "mbfunc.h"
 
 #include "mb.h"
+#include "mbcallbacks.h"
 #include "mbframe.h"
 #include "mbinstance.h"
 
@@ -86,7 +87,7 @@ eMBFuncReadInputRegister( struct xMBInstance * xInstance, uint8_t * pucFrame, ui
             *usLen += 1;
 
             eRegStatus =
-                eMBRegInputCB( xInstance, pucFrameCur, usRegAddress, usRegCount );
+                xInstance->xCallbacks->eMBRegInputCB( xInstance, pucFrameCur, usRegAddress, usRegCount );
 
             /* If an error occured convert it into a Modbus exception. */
             if( eRegStatus != MB_ENOERR )

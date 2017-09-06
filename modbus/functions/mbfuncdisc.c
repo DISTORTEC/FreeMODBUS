@@ -20,6 +20,7 @@
 #include "mbfunc.h"
 
 #include "mb.h"
+#include "mbcallbacks.h"
 #include "mbframe.h"
 #include "mbinstance.h"
 
@@ -84,7 +85,7 @@ eMBFuncReadDiscreteInputs( struct xMBInstance * xInstance, uint8_t * pucFrame, u
             *usLen += 1;
 
             eRegStatus =
-                eMBRegDiscreteCB( xInstance, pucFrameCur, usRegAddress, usDiscreteCnt );
+                xInstance->xCallbacks->eMBRegDiscreteCB( xInstance, pucFrameCur, usRegAddress, usDiscreteCnt );
 
             /* If an error occured convert it into a Modbus exception. */
             if( eRegStatus != MB_ENOERR )

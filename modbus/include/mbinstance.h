@@ -45,6 +45,8 @@
 extern "C" {
 #endif
 
+struct xMBCallbacks;
+
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_SER_SIZE_MAX     256     /*!< Maximum size of a Modbus frame. */
 
@@ -61,6 +63,9 @@ struct xMBInstance
     #if MB_FUNC_OTHER_REP_SLAVEID_ENABLED > 0
     uint8_t    ucMBSlaveID[MB_FUNC_OTHER_REP_SLAVEID_BUF];
     #endif
+
+    /* Pointer to struct representing Modbus callbacks. */
+    const struct xMBCallbacks *xCallbacks;
 
     /* Functions pointer which are initialized in eMBInit( ). Depending on the
      * mode (RTU or ASCII) the are set to the correct implementations.

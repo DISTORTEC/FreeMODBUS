@@ -31,6 +31,7 @@
 #include "mbfunc.h"
 
 #include "mb.h"
+#include "mbcallbacks.h"
 #include "mbframe.h"
 #include "mbinstance.h"
 
@@ -80,8 +81,9 @@ eMBFuncWriteHoldingRegister( struct xMBInstance * xInstance, uint8_t * pucFrame,
         usRegAddress++;
 
         /* Make callback to update the value. */
-        eRegStatus = eMBRegHoldingCB( xInstance, &pucFrame[MB_PDU_FUNC_WRITE_VALUE_OFF],
-                                      usRegAddress, 1, MB_REG_WRITE );
+        eRegStatus =
+            xInstance->xCallbacks->eMBRegHoldingCB( xInstance, &pucFrame[MB_PDU_FUNC_WRITE_VALUE_OFF],
+                                                    usRegAddress, 1, MB_REG_WRITE );
 
         /* If an error occured convert it into a Modbus exception. */
         if( eRegStatus != MB_ENOERR )
@@ -126,8 +128,8 @@ eMBFuncWriteMultipleHoldingRegister( struct xMBInstance * xInstance, uint8_t * p
         {
             /* Make callback to update the register values. */
             eRegStatus =
-                eMBRegHoldingCB( xInstance, &pucFrame[MB_PDU_FUNC_WRITE_MUL_VALUES_OFF],
-                                 usRegAddress, usRegCount, MB_REG_WRITE );
+                xInstance->xCallbacks->eMBRegHoldingCB( xInstance, &pucFrame[MB_PDU_FUNC_WRITE_MUL_VALUES_OFF],
+                                                        usRegAddress, usRegCount, MB_REG_WRITE );
 
             /* If an error occured convert it into a Modbus exception. */
             if( eRegStatus != MB_ENOERR )
@@ -196,7 +198,8 @@ eMBFuncReadHoldingRegister( struct xMBInstance * xInstance, uint8_t * pucFrame, 
             *usLen += 1;
 
             /* Make callback to fill the buffer. */
-            eRegStatus = eMBRegHoldingCB( xInstance, pucFrameCur, usRegAddress, usRegCount, MB_REG_READ );
+            eRegStatus =
+                xInstance->xCallbacks->eMBRegHoldingCB( xInstance, pucFrameCur, usRegAddress, usRegCount, MB_REG_READ );
             /* If an error occured convert it into a Modbus exception. */
             if( eRegStatus != MB_ENOERR )
             {
@@ -260,8 +263,9 @@ eMBFuncReadWriteMultipleHoldingRegister( struct xMBInstance * xInstance, uint8_t
             ( ( 2 * usRegWriteCount ) == ucRegWriteByteCount ) )
         {
             /* Make callback to update the register values. */
-            eRegStatus = eMBRegHoldingCB( xInstance, &pucFrame[MB_PDU_FUNC_READWRITE_WRITE_VALUES_OFF],
-                                          usRegWriteAddress, usRegWriteCount, MB_REG_WRITE );
+            eRegStatus =
+                xInstance->xCallbacks->eMBRegHoldingCB( xInstance, &pucFrame[MB_PDU_FUNC_READWRITE_WRITE_VALUES_OFF],
+                                                        usRegWriteAddress, usRegWriteCount, MB_REG_WRITE );
 
             if( eRegStatus == MB_ENOERR )
             {
@@ -279,7 +283,8 @@ eMBFuncReadWriteMultipleHoldingRegister( struct xMBInstance * xInstance, uint8_t
 
                 /* Make the read callback. */
                 eRegStatus =
-                    eMBRegHoldingCB( xInstance, pucFrameCur, usRegReadAddress, usRegReadCount, MB_REG_READ );
+                    xInstance->xCallbacks->eMBRegHoldingCB( xInstance, pucFrameCur, usRegReadAddress, usRegReadCount,
+                                                            MB_REG_READ );
                 if( eRegStatus == MB_ENOERR )
                 {
                     *usLen += 2 * usRegReadCount;
