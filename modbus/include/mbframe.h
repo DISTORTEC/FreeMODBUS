@@ -55,7 +55,7 @@ struct xMBInstance;
  *  |           |               |                                   |
  * (2)        (3/2')           (3')                                (4)
  *
- * (1)  ... MB_SER_PDU_SIZE_MAX = 256
+ * (1)  ... MB_SER_SIZE_MAX     = 256
  * (2)  ... MB_SER_PDU_ADDR_OFF = 0
  * (3)  ... MB_SER_PDU_PDU_OFF  = 1
  * (4)  ... MB_SER_PDU_SIZE_CRC = 2

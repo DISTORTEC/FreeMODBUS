@@ -47,23 +47,25 @@ extern "C" {
  */
 struct xMBInstance
 {
-    #if MB_ASCII_ENABLED > 0
+    #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint8_t ucBuf[MB_SER_SIZE_MAX];
     #endif
 
-    #if MB_ASCII_ENABLED > 0
+    #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint8_t *pucSndBufferCur;
     #endif
 
-    #if MB_ASCII_ENABLED > 0
-    volatile eMBBytePos eBytePos;
+    #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile eMBRcvState eRcvState;
     volatile eMBSndState eSndState;
     #endif
-
     #if MB_ASCII_ENABLED > 0
-    volatile uint16_t usRcvBufferPos;
+    volatile eMBBytePos eBytePos;
+    #endif
+
+    #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint16_t usSndBufferCount;
+    volatile uint16_t usRcvBufferPos;
     #endif
 
     #if MB_ASCII_ENABLED > 0
