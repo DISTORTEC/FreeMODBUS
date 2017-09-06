@@ -364,6 +364,10 @@ xMBASCIITransmitFSM( struct xMBInstance * xInstance )
         /* enable receiver/disable transmitter. */
         vMBPortSerialEnable( xInstance, true, false );
         break;
+    default:
+        assert( ( xInstance->eSndState == STATE_TX_START ) || ( xInstance->eSndState == STATE_TX_DATA ) ||
+                ( xInstance->eSndState == STATE_TX_END ) || ( xInstance->eSndState == STATE_TX_NOTIFY ) ||
+                ( xInstance->eSndState == STATE_TX_IDLE ) );
     }
 
     return xNeedPoll;

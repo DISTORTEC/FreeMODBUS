@@ -35,6 +35,7 @@
 #include "mbcrc.h"
 #include "mbport.h"
 #include "mbrcvstate.h"
+#include "mbsndstate.h"
 
 #include <assert.h>
 #include <stdbool.h>
@@ -46,13 +47,6 @@
 #define MB_SER_PDU_SIZE_CRC     2       /*!< Size of CRC field in PDU. */
 #define MB_SER_PDU_ADDR_OFF     0       /*!< Offset of slave address in Ser-PDU. */
 #define MB_SER_PDU_PDU_OFF      1       /*!< Offset of Modbus-PDU in Ser-PDU. */
-
-/* ----------------------- Type definitions ---------------------------------*/
-typedef enum
-{
-    STATE_TX_IDLE,              /*!< Transmitter is in idle state. */
-    STATE_TX_XMIT               /*!< Transmitter is in transfer state. */
-} eMBSndState;
 
 /* ----------------------- Static variables ---------------------------------*/
 static volatile eMBSndState eSndState;
@@ -308,6 +302,8 @@ xMBRTUTransmitFSM( struct xMBInstance * xInstance )
             eSndState = STATE_TX_IDLE;
         }
         break;
+    default:
+        assert( ( eSndState == STATE_TX_IDLE ) || ( eSndState == STATE_TX_XMIT ) );
     }
 
     return xNeedPoll;

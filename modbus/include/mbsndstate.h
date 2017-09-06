@@ -39,6 +39,7 @@ typedef enum
     STATE_TX_IDLE,              /*!< Transmitter is in idle state. */
     STATE_TX_START,             /*!< Starting transmission (':' sent). */
     STATE_TX_DATA,              /*!< Sending of data (Address, Data, LRC). */
+    STATE_TX_XMIT,              /*!< Transmitter is in transfer state. */
     STATE_TX_END,               /*!< End of transmission. */
     STATE_TX_NOTIFY             /*!< Notify sender that the frame has been sent. */
 } eMBSndState;
