@@ -186,7 +186,7 @@ xMBASCIIReceiveFSM( struct xMBInstance * xInstance )
 
     assert( xInstance->eSndState == STATE_TX_IDLE );
 
-    ( void )xMBPortSerialGetByte( xInstance, ( int8_t * ) & ucByte );
+    ( void )xMBPortSerialGetByte( xInstance, ( uint8_t * ) & ucByte );
     switch ( xInstance->eRcvState )
     {
         /* A new character is received. If the character is a ':' the input

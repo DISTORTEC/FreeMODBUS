@@ -64,9 +64,9 @@ void xMBPortSerialClose( struct xMBInstance * xInstance );
 void vMBPortSerialEnable( struct xMBInstance * xInstance, bool xRxEnable,
                           bool xTxEnable );
 
-bool xMBPortSerialGetByte( struct xMBInstance * xInstance, int8_t * pucByte );
+bool xMBPortSerialGetByte( struct xMBInstance * xInstance, uint8_t * pucByte );
 
-bool xMBPortSerialPutByte( struct xMBInstance * xInstance, int8_t ucByte );
+bool xMBPortSerialPutByte( struct xMBInstance * xInstance, uint8_t ucByte );
 
 /* ----------------------- Timers functions ---------------------------------*/
 bool xMBPortTimersInit( struct xMBInstance * xInstance,

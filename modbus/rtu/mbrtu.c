@@ -204,7 +204,7 @@ xMBRTUReceiveFSM( struct xMBInstance * xInstance )
     assert( xInstance->eSndState == STATE_TX_IDLE );
 
     /* Always read the character. */
-    ( void )xMBPortSerialGetByte( xInstance, ( int8_t * ) & ucByte );
+    ( void )xMBPortSerialGetByte( xInstance, ( uint8_t * ) & ucByte );
 
     switch ( xInstance->eRcvState )
     {
