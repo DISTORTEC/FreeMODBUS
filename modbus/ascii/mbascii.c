@@ -32,6 +32,7 @@
 
 #include "port.h"
 
+#include "mbbytepos.h"
 #include "mbport.h"
 #include "mbrcvstate.h"
 #include "mbsndstate.h"
@@ -50,13 +51,6 @@
 #define MB_SER_PDU_SIZE_LRC     1       /*!< Size of LRC field in PDU. */
 #define MB_SER_PDU_ADDR_OFF     0       /*!< Offset of slave address in Ser-PDU. */
 #define MB_SER_PDU_PDU_OFF      1       /*!< Offset of Modbus-PDU in Ser-PDU. */
-
-/* ----------------------- Type definitions ---------------------------------*/
-typedef enum
-{
-    BYTE_HIGH_NIBBLE,           /*!< Character for high nibble of byte. */
-    BYTE_LOW_NIBBLE             /*!< Character for low nibble of byte. */
-} eMBBytePos;
 
 /* ----------------------- Static functions ---------------------------------*/
 static uint8_t    prvucMBCHAR2BIN( uint8_t ucCharacter );
