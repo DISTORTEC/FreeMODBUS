@@ -31,8 +31,15 @@
 
 #include "mbbytepos.h"
 #include "mbconfig.h"
+#include "mbframe.h"
+#include "mbmode.h"
+#include "mbproto.h"
 #include "mbrcvstate.h"
 #include "mbsndstate.h"
+#include "mbstatetype.h"
+
+#include <stdbool.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,10 +54,33 @@ extern "C" {
  */
 struct xMBInstance
 {
+    xMBFunctionHandler xFuncHandlers[MB_FUNC_HANDLERS_MAX];
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint8_t ucBuf[MB_SER_SIZE_MAX];
     #endif
 
+    /* Functions pointer which are initialized in eMBInit( ). Depending on the
+     * mode (RTU or ASCII) the are set to the correct implementations.
+     */
+    peMBFrameSend peMBFrameSendCur;
+    pvMBFrameStart pvMBFrameStartCur;
+    pvMBFrameStop pvMBFrameStopCur;
+    peMBFrameReceive peMBFrameReceiveCur;
+    pvMBFrameClose pvMBFrameCloseCur;
+
+    /* Callback functions required by the porting layer. They are called when
+     * an external event has happend which includes a timeout or the reception
+     * or transmission of a character.
+     */
+    bool( *pxMBFrameCBByteReceived ) ( struct xMBInstance * xInstance );
+    bool( *pxMBFrameCBTransmitterEmpty ) ( struct xMBInstance * xInstance );
+    bool( *pxMBPortCBTimerExpired ) ( struct xMBInstance * xInstance );
+
+    bool( *pxMBFrameCBReceiveFSMCur ) ( struct xMBInstance * xInstance );
+    bool( *pxMBFrameCBTransmitFSMCur ) ( struct xMBInstance * xInstance );
+
+    eMBStateType eMBState;
+    eMBMode  eMBCurrentMode;
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint8_t *pucSndBufferCur;
     #endif
@@ -68,6 +98,7 @@ struct xMBInstance
     volatile uint16_t usRcvBufferPos;
     #endif
 
+    uint8_t ucMBAddress;
     #if MB_ASCII_ENABLED > 0
     volatile uint8_t ucMBLFCharacter;
     #endif
