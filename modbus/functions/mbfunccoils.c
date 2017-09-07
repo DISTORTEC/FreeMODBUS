@@ -31,7 +31,9 @@
 #include "mbfunc.h"
 
 #include "mb.h"
+#include "mbcallbacks.h"
 #include "mbframe.h"
+#include "mbinstance.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_PDU_FUNC_READ_ADDR_OFF           ( MB_PDU_DATA_OFF )
@@ -58,7 +60,7 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 #if MB_FUNC_READ_COILS_ENABLED > 0
 
 eMBException
-eMBFuncReadCoils( uint8_t * pucFrame, uint16_t * usLen )
+eMBFuncReadCoils( struct xMBInstance * xInstance, uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usCoilCount;
@@ -105,7 +107,7 @@ eMBFuncReadCoils( uint8_t * pucFrame, uint16_t * usLen )
             *usLen += 1;
 
             eRegStatus =
-                eMBRegCoilsCB( pucFrameCur, usRegAddress, usCoilCount,
+                xInstance->xCallbacks->eMBRegCoilsCB( xInstance, pucFrameCur, usRegAddress, usCoilCount,
                                MB_REG_READ );
 
             /* If an error occured convert it into a Modbus exception. */
@@ -137,7 +139,7 @@ eMBFuncReadCoils( uint8_t * pucFrame, uint16_t * usLen )
 
 #if MB_FUNC_WRITE_COIL_ENABLED > 0
 eMBException
-eMBFuncWriteCoil( uint8_t * pucFrame, uint16_t * usLen )
+eMBFuncWriteCoil( struct xMBInstance * xInstance, uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint8_t           ucBuf[2];
@@ -165,7 +167,7 @@ eMBFuncWriteCoil( uint8_t * pucFrame, uint16_t * usLen )
                 ucBuf[0] = 0;
             }
             eRegStatus =
-                eMBRegCoilsCB( &ucBuf[0], usRegAddress, 1, MB_REG_WRITE );
+                xInstance->xCallbacks->eMBRegCoilsCB( xInstance, &ucBuf[0], usRegAddress, 1, MB_REG_WRITE );
 
             /* If an error occured convert it into a Modbus exception. */
             if( eRegStatus != MB_ENOERR )
@@ -191,7 +193,7 @@ eMBFuncWriteCoil( uint8_t * pucFrame, uint16_t * usLen )
 
 #if MB_FUNC_WRITE_MULTIPLE_COILS_ENABLED > 0
 eMBException
-eMBFuncWriteMultipleCoils( uint8_t * pucFrame, uint16_t * usLen )
+eMBFuncWriteMultipleCoils( struct xMBInstance * xInstance, uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usCoilCnt;
@@ -227,7 +229,7 @@ eMBFuncWriteMultipleCoils( uint8_t * pucFrame, uint16_t * usLen )
             ( ucByteCountVerify == ucByteCount ) )
         {
             eRegStatus =
-                eMBRegCoilsCB( &pucFrame[MB_PDU_FUNC_WRITE_MUL_VALUES_OFF],
+                xInstance->xCallbacks->eMBRegCoilsCB( xInstance, &pucFrame[MB_PDU_FUNC_WRITE_MUL_VALUES_OFF],
                                usRegAddress, usCoilCnt, MB_REG_WRITE );
 
             /* If an error occured convert it into a Modbus exception. */

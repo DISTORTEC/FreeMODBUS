@@ -24,43 +24,24 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * File: $Id: mbascii.h,v 1.8 2006/12/07 22:10:34 wolti Exp $
  */
 
-#ifndef _MB_ASCII_H
-#define _MB_ASCII_H
-
-#include "mbconfig.h"
-#include "mberrorcode.h"
-#include "mbparity.h"
-
-#include <stdbool.h>
-#include <stdint.h>
+#ifndef _MB_RCVSTATE_H
+#define _MB_RCVSTATE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if MB_ASCII_ENABLED > 0
-struct xMBInstance;
-
-eMBErrorCode eMBASCIIInit( struct xMBInstance * xInstance,
-                           uint8_t slaveAddress, uint8_t ucPort,
-                           uint32_t ulBaudRate, eMBParity eParity );
-void eMBASCIIStart( struct xMBInstance * xInstance );
-void eMBASCIIStop( struct xMBInstance * xInstance );
-
-eMBErrorCode eMBASCIIReceive( struct xMBInstance * xInstance,
-                              uint8_t * pucRcvAddress, uint8_t ** pucFrame,
-                              uint16_t * pusLength );
-eMBErrorCode eMBASCIISend( struct xMBInstance * xInstance,
-                           uint8_t slaveAddress, const uint8_t * pucFrame,
-                           uint16_t usLength );
-bool xMBASCIIReceiveFSM( struct xMBInstance * xInstance );
-bool xMBASCIITransmitFSM( struct xMBInstance * xInstance );
-bool xMBASCIITimerT1SExpired( struct xMBInstance * xInstance );
-#endif
+/* ----------------------- Type definitions ---------------------------------*/
+typedef enum
+{
+    STATE_RX_INIT,              /*!< Receiver is in initial state. */
+    STATE_RX_IDLE,              /*!< Receiver is in idle state. */
+    STATE_RX_RCV,               /*!< Frame is beeing received. */
+    STATE_RX_WAIT_EOF,          /*!< Wait for End of Frame. */
+    STATE_RX_ERROR              /*!< If the frame is invalid. */
+} eMBRcvState;
 
 #ifdef __cplusplus
 }

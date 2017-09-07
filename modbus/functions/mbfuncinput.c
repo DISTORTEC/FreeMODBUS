@@ -28,10 +28,12 @@
  * File: $Id: mbfuncinput.c,v 1.10 2007/09/12 10:15:56 wolti Exp $
  */
 
- #include "mbfunc.h"
+#include "mbfunc.h"
 
- #include "mb.h"
- #include "mbframe.h"
+#include "mb.h"
+#include "mbcallbacks.h"
+#include "mbframe.h"
+#include "mbinstance.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_PDU_FUNC_READ_ADDR_OFF           ( MB_PDU_DATA_OFF )
@@ -48,7 +50,7 @@ eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 #if MB_FUNC_READ_INPUT_ENABLED > 0
 
 eMBException
-eMBFuncReadInputRegister( uint8_t * pucFrame, uint16_t * usLen )
+eMBFuncReadInputRegister( struct xMBInstance * xInstance, uint8_t * pucFrame, uint16_t * usLen )
 {
     uint16_t          usRegAddress;
     uint16_t          usRegCount;
@@ -85,7 +87,7 @@ eMBFuncReadInputRegister( uint8_t * pucFrame, uint16_t * usLen )
             *usLen += 1;
 
             eRegStatus =
-                eMBRegInputCB( pucFrameCur, usRegAddress, usRegCount );
+                xInstance->xCallbacks->eMBRegInputCB( xInstance, pucFrameCur, usRegAddress, usRegCount );
 
             /* If an error occured convert it into a Modbus exception. */
             if( eRegStatus != MB_ENOERR )

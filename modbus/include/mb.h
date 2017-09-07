@@ -32,8 +32,10 @@
 #define _MB_H
 
 #include "mberrorcode.h"
+#include "mbmode.h"
 #include "mbparity.h"
 #include "mbproto.h"
+#include "mbregistermode.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -68,45 +70,15 @@ extern "C" {
  * \endcode
  */
 
+struct xMBCallbacks;
+struct xMBInstance;
+
 /* ----------------------- Defines ------------------------------------------*/
 
 /*! \ingroup modbus
  * \brief Use the default Modbus TCP port (502)
  */
 #define MB_TCP_PORT_USE_DEFAULT 0
-
-/* ----------------------- Type definitions ---------------------------------*/
-
-/*! \ingroup modbus
- * \brief Modbus serial transmission modes (RTU/ASCII).
- *
- * Modbus serial supports two transmission modes. Either ASCII or RTU. RTU
- * is faster but has more hardware requirements and requires a network with
- * a low jitter. ASCII is slower and more reliable on slower links (E.g. modems)
- */
-    typedef enum
-{
-    MB_RTU,                     /*!< RTU transmission mode. */
-    MB_ASCII,                   /*!< ASCII transmission mode. */
-    MB_TCP                      /*!< TCP mode. */
-} eMBMode;
-
-/*! \ingroup modbus
- * \brief If register should be written or read.
- *
- * This value is passed to the callback functions which support either
- * reading or writing register values. Writing means that the application
- * registers should be updated and reading means that the modbus protocol
- * stack needs to know the current register values.
- *
- * \see eMBRegHoldingCB( ), eMBRegCoilsCB( ), eMBRegDiscreteCB( ) and
- *   eMBRegInputCB( ).
- */
-typedef enum
-{
-    MB_REG_READ,                /*!< Read register values and pass to protocol stack. */
-    MB_REG_WRITE                /*!< Update register values. */
-} eMBRegisterMode;
 
 /* ----------------------- Function prototypes ------------------------------*/
 /*! \ingroup modbus
@@ -117,6 +89,8 @@ typedef enum
  * note that the receiver is still disabled and no Modbus frames are
  * processed until eMBEnable( ) has been called.
  *
+ * \param xInstance The pointer to instance struct.
+ * \param xMBCallbacks The pointer to struct containing Modbus callbacks.
  * \param eMode If ASCII or RTU mode should be used.
  * \param ucSlaveAddress The slave address. Only frames sent to this
  *   address or to the broadcast address are processed.
@@ -134,8 +108,11 @@ typedef enum
  *        slave addresses are in the range 1 - 247.
  *    - eMBErrorCode::MB_EPORTERR IF the porting layer returned an error.
  */
-eMBErrorCode    eMBInit( eMBMode eMode, uint8_t ucSlaveAddress,
-                         uint8_t ucPort, uint32_t ulBaudRate, eMBParity eParity );
+eMBErrorCode    eMBInit( struct xMBInstance * xInstance,
+                         const struct xMBCallbacks * xCallbacks,
+                         eMBMode eMode, uint8_t ucSlaveAddress,
+                         uint8_t ucPort, uint32_t ulBaudRate,
+                         eMBParity eParity );
 
 /*! \ingroup modbus
  * \brief Initialize the Modbus protocol stack for Modbus TCP.
@@ -143,7 +120,10 @@ eMBErrorCode    eMBInit( eMBMode eMode, uint8_t ucSlaveAddress,
  * This function initializes the Modbus TCP Module. Please note that
  * frame processing is still disabled until eMBEnable( ) is called.
  *
+ * \param xInstance The pointer to instance struct.
+ * \param xMBCallbacks The pointer to struct containing Modbus callbacks.
  * \param usTCPPort The TCP port to listen on.
+ *
  * \return If the protocol stack has been initialized correctly the function
  *   returns eMBErrorCode::MB_ENOERR. Otherwise one of the following error
  *   codes is returned:
@@ -151,7 +131,9 @@ eMBErrorCode    eMBInit( eMBMode eMode, uint8_t ucSlaveAddress,
  *        slave addresses are in the range 1 - 247.
  *    - eMBErrorCode::MB_EPORTERR IF the porting layer returned an error.
  */
-eMBErrorCode    eMBTCPInit( uint16_t usTCPPort );
+eMBErrorCode    eMBTCPInit( struct xMBInstance * xInstance,
+                            const struct xMBCallbacks * xCallbacks,
+                            uint16_t usTCPPort );
 
 /*! \ingroup modbus
  * \brief Release resources used by the protocol stack.
@@ -163,11 +145,13 @@ eMBErrorCode    eMBTCPInit( uint16_t usTCPPort );
  * \note Note all ports implement this function. A port which wants to
  *   get an callback must define the macro MB_PORT_HAS_CLOSE to 1.
  *
+ * \param xInstance The pointer to instance struct.
+ *
  * \return If the resources where released it return eMBErrorCode::MB_ENOERR.
  *   If the protocol stack is not in the disabled state it returns
  *   eMBErrorCode::MB_EILLSTATE.
  */
-eMBErrorCode    eMBClose( void );
+eMBErrorCode    eMBClose( struct xMBInstance * xInstance );
 
 /*! \ingroup modbus
  * \brief Enable the Modbus protocol stack.
@@ -175,22 +159,26 @@ eMBErrorCode    eMBClose( void );
  * This function enables processing of Modbus frames. Enabling the protocol
  * stack is only possible if it is in the disabled state.
  *
+ * \param xInstance The pointer to instance struct.
+ *
  * \return If the protocol stack is now in the state enabled it returns
  *   eMBErrorCode::MB_ENOERR. If it was not in the disabled state it
  *   return eMBErrorCode::MB_EILLSTATE.
  */
-eMBErrorCode    eMBEnable( void );
+eMBErrorCode    eMBEnable( struct xMBInstance * xInstance );
 
 /*! \ingroup modbus
  * \brief Disable the Modbus protocol stack.
  *
  * This function disables processing of Modbus frames.
  *
+ * \param xInstance The pointer to instance struct.
+ *
  * \return If the protocol stack has been disabled it returns
  *  eMBErrorCode::MB_ENOERR. If it was not in the enabled state it returns
  *  eMBErrorCode::MB_EILLSTATE.
  */
-eMBErrorCode    eMBDisable( void );
+eMBErrorCode    eMBDisable( struct xMBInstance * xInstance );
 
 /*! \ingroup modbus
  * \brief The main pooling loop of the Modbus protocol stack.
@@ -200,11 +188,13 @@ eMBErrorCode    eMBDisable( void );
  * function calls xMBPortEventGet() and waits for an event from the receiver or
  * transmitter state machines.
  *
+ * \param xInstance The pointer to instance struct.
+ *
  * \return If the protocol stack is not in the enabled state the function
  *   returns eMBErrorCode::MB_EILLSTATE. Otherwise it returns
  *   eMBErrorCode::MB_ENOERR.
  */
-eMBErrorCode    eMBPoll( void );
+eMBErrorCode    eMBPoll( struct xMBInstance * xInstance );
 
 /*! \ingroup modbus
  * \brief Configure the slave id of the device.
@@ -212,6 +202,7 @@ eMBErrorCode    eMBPoll( void );
  * This function should be called when the Modbus function <em>Report Slave ID</em>
  * is enabled ( By defining MB_FUNC_OTHER_REP_SLAVEID_ENABLED in mbconfig.h ).
  *
+ * \param xInstance The pointer to instance struct.
  * \param ucSlaveID Values is returned in the <em>Slave ID</em> byte of the
  *   <em>Report Slave ID</em> response.
  * \param xIsRunning If true the <em>Run Indicator Status</em> byte is set to 0xFF.
@@ -224,8 +215,8 @@ eMBErrorCode    eMBPoll( void );
  *   mbconfig.h is to small it returns eMBErrorCode::MB_ENORES. Otherwise
  *   it returns eMBErrorCode::MB_ENOERR.
  */
-eMBErrorCode    eMBSetSlaveID( uint8_t ucSlaveID, bool xIsRunning,
-                               uint8_t const *pucAdditional,
+eMBErrorCode    eMBSetSlaveID( struct xMBInstance * xInstance, uint8_t ucSlaveID,
+                               bool xIsRunning, uint8_t const *pucAdditional,
                                uint16_t usAdditionalLen );
 
 /*! \ingroup modbus
@@ -237,6 +228,7 @@ eMBErrorCode    eMBSetSlaveID( uint8_t ucSlaveID, bool xIsRunning,
  * one of the possible Modbus exceptions which results in a Modbus exception frame
  * sent by the protocol stack.
  *
+ * \param xInstance The pointer to instance struct.
  * \param ucFunctionCode The Modbus function code for which this handler should
  *   be registers. Valid function codes are in the range 1 to 127.
  * \param pxHandler The function handler which should be called in case
@@ -248,154 +240,9 @@ eMBErrorCode    eMBSetSlaveID( uint8_t ucSlaveID, bool xIsRunning,
  *   case the values in mbconfig.h should be adjusted. If the argument was not
  *   valid it returns eMBErrorCode::MB_EINVAL.
  */
-eMBErrorCode    eMBRegisterCB( uint8_t ucFunctionCode,
+eMBErrorCode    eMBRegisterCB( struct xMBInstance * xInstance,
+                               uint8_t ucFunctionCode,
                                pxMBFunctionHandler pxHandler );
-
-/* ----------------------- Callback -----------------------------------------*/
-
-/*! \defgroup modbus_registers Modbus Registers
- * \code #include "mb.h" \endcode
- * The protocol stack does not internally allocate any memory for the
- * registers. This makes the protocol stack very small and also usable on
- * low end targets. In addition the values don't have to be in the memory
- * and could for example be stored in a flash.<br>
- * Whenever the protocol stack requires a value it calls one of the callback
- * function with the register address and the number of registers to read
- * as an argument. The application should then read the actual register values
- * (for example the ADC voltage) and should store the result in the supplied
- * buffer.<br>
- * If the protocol stack wants to update a register value because a write
- * register function was received a buffer with the new register values is
- * passed to the callback function. The function should then use these values
- * to update the application register values.
- */
-
-/*! \ingroup modbus_registers
- * \brief Callback function used if the value of a <em>Input Register</em>
- *   is required by the protocol stack. The starting register address is given
- *   by \c usAddress and the last register is given by <tt>usAddress +
- *   usNRegs - 1</tt>.
- *
- * \param pucRegBuffer A buffer where the callback function should write
- *   the current value of the modbus registers to.
- * \param usAddress The starting address of the register. Input registers
- *   are in the range 1 - 65535.
- * \param usNRegs Number of registers the callback function must supply.
- *
- * \return The function must return one of the following error codes:
- *   - eMBErrorCode::MB_ENOERR If no error occurred. In this case a normal
- *       Modbus response is sent.
- *   - eMBErrorCode::MB_ENOREG If the application can not supply values
- *       for registers within this range. In this case a
- *       <b>ILLEGAL DATA ADDRESS</b> exception frame is sent as a response.
- *   - eMBErrorCode::MB_ETIMEDOUT If the requested register block is
- *       currently not available and the application dependent response
- *       timeout would be violated. In this case a <b>SLAVE DEVICE BUSY</b>
- *       exception is sent as a response.
- *   - eMBErrorCode::MB_EIO If an unrecoverable error occurred. In this case
- *       a <b>SLAVE DEVICE FAILURE</b> exception is sent as a response.
- */
-eMBErrorCode    eMBRegInputCB( uint8_t * pucRegBuffer, uint16_t usAddress,
-                               uint16_t usNRegs );
-
-/*! \ingroup modbus_registers
- * \brief Callback function used if a <em>Holding Register</em> value is
- *   read or written by the protocol stack. The starting register address
- *   is given by \c usAddress and the last register is given by
- *   <tt>usAddress + usNRegs - 1</tt>.
- *
- * \param pucRegBuffer If the application registers values should be updated the
- *   buffer points to the new registers values. If the protocol stack needs
- *   to now the current values the callback function should write them into
- *   this buffer.
- * \param usAddress The starting address of the register.
- * \param usNRegs Number of registers to read or write.
- * \param eMode If eMBRegisterMode::MB_REG_WRITE the application register
- *   values should be updated from the values in the buffer. For example
- *   this would be the case when the Modbus master has issued an
- *   <b>WRITE SINGLE REGISTER</b> command.
- *   If the value eMBRegisterMode::MB_REG_READ the application should copy
- *   the current values into the buffer \c pucRegBuffer.
- *
- * \return The function must return one of the following error codes:
- *   - eMBErrorCode::MB_ENOERR If no error occurred. In this case a normal
- *       Modbus response is sent.
- *   - eMBErrorCode::MB_ENOREG If the application can not supply values
- *       for registers within this range. In this case a
- *       <b>ILLEGAL DATA ADDRESS</b> exception frame is sent as a response.
- *   - eMBErrorCode::MB_ETIMEDOUT If the requested register block is
- *       currently not available and the application dependent response
- *       timeout would be violated. In this case a <b>SLAVE DEVICE BUSY</b>
- *       exception is sent as a response.
- *   - eMBErrorCode::MB_EIO If an unrecoverable error occurred. In this case
- *       a <b>SLAVE DEVICE FAILURE</b> exception is sent as a response.
- */
-eMBErrorCode    eMBRegHoldingCB( uint8_t * pucRegBuffer, uint16_t usAddress,
-                                 uint16_t usNRegs, eMBRegisterMode eMode );
-
-/*! \ingroup modbus_registers
- * \brief Callback function used if a <em>Coil Register</em> value is
- *   read or written by the protocol stack. If you are going to use
- *   this function you might use the functions xMBUtilSetBits(  ) and
- *   xMBUtilGetBits(  ) for working with bitfields.
- *
- * \param pucRegBuffer The bits are packed in bytes where the first coil
- *   starting at address \c usAddress is stored in the LSB of the
- *   first byte in the buffer <code>pucRegBuffer</code>.
- *   If the buffer should be written by the callback function unused
- *   coil values (I.e. if not a multiple of eight coils is used) should be set
- *   to zero.
- * \param usAddress The first coil number.
- * \param usNCoils Number of coil values requested.
- * \param eMode If eMBRegisterMode::MB_REG_WRITE the application values should
- *   be updated from the values supplied in the buffer \c pucRegBuffer.
- *   If eMBRegisterMode::MB_REG_READ the application should store the current
- *   values in the buffer \c pucRegBuffer.
- *
- * \return The function must return one of the following error codes:
- *   - eMBErrorCode::MB_ENOERR If no error occurred. In this case a normal
- *       Modbus response is sent.
- *   - eMBErrorCode::MB_ENOREG If the application does not map an coils
- *       within the requested address range. In this case a
- *       <b>ILLEGAL DATA ADDRESS</b> is sent as a response.
- *   - eMBErrorCode::MB_ETIMEDOUT If the requested register block is
- *       currently not available and the application dependent response
- *       timeout would be violated. In this case a <b>SLAVE DEVICE BUSY</b>
- *       exception is sent as a response.
- *   - eMBErrorCode::MB_EIO If an unrecoverable error occurred. In this case
- *       a <b>SLAVE DEVICE FAILURE</b> exception is sent as a response.
- */
-eMBErrorCode    eMBRegCoilsCB( uint8_t * pucRegBuffer, uint16_t usAddress,
-                               uint16_t usNCoils, eMBRegisterMode eMode );
-
-/*! \ingroup modbus_registers
- * \brief Callback function used if a <em>Input Discrete Register</em> value is
- *   read by the protocol stack.
- *
- * If you are going to use his function you might use the functions
- * xMBUtilSetBits(  ) and xMBUtilGetBits(  ) for working with bitfields.
- *
- * \param pucRegBuffer The buffer should be updated with the current
- *   coil values. The first discrete input starting at \c usAddress must be
- *   stored at the LSB of the first byte in the buffer. If the requested number
- *   is not a multiple of eight the remaining bits should be set to zero.
- * \param usAddress The starting address of the first discrete input.
- * \param usNDiscrete Number of discrete input values.
- * \return The function must return one of the following error codes:
- *   - eMBErrorCode::MB_ENOERR If no error occurred. In this case a normal
- *       Modbus response is sent.
- *   - eMBErrorCode::MB_ENOREG If no such discrete inputs exists.
- *       In this case a <b>ILLEGAL DATA ADDRESS</b> exception frame is sent
- *       as a response.
- *   - eMBErrorCode::MB_ETIMEDOUT If the requested register block is
- *       currently not available and the application dependent response
- *       timeout would be violated. In this case a <b>SLAVE DEVICE BUSY</b>
- *       exception is sent as a response.
- *   - eMBErrorCode::MB_EIO If an unrecoverable error occurred. In this case
- *       a <b>SLAVE DEVICE FAILURE</b> exception is sent as a response.
- */
-eMBErrorCode    eMBRegDiscreteCB( uint8_t * pucRegBuffer, uint16_t usAddress,
-                                  uint16_t usNDiscrete );
 
 #ifdef __cplusplus
 }

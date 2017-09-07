@@ -47,12 +47,16 @@ extern "C" {
 /*! \addtogroup modbus_utils
  *  @{
  */
+
+struct xMBInstance;
+
 /*! \brief Function to set bits in a byte buffer.
  *
  * This function allows the efficient use of an array to implement bitfields.
  * The array used for storing the bits must always be a multiple of two
  * bytes. Up to eight bits can be set or cleared in one operation.
  *
+ * \param xInstance The pointer to instance struct.
  * \param ucByteBuf A buffer where the bit values are stored. Must be a
  *   multiple of 2 bytes. No length checking is performed and if
  *   usBitOffset / 8 is greater than the size of the buffer memory contents
@@ -78,14 +82,16 @@ extern "C" {
  * xMBUtilSetBits( ucBits, 8, 8, 0x5A);
  * \endcode
  */
-void            xMBUtilSetBits( uint8_t * ucByteBuf, uint16_t usBitOffset,
-                                uint8_t ucNBits, uint8_t ucValues );
+void xMBUtilSetBits( struct xMBInstance * xInstance, uint8_t * ucByteBuf,
+                     uint16_t usBitOffset, uint8_t ucNBits,
+                     uint8_t ucValues );
 
 /*! \brief Function to read bits in a byte buffer.
  *
  * This function is used to extract up bit values from an array. Up to eight
  * bit values can be extracted in one step.
  *
+ * \param xInstance The pointer to instance struct.
  * \param ucByteBuf A buffer where the bit values are stored.
  * \param usBitOffset The starting address of the bits to set. The first
  *   bit has the offset 0.
@@ -100,8 +106,8 @@ void            xMBUtilSetBits( uint8_t * ucByteBuf, uint16_t usBitOffset,
  * ucResult = xMBUtilGetBits( ucBits, 3, 8 );
  * \endcode
  */
-uint8_t           xMBUtilGetBits( uint8_t * ucByteBuf, uint16_t usBitOffset,
-                                uint8_t ucNBits );
+uint8_t xMBUtilGetBits( struct xMBInstance * xInstance, uint8_t * ucByteBuf,
+                        uint16_t usBitOffset, uint8_t ucNBits );
 
 /*! @} */
 

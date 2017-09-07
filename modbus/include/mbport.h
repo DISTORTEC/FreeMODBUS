@@ -31,6 +31,7 @@
 #ifndef _MB_PORT_H
 #define _MB_PORT_H
 
+#include "mbeventtype.h"
 #include "mbparity.h"
 
 #include <stdbool.h>
@@ -40,48 +41,45 @@
 extern "C" {
 #endif
 
-/* ----------------------- Type definitions ---------------------------------*/
-
-typedef enum
-{
-    EV_READY,                   /*!< Startup finished. */
-    EV_FRAME_RECEIVED,          /*!< Frame received. */
-    EV_EXECUTE,                 /*!< Execute function. */
-    EV_FRAME_SENT               /*!< Frame sent. */
-} eMBEventType;
+struct xMBInstance;
 
 /* ----------------------- Supporting functions -----------------------------*/
-bool            xMBPortEventInit( void );
+bool xMBPortEventInit( struct xMBInstance * xInstance );
 
-bool            xMBPortEventPost( eMBEventType eEvent );
+bool xMBPortEventPost( struct xMBInstance * xInstance, eMBEventType eEvent );
 
-bool            xMBPortEventGet(  /*@out@ */ eMBEventType * eEvent );
+bool xMBPortEventGet( struct xMBInstance * xInstance,
+                      /*@out@ */ eMBEventType * eEvent );
 
 /* ----------------------- Serial port functions ----------------------------*/
 
-bool            xMBPortSerialInit( uint8_t ucPort, uint32_t ulBaudRate,
+bool xMBPortSerialInit( struct xMBInstance * xInstance,
+                                   uint8_t ucPort, uint32_t ulBaudRate,
                                    uint8_t ucDataBits, eMBParity eParity );
 
-void            vMBPortClose( void );
+void vMBPortClose( struct xMBInstance * xInstance );
 
-void            xMBPortSerialClose( void );
+void xMBPortSerialClose( struct xMBInstance * xInstance );
 
-void            vMBPortSerialEnable( bool xRxEnable, bool xTxEnable );
+void vMBPortSerialEnable( struct xMBInstance * xInstance, bool xRxEnable,
+                          bool xTxEnable );
 
-bool            xMBPortSerialGetByte( int8_t * pucByte );
+bool xMBPortSerialGetByte( struct xMBInstance * xInstance, uint8_t * pucByte );
 
-bool            xMBPortSerialPutByte( int8_t ucByte );
+bool xMBPortSerialPutByte( struct xMBInstance * xInstance, uint8_t ucByte );
 
 /* ----------------------- Timers functions ---------------------------------*/
-bool            xMBPortTimersInit( uint16_t usTimeOut50us );
+bool xMBPortTimersInit( struct xMBInstance * xInstance,
+                        uint16_t usTimeOut50us );
 
-void            xMBPortTimersClose( void );
+void xMBPortTimersClose( struct xMBInstance * xInstance );
 
-void            vMBPortTimersEnable( void );
+void vMBPortTimersEnable( struct xMBInstance * xInstance );
 
-void            vMBPortTimersDisable( void );
+void vMBPortTimersDisable( struct xMBInstance * xInstance );
 
-void            vMBPortTimersDelay( uint16_t usTimeOutMS );
+void vMBPortTimersDelay( struct xMBInstance * xInstance,
+                         uint16_t usTimeOutMS );
 
 /* ----------------------- Callback for the protocol stack ------------------*/
 
@@ -93,26 +91,31 @@ void            vMBPortTimersDelay( uint16_t usTimeOutMS );
  * ASCII transmission layers. In any case a call to xMBPortSerialGetByte()
  * must immediately return a new character.
  *
+ * \param xInstance The pointer to instance struct.
+ *
  * \return <code>true</code> if a event was posted to the queue because
  *   a new byte was received. The port implementation should wake up the
  *   tasks which are currently blocked on the eventqueue.
  */
-extern          bool( *pxMBFrameCBByteReceived ) ( void );
+extern bool( *pxMBFrameCBByteReceived ) ( struct xMBInstance * xInstance );
 
-extern          bool( *pxMBFrameCBTransmitterEmpty ) ( void );
+extern bool( *pxMBFrameCBTransmitterEmpty ) ( struct xMBInstance * xInstance );
 
-extern          bool( *pxMBPortCBTimerExpired ) ( void );
+extern bool( *pxMBPortCBTimerExpired ) ( struct xMBInstance * xInstance );
 
 /* ----------------------- TCP port functions -------------------------------*/
-bool            xMBTCPPortInit( uint16_t usTCPPort );
+bool xMBTCPPortInit( struct xMBInstance * xInstance, uint16_t usTCPPort );
 
-void            vMBTCPPortClose( void );
+void vMBTCPPortClose( struct xMBInstance * xInstance );
 
-void            vMBTCPPortDisable( void );
+void vMBTCPPortDisable( struct xMBInstance * xInstance );
 
-bool            xMBTCPPortGetRequest( uint8_t **ppucMBTCPFrame, uint16_t * usTCPLength );
+bool xMBTCPPortGetRequest( struct xMBInstance * xInstance,
+                           uint8_t **ppucMBTCPFrame, uint16_t * usTCPLength );
 
-bool            xMBTCPPortSendResponse( const uint8_t *pucMBTCPFrame, uint16_t usTCPLength );
+bool xMBTCPPortSendResponse( struct xMBInstance * xInstance,
+                             const uint8_t *pucMBTCPFrame,
+                             uint16_t usTCPLength );
 
 #ifdef __cplusplus
 }
