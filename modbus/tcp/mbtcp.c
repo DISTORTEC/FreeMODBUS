@@ -84,6 +84,7 @@ eMBTCPDoInit( struct xMBInstance * xInstance, uint16_t ucTCPPort )
 void
 eMBTCPStart( struct xMBInstance * xInstance )
 {
+    (void)xInstance;
 }
 
 void

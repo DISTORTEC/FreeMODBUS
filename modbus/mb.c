@@ -173,14 +173,14 @@ eMBTCPInit( struct xMBInstance * xInstance, const struct xMBCallbacks * xCallbac
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
-    if( ( eStatus = eMBTCPDoInit( ucTCPPort ) ) != MB_ENOERR )
+    if( ( eStatus = eMBTCPDoInit( xInstance, ucTCPPort ) ) != MB_ENOERR )
     {
         xInstance->eMBState = STATE_DISABLED;
     }
-    else if( !xMBPortEventInit(  ) )
+    else if( !xMBPortEventInit( xInstance ) )
     {
         /* Port dependent event module initalization failed. */
-        xInstance->eStatus = MB_EPORTERR;
+        eStatus = MB_EPORTERR;
     }
     else
     {
@@ -195,7 +195,7 @@ eMBTCPInit( struct xMBInstance * xInstance, const struct xMBCallbacks * xCallbac
         xInstance->eMBCurrentMode = MB_TCP;
         xInstance->eMBState = STATE_DISABLED;
     }
-    return xInstance->eStatus;
+    return eStatus;
 }
 #endif
 
