@@ -26,8 +26,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _MBINSTANCE_H
-#define _MBINSTANCE_H
+#ifndef _MB_INSTANCE_H
+#define _MB_INSTANCE_H
 
 #include "mbbytepos.h"
 #include "mbconfig.h"
@@ -70,11 +70,11 @@ struct xMBInstance
     /* Functions pointer which are initialized in eMBInit( ). Depending on the
      * mode (RTU or ASCII) the are set to the correct implementations.
      */
+    peMBFrameReceive peMBFrameReceiveCur;
     peMBFrameSend peMBFrameSendCur;
+    pvMBFrameClose pvMBFrameCloseCur;
     pvMBFrameStart pvMBFrameStartCur;
     pvMBFrameStop pvMBFrameStopCur;
-    peMBFrameReceive peMBFrameReceiveCur;
-    pvMBFrameClose pvMBFrameCloseCur;
 
     /* Callback functions required by the porting layer. They are called when
      * an external event has happend which includes a timeout or the reception
@@ -84,14 +84,14 @@ struct xMBInstance
     bool( *pxMBFrameCBTransmitterEmpty ) ( struct xMBInstance * xInstance );
     bool( *pxMBPortCBTimerExpired ) ( struct xMBInstance * xInstance );
 
-    eMBStateType eMBState;
-    eMBMode  eMBCurrentMode;
     uint8_t *ucMBFrame;
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint8_t *pucSndBufferCur;
     #endif
 
     eMBException eException;
+    eMBMode  eMBCurrentMode;
+    eMBStateType eMBState;
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile eMBRcvState eRcvState;
     volatile eMBSndState eSndState;
