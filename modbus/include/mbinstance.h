@@ -86,10 +86,12 @@ struct xMBInstance
 
     eMBStateType eMBState;
     eMBMode  eMBCurrentMode;
+    uint8_t *ucMBFrame;
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint8_t *pucSndBufferCur;
     #endif
 
+    eMBException eException;
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile eMBRcvState eRcvState;
     volatile eMBSndState eSndState;
@@ -98,6 +100,7 @@ struct xMBInstance
     volatile eMBBytePos eBytePos;
     #endif
 
+    uint16_t usLength;
     #if ( MB_ASCII_ENABLED > 0 ) || ( MB_RTU_ENABLED > 0 )
     volatile uint16_t usSndBufferCount;
     volatile uint16_t usRcvBufferPos;
@@ -106,7 +109,9 @@ struct xMBInstance
     uint16_t   usMBSlaveIDLen;
     #endif
 
+    uint8_t ucFunctionCode;
     uint8_t ucMBAddress;
+    uint8_t ucRcvAddress;
     #if MB_ASCII_ENABLED > 0
     volatile uint8_t ucMBLFCharacter;
     #endif

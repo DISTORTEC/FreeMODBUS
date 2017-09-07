@@ -308,12 +308,6 @@ eMBDisable( struct xMBInstance * xInstance )
 eMBErrorCode
 eMBPoll( struct xMBInstance * xInstance )
 {
-    static uint8_t   *ucMBFrame;
-    static uint8_t    ucRcvAddress;
-    static uint8_t    ucFunctionCode;
-    static uint16_t   usLength;
-    static eMBException eException;
-
     int             i;
     eMBErrorCode    eStatus = MB_ENOERR;
     eMBEventType    eEvent;
@@ -334,11 +328,11 @@ eMBPoll( struct xMBInstance * xInstance )
             break;
 
         case EV_FRAME_RECEIVED:
-            eStatus = xInstance->peMBFrameReceiveCur( xInstance, &ucRcvAddress, &ucMBFrame, &usLength );
+            eStatus = xInstance->peMBFrameReceiveCur( xInstance, &xInstance->ucRcvAddress, &xInstance->ucMBFrame, &xInstance->usLength );
             if( eStatus == MB_ENOERR )
             {
                 /* Check if the frame is for us. If not ignore the frame. */
-                if( ( ucRcvAddress == xInstance->ucMBAddress ) || ( ucRcvAddress == MB_ADDRESS_BROADCAST ) )
+                if( ( xInstance->ucRcvAddress == xInstance->ucMBAddress ) || ( xInstance->ucRcvAddress == MB_ADDRESS_BROADCAST ) )
                 {
                     ( void )xMBPortEventPost( xInstance, EV_EXECUTE );
                 }
@@ -346,8 +340,8 @@ eMBPoll( struct xMBInstance * xInstance )
             break;
 
         case EV_EXECUTE:
-            ucFunctionCode = ucMBFrame[MB_PDU_FUNC_OFF];
-            eException = MB_EX_ILLEGAL_FUNCTION;
+            xInstance->ucFunctionCode = xInstance->ucMBFrame[MB_PDU_FUNC_OFF];
+            xInstance->eException = MB_EX_ILLEGAL_FUNCTION;
             for( i = 0; i < MB_FUNC_HANDLERS_MAX; i++ )
             {
                 /* No more function handlers registered. Abort. */
@@ -355,29 +349,29 @@ eMBPoll( struct xMBInstance * xInstance )
                 {
                     break;
                 }
-                else if( xInstance->xFuncHandlers[i].ucFunctionCode == ucFunctionCode )
+                else if( xInstance->xFuncHandlers[i].ucFunctionCode == xInstance->ucFunctionCode )
                 {
-                    eException = xInstance->xFuncHandlers[i].pxHandler( xInstance, ucMBFrame, &usLength );
+                    xInstance->eException = xInstance->xFuncHandlers[i].pxHandler( xInstance, xInstance->ucMBFrame, &xInstance->usLength );
                     break;
                 }
             }
 
             /* If the request was not sent to the broadcast address we
              * return a reply. */
-            if( ucRcvAddress != MB_ADDRESS_BROADCAST )
+            if( xInstance->ucRcvAddress != MB_ADDRESS_BROADCAST )
             {
-                if( eException != MB_EX_NONE )
+                if( xInstance->eException != MB_EX_NONE )
                 {
                     /* An exception occured. Build an error frame. */
-                    usLength = 0;
-                    ucMBFrame[usLength++] = ( uint8_t )( ucFunctionCode | MB_FUNC_ERROR );
-                    ucMBFrame[usLength++] = eException;
+                    xInstance->usLength = 0;
+                    xInstance->ucMBFrame[xInstance->usLength++] = ( uint8_t )( xInstance->ucFunctionCode | MB_FUNC_ERROR );
+                    xInstance->ucMBFrame[xInstance->usLength++] = xInstance->eException;
                 }
                 if( ( xInstance->eMBCurrentMode == MB_ASCII ) && MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS )
                 {
                     vMBPortTimersDelay( xInstance, MB_ASCII_TIMEOUT_WAIT_BEFORE_SEND_MS );
                 }
-                eStatus = xInstance->peMBFrameSendCur( xInstance, xInstance->ucMBAddress, ucMBFrame, usLength );
+                eStatus = xInstance->peMBFrameSendCur( xInstance, xInstance->ucMBAddress, xInstance->ucMBFrame, xInstance->usLength );
             }
             break;
 
