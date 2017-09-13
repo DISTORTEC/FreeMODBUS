@@ -124,7 +124,7 @@ eMBInit( struct xMBInstance * xInstance, const struct xMBCallbacks * xCallbacks,
             xInstance->pvMBFrameStopCur = eMBRTUStop;
             xInstance->peMBFrameSendCur = eMBRTUSend;
             xInstance->peMBFrameReceiveCur = eMBRTUReceive;
-            xInstance->pvMBFrameCloseCur = MB_PORT_HAS_CLOSE ? vMBPortClose : NULL;
+            xInstance->pvMBFrameCloseCur = MB_PORT_HAS_CLOSE ? xMBPortSerialClose : NULL;
             xInstance->pxMBFrameCBByteReceived = xMBRTUReceiveFSM;
             xInstance->pxMBFrameCBTransmitterEmpty = xMBRTUTransmitFSM;
             xInstance->pxMBPortCBTimerExpired = xMBRTUTimerT35Expired;
@@ -138,7 +138,7 @@ eMBInit( struct xMBInstance * xInstance, const struct xMBCallbacks * xCallbacks,
             xInstance->pvMBFrameStopCur = eMBASCIIStop;
             xInstance->peMBFrameSendCur = eMBASCIISend;
             xInstance->peMBFrameReceiveCur = eMBASCIIReceive;
-            xInstance->pvMBFrameCloseCur = MB_PORT_HAS_CLOSE ? vMBPortClose : NULL;
+            xInstance->pvMBFrameCloseCur = MB_PORT_HAS_CLOSE ? xMBPortSerialClose : NULL;
             xInstance->pxMBFrameCBByteReceived = xMBASCIIReceiveFSM;
             xInstance->pxMBFrameCBTransmitterEmpty = xMBASCIITransmitFSM;
             xInstance->pxMBPortCBTimerExpired = xMBASCIITimerT1SExpired;

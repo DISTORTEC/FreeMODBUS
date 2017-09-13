@@ -56,7 +56,7 @@ sio_irq( void )
 }
 
 void
-vMBPortClose( void )
+xMBPortSerialClose( void )
 {
 }
 

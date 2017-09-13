@@ -184,7 +184,7 @@ xMBPortSerialSetTimeout( struct xMBInstance * xInstance, uint32_t ulNewTimeoutMs
 }
 
 void
-vMBPortClose( struct xMBInstance * xInstance )
+xMBPortSerialClose( struct xMBInstance * xInstance )
 {
     if( ( ( struct PortInstance* )xInstance )->iSerialFd != -1 )
     {

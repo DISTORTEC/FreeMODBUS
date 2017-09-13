@@ -212,7 +212,7 @@ xMBPortSerialSetTimeout( DWORD dwTimeoutMs )
 }
 
 void
-vMBPortClose ( void )
+xMBPortSerialClose ( void )
 {
     ( void )CloseHandle( g_hSerial );
 }

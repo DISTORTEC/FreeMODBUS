@@ -203,7 +203,7 @@ xMBPortSerialSetTimeout( uint32_t ulNewTimeoutMs )
 }
 
 void
-vMBPortClose( void )
+xMBPortSerialClose( void )
 {
     if( iSerialFd != -1 )
     {

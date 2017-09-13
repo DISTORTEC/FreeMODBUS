@@ -71,12 +71,10 @@ vMBPortExitCritical( void )
 }
 
 void
-vMBPortClose( void )
+xMBPortSerialClose( void )
 {
-    extern void     vMBPortSerialClose( void );
     extern void     vMBPortTimerClose( void );
     extern void     vMBPortEventClose( void );
-    vMBPortSerialClose(  );
     vMBPortTimerClose(  );
     vMBPortEventClose(  );
 }
