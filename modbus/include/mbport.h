@@ -57,8 +57,6 @@ bool xMBPortSerialInit( struct xMBInstance * xInstance,
                                    uint8_t ucPort, uint32_t ulBaudRate,
                                    uint8_t ucDataBits, eMBParity eParity );
 
-void vMBPortClose( struct xMBInstance * xInstance );
-
 void xMBPortSerialClose( struct xMBInstance * xInstance );
 
 void vMBPortSerialEnable( struct xMBInstance * xInstance, bool xRxEnable,
