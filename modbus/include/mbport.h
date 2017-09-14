@@ -79,28 +79,6 @@ void vMBPortTimersDisable( struct xMBInstance * xInstance );
 void vMBPortTimersDelay( struct xMBInstance * xInstance,
                          uint16_t usTimeOutMS );
 
-/* ----------------------- Callback for the protocol stack ------------------*/
-
-/*!
- * \brief Callback function for the porting layer when a new byte is
- *   available.
- *
- * Depending upon the mode this callback function is used by the RTU or
- * ASCII transmission layers. In any case a call to xMBPortSerialGetByte()
- * must immediately return a new character.
- *
- * \param xInstance The pointer to instance struct.
- *
- * \return <code>true</code> if a event was posted to the queue because
- *   a new byte was received. The port implementation should wake up the
- *   tasks which are currently blocked on the eventqueue.
- */
-extern bool( *pxMBFrameCBByteReceived ) ( struct xMBInstance * xInstance );
-
-extern bool( *pxMBFrameCBTransmitterEmpty ) ( struct xMBInstance * xInstance );
-
-extern bool( *pxMBPortCBTimerExpired ) ( struct xMBInstance * xInstance );
-
 /* ----------------------- TCP port functions -------------------------------*/
 bool xMBTCPPortInit( struct xMBInstance * xInstance, uint16_t usTCPPort );
 
