@@ -42,6 +42,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#if MB_RTU_ENABLED > 0
+
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_SER_PDU_SIZE_MIN     4       /*!< Minimum size of a Modbus RTU frame. */
 #define MB_SER_PDU_SIZE_CRC     2       /*!< Size of CRC field in PDU. */
@@ -331,3 +333,5 @@ xMBRTUTimerT35Expired( struct xMBInstance * xInstance )
 
     return xNeedPoll;
 }
+
+#endif
