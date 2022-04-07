@@ -201,7 +201,7 @@ bool
 xMBRTUReceiveFSM( struct xMBInstance * xInstance )
 {
     bool            xTaskNeedSwitch = false;
-    uint8_t           ucByte;
+    uint8_t           ucByte = 0;
 
     assert( xInstance->eSndState == STATE_TX_IDLE );
 
