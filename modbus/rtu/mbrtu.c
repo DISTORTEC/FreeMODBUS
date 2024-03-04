@@ -107,6 +107,7 @@ eMBRTUStart( struct xMBInstance * xInstance )
      * modbus protocol stack until the bus is free.
      */
     xInstance->eRcvState = STATE_RX_INIT;
+    xInstance->eSndState = STATE_TX_IDLE;
     vMBPortSerialEnable( xInstance, true, false );
     vMBPortTimersEnable( xInstance );
 

@@ -90,6 +90,7 @@ eMBASCIIStart( struct xMBInstance * xInstance )
     ENTER_CRITICAL_SECTION( xInstance );
     vMBPortSerialEnable( xInstance, true, false );
     xInstance->eRcvState = STATE_RX_IDLE;
+    xInstance->eSndState = STATE_TX_IDLE;
     EXIT_CRITICAL_SECTION( xInstance );
 
     /* No special startup required for ASCII. */
